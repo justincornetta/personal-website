@@ -1,37 +1,59 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { ProjectMeta } from "@/lib/content";
-import { TagList } from "@/components/tags";
+import type { ProjectMeta } from "@/lib/content";
+
+const arrow = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M7 17L17 7M9 7h8v8" />
+  </svg>
+);
+
+const glyph = (
+  <svg className="cover__glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect x="12" y="12" width="24" height="24" rx="3" transform="rotate(45 24 24)" />
+    <rect x="19" y="19" width="10" height="10" transform="rotate(45 24 24)" fill="currentColor" stroke="none" />
+  </svg>
+);
 
 export function ProjectCard({ project }: { project: ProjectMeta }) {
-  return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className="group flex h-full flex-col justify-between rounded-3xl border border-[var(--border)] bg-white/76 p-6 shadow-[0_20px_60px_rgba(40,34,25,0.08)] transition hover:-translate-y-1 hover:border-[rgba(15,118,110,0.36)] hover:shadow-[0_24px_70px_rgba(40,34,25,0.12)]"
-    >
-      <div>
-        <div className="mb-6 flex items-start justify-between gap-4">
-          <span className="rounded-full bg-[rgba(15,118,110,0.09)] px-3 py-1 text-xs font-semibold text-[var(--accent-strong)]">
-            {project.capability}
-          </span>
-          <ArrowUpRight
-            size={20}
-            className="text-[var(--muted)] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent-strong)]"
-          />
-        </div>
-        <h3 className="text-2xl font-semibold tracking-normal text-[var(--ink)]">{project.title}</h3>
-        <p className="mt-4 text-base leading-7 text-[var(--muted)]">{project.summary}</p>
-      </div>
+  const type = project.contentType === "Writing" ? "writing" : "project";
+  const year =
+    project.published || (project.date ? new Date(project.date).getFullYear().toString() : "");
 
-      <div className="mt-8 space-y-5">
-        <TagList items={project.domain} />
-        <div className="border-t border-[var(--border)] pt-5">
-          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
-            Role
-          </p>
-          <p className="mt-1 text-sm font-medium text-[var(--ink)]">{project.role}</p>
-        </div>
+  const cover = project.cover ? (
+    <div className="cover">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={project.cover} alt="" />
+    </div>
+  ) : (
+    <div className={`cover cover--brand cover--${type}`}>{glyph}</div>
+  );
+
+  const inner = (
+    <>
+      <div className="card__top">
+        <span className={`tag tag--${type}`}>{project.contentType}</span>
+        <span className="card__year">{year}</span>
       </div>
+      <h3 className="card__title">{project.title}</h3>
+      {cover}
+      <p className="card__desc">{project.summary}</p>
+      <span className="readmore">
+        Read More {arrow}
+      </span>
+    </>
+  );
+
+  if (project.contentType === "Writing" && project.externalUrl) {
+    return (
+      <a className="card" href={project.externalUrl} target="_blank" rel="noreferrer">
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <Link className="card" href={`/projects/${project.slug}`}>
+      {inner}
     </Link>
   );
 }
