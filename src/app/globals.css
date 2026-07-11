@@ -252,6 +252,13 @@ a { color: inherit; text-decoration: none; }
 .card__ghost-title { margin: 1rem 0 0; font-size: 1.1rem; font-weight: 600; color: var(--ink-soft); letter-spacing: -0.01em; }
 .card__ghost-text { margin: 0.4rem 0 0; font-size: 0.9rem; color: var(--muted); line-height: 1.5; max-width: 26ch; }
 
+.about-cards { display: grid; grid-template-columns: 1fr; gap: 1.1rem; margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+@media (min-width: 620px) { .about-cards { grid-template-columns: 1fr 1fr; } }
+.gallery__video { position: relative; display: block; }
+.gallery__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 56px; height: 56px; border-radius: 50%; background: rgba(255, 255, 255, 0.92); display: grid; place-items: center; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); transition: transform 0.18s var(--ease); }
+.gallery__video:hover .gallery__play { transform: translate(-50%, -50%) scale(1.06); }
+.gallery__play svg { width: 20px; height: 20px; color: #16171b; margin-left: 3px; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

@@ -6,6 +6,23 @@ const contentRoot = path.join(process.cwd(), "content");
 
 export type GalleryItem = { src: string; caption: string };
 
+export type AboutMedia = {
+  type: "image" | "video";
+  src?: string;
+  href?: string;
+  thumb?: string;
+  caption: string;
+};
+
+export type AboutContent = {
+  headline: string;
+  quote: string;
+  quoteAuthor: string;
+  interests: string[];
+  media: AboutMedia[];
+  body: string;
+};
+
 export type ProjectMeta = {
   title: string;
   slug: string;
@@ -157,4 +174,27 @@ export function getPublishedWriting() {
 
 export function getWritingBySlug(slug: string) {
   return getPublishedWriting().find((entry) => entry.slug === slug);
+}
+
+export function getAbout(): AboutContent {
+  const parsed = matter(fs.readFileSync(path.join(contentRoot, "about.mdx"), "utf8"));
+  const data = parsed.data as Record<string, unknown>;
+  const rawMedia = Array.isArray(data.media) ? data.media : [];
+  const media: AboutMedia[] = rawMedia
+    .filter((m): m is Record<string, unknown> => Boolean(m) && typeof m === "object")
+    .map((m) => ({
+      type: m.type === "video" ? "video" : "image",
+      src: m.src ? String(m.src) : undefined,
+      href: m.href ? String(m.href) : undefined,
+      thumb: m.thumb ? String(m.thumb) : undefined,
+      caption: String(m.caption ?? ""),
+    }));
+  return {
+    headline: String(data.headline ?? ""),
+    quote: String(data.quote ?? ""),
+    quoteAuthor: String(data.quoteAuthor ?? ""),
+    interests: asArray(data.interests),
+    media,
+    body: parsed.content,
+  };
 }
