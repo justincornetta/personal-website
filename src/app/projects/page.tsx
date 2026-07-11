@@ -23,6 +23,13 @@ export default function ProjectsPage() {
         {projects.map((project) => (
           <ProjectCard key={project.slug} project={project} />
         ))}
+        {projects.length <= 2 ? (
+          <div className="card card--ghost" aria-hidden="true">
+            <span className="card__ghost-mark">+</span>
+            <p className="card__ghost-title">More on the way</p>
+            <p className="card__ghost-text">New projects, research, and analysis are in progress.</p>
+          </div>
+        ) : null}
       </div>
     </section>
   );
