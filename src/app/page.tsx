@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ProjectCarousel } from "@/components/project-carousel";
 import { getPublishedProjects } from "@/lib/content";
 
@@ -67,30 +68,53 @@ export default function Home() {
       {/* Hero */}
       <div className="hero">
         <div>
+          <span className="status-pill">
+            <span className="status-pill__dot" />
+            Open to work
+          </span>
           <h1 className="hero__name">Justin Cornetta</h1>
           <p className="hero__lede">
-            A generalist operator who turns <b>ambiguity into systems</b> that move real organizations.
+            Versatile operator and strategist spanning healthcare, psychedelic medicine, and markets,
+            with a passion for learning, building, and working alongside others who share the same
+            energy.
           </p>
           <p className="hero__bio">
-            I&rsquo;m a cross-functional operator at Teladoc Health and Director of Strategy,
-            Operations &amp; Technology at IPN, a nonprofit in psychedelic medicine. I learn complex
-            spaces quickly, then build the systems (dashboards, member portals, research workflows)
-            that help people move. Alongside that, I write market research across AI, energy, Bitcoin,
-            and healthcare.
+            I spent my early career building a broad, practical skillset across several industries. I
+            have managed C-suite initiatives across product, engineering, clinical, and commercial
+            teams, stood up enterprise-wide governance, and led strategic planning, product
+            management, recruitment, and financial oversight. That range lets me move into new
+            environments and navigate complexity quickly.
           </p>
-          <div className="socials">
-            <a className="social" href="mailto:justin.cornetta@gmail.com">
-              <span className="dot" />
-              Email
+          <div className="hero__cta">
+            <Link className="button-primary" href="/projects">
+              Explore my work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </Link>
+            <a className="button-secondary" href="/justin-cornetta-resume.pdf" target="_blank" rel="noreferrer">
+              R&eacute;sum&eacute;
             </a>
-            <a className="social" href="https://x.com/jmjcapital" target="_blank" rel="noreferrer">
-              <span className="dot" />
-              X · @jmjcapital
-            </a>
-            <a className="social" href="https://www.linkedin.com/in/justin-cornetta/" target="_blank" rel="noreferrer">
-              <span className="dot" />
-              LinkedIn
-            </a>
+            <Link className="button-secondary" href="/about">
+              About
+            </Link>
+          </div>
+          <div className="hero__connect">
+            <span className="hero__connect-label">Let&rsquo;s connect</span>
+            <div className="socials">
+              <a className="social" href="mailto:justin.cornetta@gmail.com">
+                <span className="dot" />
+                Email
+              </a>
+              <a className="social" href="https://www.linkedin.com/in/justin-cornetta/" target="_blank" rel="noreferrer">
+                <span className="dot" />
+                LinkedIn
+              </a>
+              <a className="social" href="https://x.com/jmjcapital" target="_blank" rel="noreferrer">
+                <span className="dot" />
+                X
+              </a>
+            </div>
           </div>
         </div>
         <figure className="hero__photo">
