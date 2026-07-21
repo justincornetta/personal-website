@@ -74,16 +74,17 @@ export default function Home() {
           </span>
           <h1 className="hero__name">Justin Cornetta</h1>
           <p className="hero__lede">
-            Versatile operator and strategist spanning healthcare, psychedelic medicine, and markets,
-            with a passion for learning, building, and working alongside others who share the same
-            energy.
+            Versatile operator and strategist passionate about learning and building alongside others
+            who share the same energy.
           </p>
           <p className="hero__bio">
-            I spent my early career building a broad, practical skillset across several industries. I
-            have managed C-suite initiatives across product, engineering, clinical, and commercial
-            teams, stood up enterprise-wide governance, and led strategic planning, product
-            management, recruitment, and financial oversight. That range lets me move into new
-            environments and navigate complexity quickly.
+            I have spent my early career building a practical skillset across healthcare, psychedelic
+            medicine, and financial markets. At Teladoc Health, I led multiple C-suite initiatives and
+            built a $1.6B business unit&rsquo;s performance operations function from the ground up. I
+            lead a psychedelic-medicine nonprofit, now grown to 2,100+ members across 70+ countries,
+            and I publish independent market research on Bitcoin, AI/technology, and energy. This range
+            provides me with foresight and a diverse perspective to navigate complexity and
+            problem-solve.
           </p>
           <div className="hero__cta">
             <Link className="button-primary" href="/projects">
