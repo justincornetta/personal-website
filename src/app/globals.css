@@ -270,6 +270,8 @@ a { color: inherit; text-decoration: none; }
 .gallery--uniform .gallery__frame { aspect-ratio: 4 / 3; }
 .gallery--uniform .gallery__frame img { height: 100%; object-fit: cover; object-position: center; }
 
+.about-contact { margin-top: clamp(2.5rem, 5vw, 3.5rem); max-width: 420px; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

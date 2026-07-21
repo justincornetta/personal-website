@@ -15,10 +15,7 @@ export default function AboutPage() {
 
   return (
     <section className="page-shell about" style={{ paddingBottom: "clamp(3rem, 8vw, 6rem)" }}>
-      <p className="eyebrow">About</p>
-      <h1 className="page-title" style={{ maxWidth: "18ch" }}>
-        {about.headline}
-      </h1>
+      <h1 className="eyebrow">About</h1>
 
       <figure className="pullquote">
         <blockquote>
@@ -33,37 +30,25 @@ export default function AboutPage() {
         <MDXRemote source={about.body} components={mdxComponents} />
       </div>
 
-      <div className="about-cards">
-        <div className="aside-card">
-          <h4>Current interests</h4>
-          <div className="interests">
-            {about.interests.map((interest) => (
-              <span className="chip" key={interest}>
-                {interest}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="aside-card">
-          <h4>Get in touch</h4>
-          <a className="contact-line" href="mailto:justin.cornetta@gmail.com">
-            justin.cornetta@gmail.com
+      <div className="aside-card about-contact">
+        <h4>Get in touch</h4>
+        <a className="contact-line" href="mailto:justin.cornetta@gmail.com">
+          justin.cornetta@gmail.com
+        </a>
+        <div className="socials" style={{ marginTop: "1.1rem" }}>
+          <a className="social" href="https://x.com/jmjcapital" target="_blank" rel="noreferrer">
+            <span className="dot" />
+            X
           </a>
-          <div className="socials" style={{ marginTop: "1.1rem" }}>
-            <a className="social" href="https://x.com/jmjcapital" target="_blank" rel="noreferrer">
-              <span className="dot" />
-              X
-            </a>
-            <a
-              className="social"
-              href="https://www.linkedin.com/in/justin-cornetta/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="dot" />
-              LinkedIn
-            </a>
-          </div>
+          <a
+            className="social"
+            href="https://www.linkedin.com/in/justin-cornetta/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className="dot" />
+            LinkedIn
+          </a>
         </div>
       </div>
 
