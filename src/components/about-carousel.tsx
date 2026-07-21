@@ -17,7 +17,7 @@ export function AboutCarousel({ items }: { items: AboutMedia[] }) {
   };
 
   return (
-    <section className="gallery" aria-label="Highlights">
+    <section className="gallery gallery--uniform" aria-label="Highlights">
       <div className="gallery__head">
         <div>
           <p className="eyebrow">Highlights</p>
