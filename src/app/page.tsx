@@ -74,8 +74,8 @@ export default function Home() {
           </span>
           <h1 className="hero__name">Justin Cornetta</h1>
           <p className="hero__lede">
-            Versatile operator and strategist passionate about learning and building alongside others
-            who share the same energy.
+            Versatile operator and strategist across healthcare, psychedelic medicine, and financial
+            markets, passionate about learning and building alongside others who share the same energy.
           </p>
           <div className="hero__cta">
             <Link className="button-primary" href="/projects">
