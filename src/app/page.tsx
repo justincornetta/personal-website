@@ -78,13 +78,11 @@ export default function Home() {
             who share the same energy.
           </p>
           <p className="hero__bio">
-            I have spent my early career building a practical skillset across healthcare, psychedelic
-            medicine, and financial markets. At Teladoc Health, I led multiple C-suite initiatives and
-            built a $1.6B business unit&rsquo;s performance operations function from the ground up. I
-            lead a psychedelic-medicine nonprofit, now grown to 2,100+ members across 70+ countries,
-            and I publish independent market research on Bitcoin, AI/technology, and energy. This range
-            provides me with foresight and a diverse perspective to navigate complexity and
-            problem-solve.
+            I’ve built a practical skill set across healthcare, psychedelic medicine, and financial
+            markets. My experience spans program management, client experience, performance operations,
+            product management and design, fundraising, investing, and market research, with AI
+            integrated throughout my work. This breadth helps me navigate complexity and approach
+            problems from multiple perspectives.
           </p>
           <div className="hero__cta">
             <Link className="button-primary" href="/projects">
