@@ -77,13 +77,6 @@ export default function Home() {
             Versatile operator and strategist passionate about learning and building alongside others
             who share the same energy.
           </p>
-          <p className="hero__bio">
-            I’ve built a practical skill set across healthcare, psychedelic medicine, and financial
-            markets. My experience spans program management, client experience, performance operations,
-            product management and design, fundraising, investing, and market research, with AI
-            integrated throughout my work. This breadth helps me navigate complexity and approach
-            problems from multiple perspectives.
-          </p>
           <div className="hero__cta">
             <Link className="button-primary" href="/projects">
               Explore my work
