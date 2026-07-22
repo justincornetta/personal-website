@@ -15,7 +15,11 @@ export default function AboutPage() {
 
   return (
     <section className="page-shell about" style={{ paddingBottom: "clamp(3rem, 8vw, 6rem)" }}>
-      <h1 className="eyebrow">About</h1>
+      <h1 className="sr-only">About</h1>
+
+      <div className="about__intro-carousel">
+        <AboutCarousel items={about.media} />
+      </div>
 
       <figure className="pullquote">
         <blockquote>
@@ -52,7 +56,6 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <AboutCarousel items={about.media} />
     </section>
   );
 }
