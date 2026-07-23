@@ -55,7 +55,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         Back to Projects
       </Link>
 
-      <span className="tag tag--project case__tag">{project.contentType}</span>
       <h1 className="case__title">{project.title}</h1>
       {project.subtitle ? <p className="case__sub">{project.subtitle}</p> : null}
 
@@ -101,6 +100,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
         ) : null}
       </dl>
+
+      {!embed && project.cover ? (
+        <figure className="case__cover">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={project.cover} alt={`${project.title} project interface`} />
+        </figure>
+      ) : null}
 
       {embed ? (
         <div className="video" style={{ marginTop: "2rem" }}>

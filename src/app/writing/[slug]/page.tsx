@@ -38,27 +38,32 @@ export default async function WritingDetailPage({ params }: WritingPageProps) {
   }
 
   return (
-    <article className="page-shell section-pad">
-      <Link href="/writing" className="mb-10 inline-flex items-center gap-2 text-sm font-semibold text-[var(--muted)] transition hover:text-[var(--ink)]">
+    <article
+      className="page-shell case"
+      style={{ paddingBottom: "clamp(3rem, 8vw, 6rem)" }}
+    >
+      <Link href="/writing" className="case__back">
         <ArrowLeft size={16} />
-        Back to writing
+        Back to Writing
       </Link>
-      <header className="max-w-3xl">
-        <p className="eyebrow">{entry.category}</p>
-        <h1 className="mt-4 text-5xl font-semibold leading-tight tracking-normal text-[var(--ink)] md:text-6xl">
+      <header>
+        <p className="eyebrow" style={{ marginTop: "1.4rem" }}>
+          {entry.category}
+        </p>
+        <h1 className="case__title" style={{ marginTop: "0.55rem" }}>
           {entry.title}
         </h1>
-        <p className="mt-6 text-xl leading-8 text-[var(--muted)]">{entry.summary}</p>
+        <p className="case__sub">{entry.summary}</p>
         <div className="mt-6">
           <TagList items={entry.tags} />
         </div>
       </header>
-      {entry.disclosure ? (
-        <div className="mt-10 rounded-2xl border border-[var(--border)] bg-white/72 p-5 text-sm leading-6 text-[var(--muted)]">
-          <strong className="text-[var(--ink)]">Disclosure:</strong> {entry.disclosure}
-        </div>
-      ) : null}
-      <div className="prose-content mt-12 max-w-3xl">
+      <div className="case__body prose-content">
+        {entry.disclosure ? (
+          <div className="mb-10 rounded-2xl border border-[var(--border)] bg-white/72 p-5 text-sm leading-6 text-[var(--muted)]">
+            <strong className="text-[var(--ink)]">Disclosure:</strong> {entry.disclosure}
+          </div>
+        ) : null}
         <MDXRemote source={entry.body} components={mdxComponents} />
       </div>
     </article>
