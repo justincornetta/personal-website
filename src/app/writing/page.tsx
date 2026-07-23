@@ -19,17 +19,18 @@ export default function WritingPage() {
   const writing = getPublishedWriting();
 
   return (
-    <section className="page-shell section-pad">
-      <div className="max-w-3xl">
-        <p className="eyebrow">Writing</p>
-        <h1 className="mt-4 text-5xl font-semibold leading-tight tracking-normal text-[var(--ink)] md:text-6xl">
-          Research notes on the sectors and ideas I am tracking.
-        </h1>
-        <p className="mt-6 text-lg leading-8 text-[var(--muted)]">
+    <section
+      className="page-shell page-head"
+      style={{ paddingBottom: "clamp(3rem, 8vw, 6rem)" }}
+    >
+      <header>
+        <h1 className="page-title">Writing</h1>
+        <p className="page-lead">Research notes on the sectors and ideas I am tracking.</p>
+        <p className="page-summary">
           This is the long-form home for market research, investment notes, and essays across
           psychedelic medicine, AI, energy, Bitcoin, macro, and company-specific work.
         </p>
-      </div>
+      </header>
 
       {writing.length > 0 ? (
         <div className="mt-12 grid gap-5 md:grid-cols-2">
@@ -38,7 +39,7 @@ export default function WritingPage() {
           ))}
         </div>
       ) : (
-        <div className="mt-12 rounded-3xl border border-[var(--border)] bg-white/72 p-8">
+        <div className="writing-empty rounded-3xl border border-[var(--border)] bg-white/72 p-8">
           <h2 className="text-2xl font-semibold text-[var(--ink)]">Published research is coming next.</h2>
           <p className="mt-3 max-w-2xl leading-7 text-[var(--muted)]">
             The site structure is ready. Drafts stay out of public routes until they are marked
