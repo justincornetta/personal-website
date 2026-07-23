@@ -101,7 +101,7 @@ export function GalleryCarousel({ items }: { items: GalleryItem[] }) {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={item.src} alt="" loading="lazy" />
-              <span className="gallery__hint" aria-hidden="true">Double-click to enlarge</span>
+              <span className="gallery__hint" aria-hidden="true">Click to enlarge</span>
             </button>
             {item.caption ? <figcaption className="gallery__cap">{item.caption}</figcaption> : null}
           </figure>
