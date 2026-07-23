@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { ArrowLeft } from "lucide-react";
+import { GalleryCarousel } from "@/components/gallery-carousel";
 import { mdxComponents } from "@/components/mdx-components";
-import { TagList } from "@/components/tags";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 
 type ProjectPageProps = {
@@ -18,70 +17,108 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
-
   if (!project) {
     return {};
   }
-
   return {
     title: project.title,
     description: project.summary,
   };
 }
 
+function youtubeEmbed(url?: string) {
+  if (!url) return null;
+  const match = url.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{6,})/);
+  return match?.[1] ? `https://www.youtube-nocookie.com/embed/${match[1]}` : null;
+}
+
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
-
   if (!project) {
     notFound();
   }
 
+  const embed = youtubeEmbed(project.video);
+  const published =
+    project.published ||
+    (project.date
+      ? new Date(project.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })
+      : "");
+
   return (
-    <article className="page-shell section-pad">
-      <Link href="/projects" className="mb-10 inline-flex items-center gap-2 text-sm font-semibold text-[var(--muted)] transition hover:text-[var(--ink)]">
-        <ArrowLeft size={16} />
-        Back to projects
+    <article className="page-shell case" style={{ paddingBottom: "clamp(3rem, 8vw, 6rem)" }}>
+      <Link href="/projects" className="case__back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+        Back to Projects
       </Link>
 
-      <header className="grid gap-8 md:grid-cols-[1fr_0.42fr] md:items-end">
-        <div>
-          <p className="eyebrow">{project.capability}</p>
-          <h1 className="mt-4 text-5xl font-semibold leading-tight tracking-normal text-[var(--ink)] md:text-6xl">
-            {project.title}
-          </h1>
-          <p className="mt-6 text-xl leading-8 text-[var(--muted)]">{project.summary}</p>
-        </div>
-        <aside className="rounded-3xl border border-[var(--border)] bg-white/72 p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">Role</p>
-          <p className="mt-2 font-semibold text-[var(--ink)]">{project.role}</p>
-          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">Tools</p>
-          <div className="mt-3">
-            <TagList items={project.tools} />
-          </div>
-        </aside>
-      </header>
+      <span className="tag tag--project case__tag">{project.contentType}</span>
+      <h1 className="case__title">{project.title}</h1>
+      {project.subtitle ? <p className="case__sub">{project.subtitle}</p> : null}
 
-      <div className="mt-12 grid gap-10 md:grid-cols-[0.24fr_0.76fr]">
-        <div className="space-y-6">
+      <dl className="case__meta">
+        {published ? (
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">Domains</p>
-            <div className="mt-3">
-              <TagList items={project.domain} />
-            </div>
+            <dt>Published</dt>
+            <dd>{published}</dd>
           </div>
+        ) : null}
+        {project.role ? (
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">Skills</p>
-            <div className="mt-3">
-              <TagList items={project.skills} tone="accent" />
-            </div>
+            <dt>Role</dt>
+            <dd>{project.role}</dd>
           </div>
-        </div>
+        ) : null}
+        {project.skills.length ? (
+          <div>
+            <dt>Skills</dt>
+            <dd>
+              <div className="interests" style={{ marginTop: "0.15rem" }}>
+                {project.skills.map((skill) => (
+                  <span className="chip" key={skill}>
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </dd>
+          </div>
+        ) : null}
+        {project.tools.length ? (
+          <div>
+            <dt>Tools</dt>
+            <dd>
+              <div className="interests" style={{ marginTop: "0.15rem" }}>
+                {project.tools.map((tool) => (
+                  <span className="chip" key={tool}>
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </dd>
+          </div>
+        ) : null}
+      </dl>
 
-        <div className="prose-content">
-          <MDXRemote source={project.body} components={mdxComponents} />
+      {embed ? (
+        <div className="video" style={{ marginTop: "2rem" }}>
+          <iframe
+            src={embed}
+            title={`${project.title} walkthrough`}
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            loading="lazy"
+          />
         </div>
+      ) : null}
+
+      <div className="case__body prose-content">
+        <MDXRemote source={project.body} components={mdxComponents} />
       </div>
+
+      <GalleryCarousel items={project.gallery} />
     </article>
   );
 }

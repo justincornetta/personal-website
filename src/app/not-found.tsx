@@ -2,17 +2,18 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <section className="page-shell section-pad">
-      <div className="max-w-xl rounded-3xl border border-[var(--border)] bg-white/72 p-8">
-        <p className="eyebrow">404</p>
-        <h1 className="mt-4 text-4xl font-semibold text-[var(--ink)]">This page is not published.</h1>
-        <p className="mt-4 leading-7 text-[var(--muted)]">
-          Draft and private MDX files are intentionally hidden from public routes.
-        </p>
-        <Link className="button-primary mt-8" href="/">
-          Back home
-        </Link>
-      </div>
+    <section className="page-shell" style={{ padding: "clamp(4rem, 12vw, 8rem) 0" }}>
+      <p className="eyebrow">404</p>
+      <h1 className="page-title" style={{ maxWidth: "18ch" }}>
+        This page isn&rsquo;t here.
+      </h1>
+      <p className="page-lead">
+        The page you&rsquo;re looking for doesn&rsquo;t exist, or it&rsquo;s a draft that hasn&rsquo;t
+        been published yet.
+      </p>
+      <Link className="button-primary" href="/" style={{ marginTop: "2rem" }}>
+        Back home
+      </Link>
     </section>
   );
 }

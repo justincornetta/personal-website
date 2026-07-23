@@ -1,183 +1,164 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Brain, BriefcaseBusiness, LineChart, Mail, Network } from "lucide-react";
-import { ProjectCard } from "@/components/project-card";
-import { getFeaturedProjects, getPublishedWriting } from "@/lib/content";
+import { ProjectCarousel } from "@/components/project-carousel";
+import { getPublishedProjects } from "@/lib/content";
 
-const proofPoints = ["Teladoc Health", "IPN", "Penn Neuroscience", "Rutgers Analytics", "AI Workflows", "Investing Research"];
-
-const themes = [
+const experience = [
   {
-    icon: BriefcaseBusiness,
-    title: "Operations and strategy",
-    text: "Cross-functional operator with experience across performance operations, client operations, program management, and nonprofit strategy.",
+    org: "Teladoc Health",
+    tenure: "4 yrs 3 mos",
+    roles: [
+      {
+        pos: "Performance Operations Manager",
+        dates: "Oct 2025 to Present",
+        desc: "Own end-to-end performance monitoring for Teladoc's $1.6B ARR US Group Health business across four service lines. Built the Performance Operations analytics function from the ground up and lead a cross-functional Enterprise Data & AI initiative to standardize metrics company-wide.",
+      },
+      {
+        pos: "Program Manager",
+        dates: "Sep 2024 to Oct 2025",
+        desc: "Led C-suite initiatives across clinical, patient, client, and member operations behind a $480M operating plan, including AI clinical transcription and data integrations that drove $1M+ in savings and unlocked $50M+ in new revenue.",
+      },
+      {
+        pos: "Client Operations Manager",
+        dates: "Jan 2024 to Sep 2024",
+        desc: "Managed $187M+ ARR and 10M+ lives across 14 employer and health-plan clients; led an at-risk-client remediation that preserved $10M in ARR.",
+      },
+      {
+        pos: "Client Experience Associate · Client Management Analyst",
+        dates: "May 2022 to Jan 2024",
+        desc: "",
+      },
+    ],
   },
   {
-    icon: Brain,
-    title: "AI-enabled execution",
-    text: "Focused on using AI tools to move faster across research, workflow design, automation, content systems, and product planning.",
+    org: "Intercollegiate Psychedelics Network (IPN)",
+    tenure: "2 yrs 10 mos",
+    roles: [
+      {
+        pos: "Director of Strategy, Operations & Technology",
+        dates: "Mar 2026 to Present",
+        desc: "Lead strategy, operations, and technology for a national student and young-professional network in psychedelic medicine, building the systems, web applications, and AI workflows behind the organization.",
+      },
+      {
+        pos: "Director of Operations",
+        dates: "Dec 2024 to Mar 2026",
+        desc: "Oversaw governance, systems, finances, recruitment, and compliance; built KPIs and accountability frameworks to measure organizational and program success.",
+      },
+      {
+        pos: "Fundraising Coordinator",
+        dates: "Oct 2023 to Apr 2025",
+        desc: "Built revenue and fundraising calendars, secured donations and sponsorships, and won grants to fund operations.",
+      },
+    ],
   },
   {
-    icon: LineChart,
-    title: "Markets and business research",
-    text: "Active investor and writer connecting macro themes to company-level opportunities across energy, AI infrastructure, Bitcoin, and psychedelics.",
-  },
-  {
-    icon: Network,
-    title: "Psychedelic medicine",
-    text: "Director of Operations and Strategy at IPN, building programs and systems for the next generation of psychedelic researchers and professionals.",
+    org: "Earlier",
+    tenure: "",
+    roles: [
+      { pos: "Client Experience Intern at Somatix", dates: "2022", desc: "" },
+      { pos: "Clinical Research Assistant at Penn Medicine", dates: "2021 to 2022", desc: "" },
+    ],
   },
 ];
 
-const writingCategories = ["Psychedelic medicine", "AI and technology", "Energy", "Bitcoin and crypto", "Company research"];
-
 export default function Home() {
-  const featuredProjects = getFeaturedProjects();
-  const writing = getPublishedWriting().slice(0, 3);
+  const projects = getPublishedProjects();
 
   return (
-    <>
-      <section className="page-shell grid gap-12 py-16 md:grid-cols-[1.08fr_0.92fr] md:items-center md:py-24">
+    <section className="page-shell">
+      {/* Hero */}
+      <div className="hero">
         <div>
-          <p className="eyebrow">Operations / AI / Psychedelics / Markets</p>
-          <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[1.02] tracking-normal text-[var(--ink)] md:text-7xl">
-            Justin Cornetta
-          </h1>
-          <p className="mt-6 max-w-2xl text-xl leading-8 text-[var(--muted)]">
-            I am a generalist operator with a bias toward learning fast, connecting ideas across
-            domains, and turning ambiguity into practical systems. My work sits across healthcare
-            operations, AI-enabled execution, psychedelic medicine, investing research, and
-            technology.
+          <span className="status-pill">
+            <span className="status-pill__dot" />
+            Open to work
+          </span>
+          <h1 className="hero__name">Justin Cornetta</h1>
+          <p className="hero__lede">
+            Versatile operator and strategist passionate about learning and building alongside others
+            who share the same energy.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a className="button-primary" href="mailto:justin.cornetta@gmail.com">
-              <Mail size={17} />
-              Contact me
+          <p className="hero__bio">
+            I have spent my early career building a practical skillset across healthcare, psychedelic
+            medicine, and financial markets. At Teladoc Health, I led multiple C-suite initiatives and
+            built a $1.6B business unit&rsquo;s performance operations function from the ground up. I
+            lead a psychedelic-medicine nonprofit, now grown to 2,100+ members across 70+ countries,
+            and I publish independent market research on Bitcoin, AI/technology, and energy. This range
+            provides me with foresight and a diverse perspective to navigate complexity and
+            problem-solve.
+          </p>
+          <div className="hero__cta">
+            <Link className="button-primary" href="/projects">
+              Explore my work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </Link>
+            <a className="button-secondary" href="/justin-cornetta-resume.pdf" target="_blank" rel="noreferrer">
+              R&eacute;sum&eacute;
             </a>
-            <Link className="button-secondary" href="/projects">
-              View projects
-              <ArrowRight size={17} />
+            <Link className="button-secondary" href="/about">
+              About
             </Link>
           </div>
-        </div>
-
-        <div className="surface overflow-hidden rounded-[2rem] p-5">
-          <div className="grid gap-5 md:grid-cols-[0.9fr_1.1fr]">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-[var(--panel-soft)]">
-              <Image
-                src="/images/justin-cornetta-headshot.jpg"
-                alt="Justin Cornetta"
-                fill
-                priority
-                sizes="(max-width: 768px) 70vw, 320px"
-                className="object-cover"
-              />
-            </div>
-            <div className="flex flex-col justify-between rounded-[1.4rem] bg-[var(--ink)] p-5 text-white">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-white/50">
-                  Current focus
-                </p>
-                <p className="mt-3 text-2xl font-semibold leading-tight">
-                  Building evidence that AI-literate operators can accelerate real organizations.
-                </p>
-              </div>
-              <div className="mt-10 grid grid-cols-2 gap-3 text-sm">
-                <div className="rounded-2xl bg-white/8 p-3">
-                  <p className="font-semibold">Teladoc</p>
-                  <p className="mt-1 text-white/60">Performance operations</p>
-                </div>
-                <div className="rounded-2xl bg-white/8 p-3">
-                  <p className="font-semibold">IPN</p>
-                  <p className="mt-1 text-white/60">Operations and strategy</p>
-                </div>
-              </div>
+          <div className="hero__connect">
+            <span className="hero__connect-label">Let&rsquo;s connect</span>
+            <div className="socials">
+              <a className="social" href="mailto:justin.cornetta@gmail.com">
+                <span className="dot" />
+                Email
+              </a>
+              <a className="social" href="https://www.linkedin.com/in/justin-cornetta/" target="_blank" rel="noreferrer">
+                <span className="dot" />
+                LinkedIn
+              </a>
+              <a className="social" href="https://x.com/jmjcapital" target="_blank" rel="noreferrer">
+                <span className="dot" />
+                X
+              </a>
             </div>
           </div>
         </div>
-      </section>
+        <figure className="hero__photo">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/justin-cliffs-portrait.jpg" alt="Justin Cornetta" />
+        </figure>
+      </div>
 
-      <section className="border-y border-[var(--border)] bg-white/45">
-        <div className="page-shell flex flex-wrap gap-3 py-5">
-          {proofPoints.map((point) => (
-            <span key={point} className="rounded-full border border-[var(--border)] bg-white/70 px-4 py-2 text-sm font-semibold text-[var(--muted)]">
-              {point}
-            </span>
+      {/* Experience */}
+      <section className="exp" aria-label="Experience">
+        <p className="eyebrow">Experience</p>
+        <h2 className="sec-title">Where I&rsquo;ve operated</h2>
+        <div className="exp__list">
+          {experience.map((group) => (
+            <div className="exp__group" key={group.org}>
+              <div>
+                <p className="exp__org">{group.org}</p>
+                {group.tenure ? <p className="exp__tenure">{group.tenure}</p> : null}
+              </div>
+              <div className="exp__roles">
+                {group.roles.map((role) => (
+                  <div key={role.pos}>
+                    <div className="exp__role-head">
+                      <span className="exp__pos">{role.pos}</span>
+                      <span className="exp__dates">{role.dates}</span>
+                    </div>
+                    {role.desc ? <p className="exp__desc">{role.desc}</p> : null}
+                  </div>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </section>
 
-      <section className="page-shell section-pad">
-        <div className="max-w-3xl">
-          <p className="eyebrow">Working range</p>
-          <h2 className="mt-4 text-4xl font-semibold tracking-normal text-[var(--ink)] md:text-5xl">
-            A portfolio built around operating range, not a single narrow lane.
-          </h2>
-        </div>
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          {themes.map((theme) => {
-            const Icon = theme.icon;
-
-            return (
-              <div key={theme.title} className="rounded-3xl border border-[var(--border)] bg-white/68 p-6">
-                <Icon className="text-[var(--accent-strong)]" size={24} />
-                <h3 className="mt-5 text-xl font-semibold text-[var(--ink)]">{theme.title}</h3>
-                <p className="mt-3 leading-7 text-[var(--muted)]">{theme.text}</p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="bg-[var(--panel-soft)] py-16">
-        <div className="page-shell">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="eyebrow">Featured projects</p>
-              <h2 className="mt-4 text-4xl font-semibold tracking-normal text-[var(--ink)]">
-                Public-safe IPN case studies.
-              </h2>
-            </div>
-            <Link className="button-secondary" href="/projects">
-              All projects
-              <ArrowRight size={17} />
-            </Link>
-          </div>
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            {featuredProjects.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="page-shell section-pad grid gap-10 md:grid-cols-[0.85fr_1.15fr]">
-        <div>
-          <p className="eyebrow">Writing and research</p>
-          <h2 className="mt-4 text-4xl font-semibold tracking-normal text-[var(--ink)]">
-            A public research hub for the themes I keep coming back to.
-          </h2>
-          <p className="mt-5 leading-7 text-[var(--muted)]">
-            This section will collect polished notes, reports, and essays across psychedelic
-            medicine, AI, energy, Bitcoin, macro, and company-specific research.
-          </p>
-        </div>
-        <div className="grid gap-3">
-          {writing.length > 0
-            ? writing.map((entry) => (
-                <Link key={entry.slug} href={`/writing/${entry.slug}`} className="rounded-2xl border border-[var(--border)] bg-white/72 p-5">
-                  <p className="text-sm font-semibold text-[var(--accent-strong)]">{entry.category}</p>
-                  <h3 className="mt-2 text-xl font-semibold text-[var(--ink)]">{entry.title}</h3>
-                </Link>
-              ))
-            : writingCategories.map((category) => (
-                <div key={category} className="rounded-2xl border border-[var(--border)] bg-white/72 p-5">
-                  <p className="text-sm font-semibold text-[var(--ink)]">{category}</p>
-                  <p className="mt-2 text-sm text-[var(--muted)]">Publishing queue for future research.</p>
-                </div>
-              ))}
-        </div>
-      </section>
-    </>
+      {/* Selected work */}
+      <div style={{ paddingBottom: "clamp(3rem, 8vw, 6rem)" }}>
+        <ProjectCarousel
+          projects={projects}
+          title="Projects: Research, Analysis & AI Use Cases"
+          subtitle="Personal projects consisting of web applications, AI workflows & automations, industry reports, and investment analysis, showcasing a wide range of skills, knowledge, and experience."
+        />
+      </div>
+    </section>
   );
 }
