@@ -1,62 +1,100 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ProjectCarousel } from "@/components/project-carousel";
 import { getPublishedProjects } from "@/lib/content";
 
 const experience = [
   {
     org: "Teladoc Health",
-    tenure: "4 yrs 3 mos",
+    tenure: "May 2022 to May 2026",
     roles: [
       {
         pos: "Performance Operations Manager",
-        dates: "Oct 2025 to Present",
-        desc: "Own end-to-end performance monitoring for Teladoc's $1.6B ARR US Group Health business across four service lines. Built the Performance Operations analytics function from the ground up and lead a cross-functional Enterprise Data & AI initiative to standardize metrics company-wide.",
+        dates: "Oct 2025 to May 2026",
+        desc: "Built the Performance Operations function from the ground up for Teladoc's $1.6B ARR US Group Health business, creating end-to-end monitoring across our Chronic Condition Management, Mental Health, Primary Care, and Virtual 24/7 Urgent Care service lines. Led daily executive performance reviews that contributed to $15M in YTD revenue outperformance. Coordinated a cross-functional data governance program standardizing 500+ metrics for trusted analytics and responsible AI.",
       },
       {
         pos: "Program Manager",
         dates: "Sep 2024 to Oct 2025",
-        desc: "Led C-suite initiatives across clinical, patient, client, and member operations behind a $480M operating plan, including AI clinical transcription and data integrations that drove $1M+ in savings and unlocked $50M+ in new revenue.",
+        desc: "Implemented AI clinical transcription, care gaps data integrations, and referral workflows into Teladoc's Care Delivery Platform, PRISM, that cut chart completion time 58%, produced $900K+ in annual savings, and drove $1.3M+ in revenue lift. Collaborated with the Chief Patient Experience Officer on Teladoc's patient experience strategy and governance spanning 100M+ members and seven service lines. Led a member access initiative delivering $3.6M+ in recurring savings and a 39-point improvement in member NPS.",
       },
       {
         pos: "Client Operations Manager",
-        dates: "Jan 2024 to Sep 2024",
-        desc: "Managed $187M+ ARR and 10M+ lives across 14 employer and health-plan clients; led an at-risk-client remediation that preserved $10M in ARR.",
-      },
-      {
-        pos: "Client Experience Associate · Client Management Analyst",
-        dates: "May 2022 to Jan 2024",
-        desc: "",
+        dates: "May 2022 to Sep 2024",
+        desc: "Managed $187M+ in ARR and 10M+ lives across 14 employer and health plan clients, serving as the day-to-day operations lead. Led cross-functional remediation for an at-risk client that resulted in a $10M contract renewal and $20M upsell within 12 months.",
       },
     ],
   },
   {
     org: "Intercollegiate Psychedelics Network (IPN)",
-    tenure: "2 yrs 10 mos",
+    tenure: "Dec 2024 to Present",
     roles: [
       {
         pos: "Director of Strategy, Operations & Technology",
-        dates: "Mar 2026 to Present",
-        desc: "Lead strategy, operations, and technology for a national student and young-professional network in psychedelic medicine, building the systems, web applications, and AI workflows behind the organization.",
-      },
-      {
-        pos: "Director of Operations",
-        dates: "Dec 2024 to Mar 2026",
-        desc: "Oversaw governance, systems, finances, recruitment, and compliance; built KPIs and accountability frameworks to measure organizational and program success.",
-      },
-      {
-        pos: "Fundraising Coordinator",
-        dates: "Oct 2023 to Apr 2025",
-        desc: "Built revenue and fundraising calendars, secured donations and sponsorships, and won grants to fund operations.",
+        dates: "Dec 2024 to Present",
+        desc: "Lead strategy, operations, and technology for a 20+ person nonprofit serving 2,100+ members across 70+ countries, spanning governance, planning, systems, finances, recruitment, performance, partnerships, fundraising, and compliance. Built a member web application and organization-wide analytics infrastructure, and generated $15K+ through sponsorships, affiliate programs, fundraising campaigns, and grants.",
       },
     ],
   },
   {
-    org: "Earlier",
-    tenure: "",
+    org: "RU Psyched: Rutgers Psychedelic Society",
+    tenure: "Jan 2023 to May 2024",
     roles: [
-      { pos: "Client Experience Intern at Somatix", dates: "2022", desc: "" },
-      { pos: "Clinical Research Assistant at Penn Medicine", dates: "2021 to 2022", desc: "" },
+      {
+        pos: "President",
+        dates: "Jan 2023 to May 2024",
+        desc: "Re-launched Rutgers' psychedelic society, recruited a team of seven officers and more than 300 members, and facilitated nine educational events. The group's growth led to an invitation to join the New Jersey Psilocybin Coalition and support advocacy for NJS2283.",
+      },
     ],
+  },
+  {
+    org: "Somatix",
+    tenure: "Jan 2022 to Jun 2022",
+    roles: [
+      {
+        pos: "Client Experience Intern",
+        dates: "Jan 2022 to Jun 2022",
+        desc: "Led onboarding and implementation for five clients during the launch of an AI-powered remote patient monitoring platform, including a smoking cessation pilot with a top-ten global pharmaceutical company. Delivered live training and created documentation and tutorial videos to improve adoption.",
+      },
+    ],
+  },
+  {
+    org: "Penn Medicine",
+    tenure: "Jun 2021 to Jan 2022",
+    roles: [
+      {
+        pos: "Clinical Research Assistant",
+        dates: "Jun 2021 to Jan 2022",
+        desc: "Supported a Penn and Children's Hospital of Philadelphia study evaluating wearable biosensors for early infection detection in pediatric transplant patients. Helped implement a real-time detection algorithm and recruited and supported approximately 500 patients and family participants, improving communication and helping prevent study attrition.",
+      },
+    ],
+  },
+];
+
+const education = [
+  {
+    school: "University of Pennsylvania",
+    degree: "Bachelor of Arts in Neuroscience, minor in Chemistry",
+    graduation: "May 2022",
+    logo: "/images/education/penn-wordmark.png",
+    logoAlt: "Penn, University of Pennsylvania",
+    logoWidth: 1280,
+    logoHeight: 595,
+    logoClass: "edu__logo-image--penn",
+    activities:
+      "Varsity Men's Track & Field and Cross Country; Penn Neuroscience Society; Wharton Undergraduate Healthcare Club",
+  },
+  {
+    school: "Rutgers University",
+    degree: "Graduate Certificate in Healthcare Analytics",
+    graduation: "May 2023",
+    logo: "/images/education/rutgers-wordmark.png",
+    logoAlt: "Rutgers, The State University of New Jersey",
+    logoWidth: 1280,
+    logoHeight: 449,
+    logoClass: "edu__logo-image--rutgers",
+    activities:
+      "Varsity Men's Track & Field and Cross Country Leadership Council; President, RU Psyched: Rutgers Psychedelic Society",
   },
 ];
 
@@ -138,6 +176,38 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Education */}
+      <section className="edu" aria-label="Education">
+        <p className="eyebrow">Education</p>
+        <h2 className="sec-title">Academic foundation</h2>
+        <div className="edu__list">
+          {education.map((item) => (
+            <article className="edu__item" key={item.school}>
+              <div className="edu__logo">
+                <Image
+                  className={item.logoClass}
+                  src={item.logo}
+                  alt={item.logoAlt}
+                  width={item.logoWidth}
+                  height={item.logoHeight}
+                  sizes="(min-width: 760px) 150px, 90px"
+                />
+              </div>
+              <div className="edu__content">
+                <div className="edu__heading">
+                  <h3 className="edu__school">{item.school}</h3>
+                  <p className="edu__date">{item.graduation}</p>
+                </div>
+                <p className="edu__degree">{item.degree}</p>
+                <p className="edu__activities">
+                  <span>Activities:</span> {item.activities}
+                </p>
+              </div>
+            </article>
           ))}
         </div>
       </section>
