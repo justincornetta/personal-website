@@ -17,7 +17,7 @@ export default function AboutPage() {
     <section className="page-shell about" style={{ paddingBottom: "clamp(3rem, 8vw, 6rem)" }}>
       <h1 className="sr-only">About</h1>
 
-      <div className="about__intro-carousel">
+      <div className="about__highlights">
         <AboutCarousel items={about.media} />
       </div>
 
@@ -34,28 +34,31 @@ export default function AboutPage() {
         <MDXRemote source={about.body} components={mdxComponents} />
       </div>
 
-      <div className="aside-card about-contact">
-        <h4>Get in touch</h4>
-        <a className="contact-line" href="mailto:justin.cornetta@gmail.com">
-          justin.cornetta@gmail.com
-        </a>
-        <div className="socials" style={{ marginTop: "1.1rem" }}>
-          <a className="social" href="https://x.com/jmjcapital" target="_blank" rel="noreferrer">
-            <span className="dot" />
-            X
-          </a>
+      <section className="about-contact" aria-labelledby="about-contact-title">
+        <h2 id="about-contact-title">Have a project, role, or idea worth talking through?</h2>
+        <div className="about-contact__links">
           <a
-            className="social"
-            href="https://www.linkedin.com/in/justin-cornetta/"
-            target="_blank"
-            rel="noreferrer"
+            className="about-contact__email"
+            href="mailto:justin.cornetta@gmail.com"
           >
-            <span className="dot" />
-            LinkedIn
+            justin.cornetta@gmail.com
+            <span aria-hidden="true">&rarr;</span>
           </a>
+          <div className="about-contact__socials">
+            <a href="https://x.com/jmjcapital" target="_blank" rel="noreferrer">
+              X
+            </a>
+            <span aria-hidden="true">/</span>
+            <a
+              href="https://www.linkedin.com/in/justin-cornetta/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn
+            </a>
+          </div>
         </div>
-      </div>
-
+      </section>
     </section>
   );
 }
