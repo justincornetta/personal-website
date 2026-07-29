@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://personal-website.vercel.app"),
+  metadataBase: new URL("https://justincornetta.com"),
   title: {
     default: "Justin Cornetta",
     template: "%s | Justin Cornetta",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     description:
       "Operations, strategy, AI-enabled execution, psychedelic medicine, investing, and technology.",
     type: "website",
-    url: "https://personal-website.vercel.app",
+    url: "https://justincornetta.com",
   },
 };
 
