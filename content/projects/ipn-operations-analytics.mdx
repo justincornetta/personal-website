@@ -1,0 +1,109 @@
+---
+title: "IPN Analytics & Data Infrastructure"
+slug: "ipn-operations-analytics"
+subtitle: "Company-wide analytics infrastructure providing daily insights into member growth, demographics, portal utilization, events, marketing, social media, and website performance and trends."
+summary: "Company-wide analytics infrastructure providing daily insights into member growth, demographics, portal utilization, events, marketing, social media, and website performance and trends."
+category: "Web App"
+contentType: "Project"
+role: "Project Lead"
+date: "2026-08-03"
+published: "Aug 2026"
+featured: true
+order: 2
+status: "published"
+cover: "/images/projects/ipn-operations-analytics/01.png"
+skills:
+  - "Data Analysis"
+  - "Business Performance"
+  - "Product Management"
+  - "Product Design"
+  - "Systems Design"
+  - "Data Engineering"
+tools:
+  - "Codex"
+  - "Python"
+  - "SQL"
+  - "Next.js"
+  - "Supabase"
+  - "Google Analytics"
+  - "APIs"
+  - "Cron Jobs"
+  - "Meta for Developers"
+  - "Mailchimp"
+  - "Zoom Admin Portal"
+gallery:
+  - src: "/images/projects/ipn-operations-analytics/02.png"
+    caption: "The analytics admin view brings every reporting area into one interface and shows the refresh status of each source. This makes data freshness visible at a glance."
+  - src: "/images/projects/ipn-operations-analytics/03.png"
+    caption: "The member overview combines searchable filters, headline counts, and a growth trend across the live portal and historical membership source of truth. It gives leadership a quick view of member scale and growth over time."
+  - src: "/images/projects/ipn-operations-analytics/04.png"
+    caption: "These charts compare members by career stage and professional field using both distribution and count views. This helps IPN understand who it serves and design programming for the mix of people in the network."
+  - src: "/images/projects/ipn-operations-analytics/05.png"
+    caption: "The geography view maps members globally and ranks cities by member count. It shows where the network is concentrated and where local programming or partnerships may have the strongest base."
+  - src: "/images/projects/ipn-operations-analytics/06.png"
+    caption: "The unified directory brings 2,100 merged member records into one searchable table and identifies which source systems contribute to each record. This makes the deduplicated membership source of truth usable without returning to separate exports."
+  - src: "/images/projects/ipn-operations-analytics/08.png"
+    caption: "The registration view pairs conversion trends with step-level drop-off across the onboarding flow. It shows where prospective members leave the process so improvements can focus on the point of friction."
+  - src: "/images/projects/ipn-operations-analytics/09.png"
+    caption: "The monthly active user trend separates continued portal engagement from total account creation. This provides a clearer view of whether members return and use the product over time. Click on a particular date gives you a list of members are included in the counts and the number of engagements in the last 30 days."
+  - src: "/images/projects/ipn-operations-analytics/10.png"
+    caption: "Page-view trends compare usage across major portal sections. The view shows which parts of the experience members rely on and how engagement shifts over time."
+  - src: "/images/projects/ipn-operations-analytics/11.png"
+    caption: "The journey flow shows the most common paths after registration or sign-in, from the dashboard to community, profile, resources, and WhatsApp actions. It turns individual events into a readable picture of how members move through the product."
+  - src: "/images/projects/ipn-operations-analytics/13.png"
+    caption: "The utilization directory combines registration date, last sign-in, session activity, community connections, WhatsApp status, and email subscription in one view. It supports member-level follow-up while showing engagement across channels."
+  - src: "/images/projects/ipn-operations-analytics/14.png"
+    caption: "Campaign detail connects Mailchimp opens and clicks to the specific links members selected. This makes it possible to understand which topics and calls to action drive engagement, not just whether an email was opened."
+  - src: "/images/projects/ipn-operations-analytics/15.png"
+    caption: "The website overview combines traffic, visitors, page views, bounce rate, session duration, acquisition, device, and geography trends. It gives leadership an at-a-glance view of website performance without opening GA4."
+  - src: "/images/projects/ipn-operations-analytics/16.png"
+    caption: "The traffic-source table breaks website sessions and users down by channel and referring source. It shows which acquisition channels bring people to IPN and where outreach is generating attention."
+  - src: "/images/projects/ipn-operations-analytics/17.png"
+    caption: "The traffic-source table breaks website sessions and users down by channel and referring source. It shows which acquisition channels bring people to IPN and where outreach is generating attention."
+  - src: "/images/projects/ipn-operations-analytics/18.png"
+    caption: "The event-detail view combines event registration trends, attendance, participation duration, and prior attendance for a single Zoom event. It helps the team evaluate conversion, engagement depth, and repeat participation at the event level."
+---
+
+## Overview & Problem Statement
+
+Daily visibility into IPN performance and membership was limited and scattered across systems, with no single source of truth. Since its founding in 2020, membership data lived across Mailchimp, a now-retired IPN app, and Google Forms. As a result, it was difficult to answer basic operating questions: how many members we have, who they are, which are active, and how they engage.
+
+## Solution
+
+I built a centralized analytics and data infrastructure to provide trusted day-to-day operating visibility. This included creating a deduped membership file as a single source of truth and a daily cron job that pulls data from seven sources (Supabase, Google Analytics, Instagram, Facebook, Mailchimp, Zoom, and Eventbrite). The data is ingested into a unified data schema stored in Supabase and organized into focused views for membership, portal utilization, events, email, social media, and website performance. This information provides IPN with a way to measure and assess performance, as well as inform improvement initiatives and new program offerings.
+
+## Implementation Details
+
+1. **Mapped KPIs by key business functions/member journeys:** As highlighted in our [E2E member experience workshop](https://www.figma.com/board/1R0OnoqQ31k3QHqrSjFDrM/IPN-2026-Planning?node-id=18-278&t=h1MWrL5fJPFkKuyh-1), we mapped key performance indicators to each aspect of the member journey from member acquisition to registration, onboarding, and ongoing member engagement. This ensured all key information about how members hear about, find, register, and engage with IPN is captured.
+2. **Built the membership source-of-truth Excel file:** I consolidated historical registration records from Mailchimp, the retired IPN app, and Google Forms. I standardized fields and email addresses, and deduplicated records by email to create one authoritative membership dataset in Excel.
+3. **Designed the Supabase data schema:** I separated live portal data, historical membership records, and incoming analytics sources within a unified Supabase data model. I mapped and loaded the cleaned, deduplicated member dataset, creating a consistent foundation for reporting on membership growth, aggregate demographics, geography, professional background, interests, and registration sources.
+4. **Instrumented the member portal:** I implemented first-party events for registration steps, sign-in, page views, time on page, clicks, errors, event RSVPs, and other event actions. Session-level journeys show what members do after registration or sign-in so that we can track and learn from member behavior.
+5. **Connected external performance data:** I integrated Mailchimp, Meta, GA4, Zoom, Eventbrite, and other operating sources through APIs. I kept high-cost sources manual when automation did not justify the cost.
+6. **Designed charts and tables for at-a-glance use:** I organized the interface into scannable tabs and designed charts and tables to surface performance, trends, and supporting detail at a glance. I added plain-English definitions, methodology, and refresh cadence so leadership could interpret each view consistently.
+7. **Automated refreshes with guardrails:** I moved the pipeline to a daily cloud schedule through GitHub Actions, added source-status checks, and prevented invalid pulls from erroneously replacing trusted data. The system reports freshness and failures daily through a dedicated Slack channel.
+
+## Features
+
+- **Membership overview:** registration growth, source mix, demographics, professional background, interests, and member geography.
+- **Portal utilization:** registration conversion and step-level drop-off, sign-in conversion, monthly active users, device mix, page views, time on page, errors, and session journeys.
+- **Event performance:** registrations, attendance, participation duration, retention, repeat attendees, and event-level detail.
+- **Email performance:** subscriber growth, campaign open and click rates, unsubscribes, and link-level click activity over time.
+- **Social media performance:** follower trends, platform engagement, and post-level likes and comments.
+- **Website performance:** traffic trends, acquisition sources, devices, geography, top pages, and conversion-page behavior.
+- **Data Sources & Glossary:** metric definitions, methodology, source details, refresh cadence, and freshness status.
+
+## Outcomes & Impact
+
+- **A single source of truth for membership data and insights**, providing meaningful visibility into who our members are and informing future programs and offerings. Approximately 22% of duplicate records were removed.
+- **Eight data sources** consolidated into one operating view instead of separate logins and exports, saving leadership time and energy pulling this data manually, **without incurring any ongoing costs.**
+- **First-party portal instrumentation** now shows registration drop-off, product utilization, return activity, and member journeys, informing ways to improve the user experience.
+- **Shared definitions and source status** give leadership a consistent reference for interpreting the data.
+
+## Lessons Learned
+
+- **Less is more:** There are a million things we can measure, but more data does not create more clarity. Choose the few metrics that show how something is performing and where attention is needed.
+- **Instrumentation and user journeys to understand user experience:** Registration counts tell me that someone joined. Step-level conversion, page duration, journeys, and return activity showed where the experience works and where it creates friction.
+
+## Links
+
+- **Access:** Internal to IPN leadership. No public link.

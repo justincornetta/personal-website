@@ -22,68 +22,59 @@ skills:
 tools:
   - "Codex"
   - "Next.js"
-  - "GitHub"
+  - "Github"
   - "Netlify"
   - "Supabase"
   - "Resend"
 gallery:
-  - src: "/images/projects/ipn-member-portal/gallery/01.jpg"
-    caption: "IPN's Global Member Directory: find and connect with members by shared interest, background, and location."
-  - src: "/images/projects/ipn-member-portal/gallery/02.jpg"
-    caption: "Connect with a member directly after opening their profile."
-  - src: "/images/projects/ipn-member-portal/gallery/03.jpg"
-    caption: "Once a friend request is accepted, see their contact details and message them on WhatsApp in one tap."
-  - src: "/images/projects/ipn-member-portal/gallery/04.jpg"
-    caption: "The member profile section, where members manage their settings and details."
-  - src: "/images/projects/ipn-member-portal/gallery/05.jpg"
-    caption: "A growing resource hub: member-exclusive discounts, the IPN Blog, and partner/sponsor information."
-  - src: "/images/projects/ipn-member-portal/gallery/06.jpg"
-    caption: "The admin panel: leadership can add and update events, review analytics and feedback, and moderate membership."
-  - src: "/images/projects/ipn-member-portal/gallery/07.jpg"
-    caption: "Feedback modals on every page route submissions straight to IPN leadership in Slack via a webhook."
+  - src: "/images/projects/ipn-member-portal/05.png"
+    caption: "A growing repository for member-exclusive discounts, blog post submissions, and IPN partner/sponsor information."
+  - src: "/images/projects/ipn-member-portal/06.png"
+    caption: "An admin panel for IPN leadership team members to add/update events, review analytics, review feedback, and moderate our membership."
 ---
 
 ## Overview & Problem Statement
 
-IPN has a strong, mission-driven membership base that has grown to over 2,000 members across 70 countries, but its member experience was scattered across email, Discord, Zoom events, Eventbrite events, and our website, without a clear way to engage with IPN and other members. IPN needed a more streamlined member experience, from registration and onboarding through ongoing engagement.
+IPN has a strong, mission-driven membership base that has grown to over 2,100+ members across 70+ countries, but its member experience was scattered across email, Discord, Zoom events, Eventbrite events, and our website without a clear way to engage with IPN and other members. IPN needed a more streamlined member experience from registration and onboarding to ongoing engagement.
 
 ## Solution
 
-Following a buy-vs-build decision, we chose a greenfield web application built with Next.js, hosted on Netlify, with data stored on Supabase, serving as IPN's home for everything IPN: events, member-exclusive resources, a member directory, and a community platform. We planned the launch before IPN's annual conference to capture the window of greatest traffic and organizational visibility.
+Following a buy vs build decision, we decided on a greenfield web application build using Next.js hosted on Netlify with data stored on Supabase to serve as IPN’s home for all things IPN: events, member-exclusive resources, member directory, and a community platform. Planned launch before IPN’s annual conference to capture the window of greatest traffic and org visibility.
 
 ## Implementation Details
 
-1. **End-to-end member experience workshop:** a multi-session [E2E member experience workshop](https://www.figma.com/board/1R0OnoqQ31k3QHqrSjFDrM/IPN-2026-Planning?node-id=18-278&t=h1MWrL5fJPFkKuyh-1) surfaced key gaps in the member experience and the need for a single interface for IPN events and resources.
-2. **Built a weighted decision matrix:** scored three paths (greenfield Next.js + Supabase, Circle.so, and Mighty Networks) across eight dimensions: cost, build time, maintenance (time and cost), customizability, feasibility, long-term maintainability, and intrinsic reward.
-3. **Wrote the requirements & timeline:** brainstormed and prioritized greenfield build requirements in [Notion](https://viridian-chill-a31.notion.site/Member-Portal-Requirements-Prioritization-3579c4a2baaa81f682e2eeb8f7062ff1?source=copy_link), then scoped a phased plan where every week ships something, with a Week-4 fallback to a branded waitlist if progress stalled.
-4. **Established a GitHub repository & collaboration plan:** partnering with our membership growth & outreach coordinator, we set a phased plan to complete requirements, commit to a shared GitHub repo, and submit and review pull requests before production deployment.
-5. **Stood up the data layer (Supabase):** built the backend on Supabase, a Postgres database storing member profiles, events, RSVPs, resources, and directory data as a single source of truth, with authentication and row-level security so each member only accesses what they should.
-6. **Connected a branded domain:** used IPN's existing Squarespace domain to point a `members.` subdomain at the Netlify deployment, giving the portal a branded home at `members.intercollegiatepsychedelics.net`.
-7. **Branded, transactional email (Resend):** integrated Resend for branded authentication emails (email verification and password reset) and event RSVP notifications and confirmations, with a roadmap to expand Resend into engagement email (friend requests, and alerts when new events or resources are posted) to drive ongoing member activity.
-8. **Launch plan:** devised a launch plan with our media team, including a [member portal launch video](https://www.youtube.com/watch?v=_iYScmnd2i4) shared to socials and replayed during the conference intermission, and highlighted it in our monthly member newsletter.
-9. **Analytics & feedback:** implemented instrumentation and analytics to monitor membership growth, background, needs, and platform utilization after launch for ongoing improvements. Feedback modals throughout each page let members submit feedback directly to leadership via a Slack webhook.
+1. **End-to-End Member Experience Workshop:** a multi-session [E2E member experience workshop](https://www.figma.com/board/1R0OnoqQ31k3QHqrSjFDrM/IPN-2026-Planning?node-id=18-278&t=h1MWrL5fJPFkKuyh-1) revealed key gaps in member experience and need for a singular interface for IPN events and resources.
+2. **Built a weighted decision matrix:** scored three paths (greenfield Next.js + Supabase, [Circle.so](http://Circle.so), Mighty Networks) across eight dimensions: cost, build time, maintenance (time + cost), customizability, feasibility, long-term maintainability, and intrinsic reward.
+3. **Wrote the requirements & timeline:** brainstormed and prioritized greenfield build requirements in [Notion](https://viridian-chill-a31.notion.site/Member-Portal-Requirements-Prioritization-3579c4a2baaa81f682e2eeb8f7062ff1?source=copy_link). Scoped a phased plan where every week ships something, with a Week-4 decision fallback to branded waitlist if progress stalls.
+4. **Established Github Repository & Collaboration Plan:** Partnering with our membership growth & outreach coordinator, we established a phased plan to complete requirements, commit to a shared GitHub repo, submit & review pull requests before production deployment.
+5. **Stood up the data layer (Supabase):** built the backend on Supabase, a Postgres database that stores member profiles, events, RSVPs, resources, and directory data as a single source of truth, with authentication and row-level security so each member only accesses what they should.
+6. **Connected a branded domain:** used IPN’s existing Squarespace domain to point a `members.` subdomain at the Netlify deployment, giving the portal a branded home at `members.intercollegiatepsychedelics.net`.
+7. **Branded, transactional email (Resend):** integrated Resend for branded authentication emails (email verification and password reset) and event RSVP notifications and confirmations with a roadmap to expand Resend into engagement email (friend requests, and alerts when new events or resources are posted) to drive ongoing member activity.
+8. **Launch Plan:** Devised a launch plan coordinated with our media team, including a [member portal launch video](https://www.youtube.com/watch?v=_iYScmnd2i4) shared to socials and replayed during our conference intermission, along with highlighting it in our monthly member newsletter.
+9. **Analytics & Feedback:** Implemented instrumentation and analytics to monitor membership growth, background, needs, and platform utilization following launch for ongoing improvements. Feedback modals located throughout each page for members to submit feedback directly to leadership through a Slack webhook.
 
 ## Features (V1)
 
-- **Events Registry:** browse past and upcoming events, RSVP in one click, add events to your calendar, and join the event-specific WhatsApp community.
-- **Member Directory:** find members who share your interests and area through both a list view and an interactive globe view, and connect directly with peers across the network.
-- **Member Resources:** member-exclusive discounts, the IPN Blog, and information on IPN's partners and sponsors.
-- **WhatsApp Community:** link your IPN member profile to a WhatsApp account to join the community for announcements, event-specific chats, and direct connections with other members from inside the portal.
-- **Onboarding Modal & Checklist:** a guided onboarding flow that helps new members complete their profile and take their first actions in the portal.
-- **More to come:** conference tracking, a job portal, member-submitted community events, and more.
+- **Events Registry:** Browse past and upcoming events, RSVP in one click, add events to your calendar, and join the event-specific WhatsApp community.
+- **Member Directory:** Find members who share your interests and area through both a list view and an interactive globe view, and connect directly with peers across the network.
+- **Member Resources:** Member-exclusive discounts, the IPN Blog, and information on IPN’s partners and sponsors.
+- **WhatsApp Community:** Link your IPN member profile to a WhatsApp account to join the community for announcements, event-specific chats, and direct connections with other members from inside the portal.
+- **Onboarding Modal & Checklist:** A guided onboarding flow that helps new members complete their profile and take their first actions in the portal.
+
+With more to come, including conference tracking, a job portal, member-submitted community events, and more.
 
 ## Outcomes & Impact
 
 - **One home** replacing four-plus scattered surfaces: onboarding, a persona-searchable member directory, events, and resources.
-- **$0/month** recurring cost, which keeps the full nonprofit budget available for programming and partnerships.
-- **Live v1** deployed on time at `members.intercollegiatepsychedelics.net`.
-- **50+ members registered within the first week**, with plans to scale registrations after v1.1 to optimize for monthly active users (MAU).
+- **$0/month** recurring cost: keeps the full nonprofit budget available for programming and partnerships.
+- **Live v1** deployed on-time at `members.intercollegiatepsychedelics.net`.
+- **50+ members registered within one week;** plans to scale platform registrations following completion of v1.1 requirements to optimize for MAU (monthly active users).
 
 ## Lessons Learned
 
-- **Product mindset & vision.** This project pushed me to think like a product manager, designer, and engineer at once, meshing all three into a single role. The platform strategy started by connecting the product's design and offerings directly to IPN's mission (to empower, connect, and develop the next generation of psychedelic professionals) and to where we're headed next: the portal becomes the infrastructure to eventually put select offerings behind a paywall with tiered pricing and benefits. That framing drove meticulous product-design choices about which features to surface directly in front of a member, and how to optimize their first touch points with the platform right after onboarding.
-- **Dev collaboration in a shared repo.** This was my first time collaborating in a shared GitHub repo, and it showed me how much dev collaboration depends on planning and organization. Keeping the repo clean was essential to preventing errors, so we held to a clear process: build locally off a branch, QA locally (via agent loops and manual testing), open a pull request for my collaborator to review, then merge to main. We also set up Slack notifications that fired when a PR was opened and when a merge landed, so both of us stayed in sync without manual check-ins.
+- **Product mindset & vision:** This project pushed me to think like a product manager, designer, and engineer at once, meshing all three into a single role. The platform strategy started by connecting the product’s design and offerings directly to IPN’s mission (to empower, connect, and develop the next generation of psychedelic professionals) and to where we’re headed next: the portal becomes the infrastructure to eventually put select offerings behind a paywall with tiered pricing and benefits. That framing drove meticulous product-design choices about which features to surface directly in front of a member, and how to optimize their first touch points with the platform right after onboarding.
+- **Dev collaboration in a shared repo:** This was my first time collaborating in a shared GitHub repo, and it showed me how much dev collaboration depends on planning and organization. Keeping the repo clean was essential to preventing errors, so we held to a clear process: build locally off a branch, QA locally (both via agent loops and manual), open a pull request for my collaborator to review, then merge to main. We also set up Slack notifications that fired when a PR was opened, and when a merge landed, so both of us stayed in sync and organized without manual check-ins.
 
 ## Links
 
-- **Live site:** [members.intercollegiatepsychedelics.net](https://members.intercollegiatepsychedelics.net)
+- **Live:** [https://members.intercollegiatepsychedelics.net](https://members.intercollegiatepsychedelics.net)
