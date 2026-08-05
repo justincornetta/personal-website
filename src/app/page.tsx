@@ -6,7 +6,13 @@ import { getPublishedProjects } from "@/lib/content";
 const experience = [
   {
     org: "Teladoc Health",
-    tenure: "May 2022 to May 2026",
+    logo: {
+      src: "/images/experience/teladoc-health-transparent.png",
+      alt: "Teladoc Health logo",
+      width: 860,
+      height: 574,
+      className: "exp__logo--teladoc",
+    },
     roles: [
       {
         pos: "Performance Operations Manager",
@@ -21,13 +27,19 @@ const experience = [
       {
         pos: "Client Operations Manager",
         dates: "May 2022 to Sep 2024",
-        desc: "Managed $187M+ in ARR and 10M+ lives across 14 employer and health plan clients, serving as the day-to-day operations lead. Led cross-functional remediation for an at-risk client that resulted in a $10M contract renewal and $20M upsell within 12 months.",
+        desc: "Managed $187M+ in ARR and 10M+ lives across 14 employer and health plan clients, serving as the day-to-day operations lead. Led cross-functional remediation for an at-risk client that resulted in a $10M contract renewal and a $20M upsell opportunity within 12 months.",
       },
     ],
   },
   {
     org: "Intercollegiate Psychedelics Network (IPN)",
-    tenure: "Dec 2024 to Present",
+    logo: {
+      src: "/images/experience/ipn.png",
+      alt: "Intercollegiate Psychedelics Network logo",
+      width: 512,
+      height: 512,
+      className: "exp__logo--ipn",
+    },
     roles: [
       {
         pos: "Director of Strategy, Operations & Technology",
@@ -38,7 +50,6 @@ const experience = [
   },
   {
     org: "RU Psyched: Rutgers Psychedelic Society",
-    tenure: "Jan 2023 to May 2024",
     roles: [
       {
         pos: "President",
@@ -49,7 +60,13 @@ const experience = [
   },
   {
     org: "Somatix",
-    tenure: "Jan 2022 to Jun 2022",
+    logo: {
+      src: "/images/experience/somatix-transparent.png",
+      alt: "Somatix logo",
+      width: 462,
+      height: 135,
+      className: "",
+    },
     roles: [
       {
         pos: "Client Experience Intern",
@@ -60,12 +77,18 @@ const experience = [
   },
   {
     org: "Penn Medicine",
-    tenure: "Jun 2021 to Jan 2022",
+    logo: {
+      src: "/images/experience/penn-medicine-transparent.png",
+      alt: "Penn Medicine logo",
+      width: 750,
+      height: 225,
+      className: "",
+    },
     roles: [
       {
         pos: "Clinical Research Assistant",
         dates: "Jun 2021 to Jan 2022",
-        desc: "Supported a Penn and Children's Hospital of Philadelphia study evaluating wearable biosensors for early infection detection in pediatric transplant patients. Helped implement a real-time detection algorithm and recruited and supported approximately 500 patients and family participants, improving communication and helping prevent study attrition.",
+        desc: "Supported a Penn and Children's Hospital of Philadelphia study evaluating wearable biosensors for early infection detection in adult and pediatric transplant patients. Helped implement a real-time detection algorithm and recruited and supported approximately 500 patients and family participants, improving communication and helping prevent study attrition.",
       },
     ],
   },
@@ -160,9 +183,20 @@ export default function Home() {
         <div className="exp__list">
           {experience.map((group) => (
             <div className="exp__group" key={group.org}>
-              <div>
+              <div className="exp__org-block">
                 <p className="exp__org">{group.org}</p>
-                {group.tenure ? <p className="exp__tenure">{group.tenure}</p> : null}
+                {group.logo ? (
+                  <div className="exp__logo-frame">
+                    <Image
+                      className={`exp__logo ${group.logo.className}`}
+                      src={group.logo.src}
+                      alt={group.logo.alt}
+                      width={group.logo.width}
+                      height={group.logo.height}
+                      sizes="(min-width: 760px) 160px, 130px"
+                    />
+                  </div>
+                ) : null}
               </div>
               <div className="exp__roles">
                 {group.roles.map((role) => (

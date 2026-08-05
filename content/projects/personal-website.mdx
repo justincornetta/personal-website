@@ -1,0 +1,70 @@
+---
+title: "Personal Website & Portfolio Publishing System"
+slug: "personal-website"
+subtitle: "A personal site and repeatable publishing workflow that turns my experience and work into evidence-backed proof for employers and potential business partners."
+summary: "A personal site and repeatable publishing workflow that turns my experience and work into evidence-backed proof for employers and potential business partners."
+category: "Web App"
+contentType: "Project"
+role: "Website Designer and Developer"
+date: "2026-07-21"
+published: "Jul 2026"
+featured: true
+order: 3
+status: "published"
+liveUrl: "https://justincornetta.com"
+externalUrl: "https://github.com/justincornetta/personal-website"
+cover: "/images/projects/personal-website/01.png"
+skills:
+  - "Web App Development"
+  - "Website Design"
+  - "AI Workflows"
+tools:
+  - "Codex"
+  - "Next.js"
+  - "React"
+  - "Notion"
+  - "Github"
+  - "Vercel"
+---
+
+## Overview & Problem Statement
+
+A résumé listed my experience but did not give employers or business partners enough evidence of how I think, build, and deliver. I wanted a platform where I could share examples of my work to demonstrate my diverse skill set and experience.
+
+## Solution
+
+I built a personal website in Next.js with an MDX content system for projects, writing, and my background. I additionally paired the public site with a Notion-to-MDX workflow and two purpose-built Codex skills that standardize how projects are published on the site, leveraging content from existing codebases.
+
+## Implementation Details
+
+1. **Defined the audience and purpose:** I started by deciding who the website was for and what it needed to prove. The objective was to give future employers and business partners clear evidence of my background, experience, judgment, and ability to execute.
+2. **Researched design references:** I sourced inspiration from personal websites on Dribbble to define the visual direction, information hierarchy, and page structure. I shared those references with Codex and incorporated them into the implementation plan.
+3. **Built the website foundation:** I scaffolded the site in Next.js and created an MDX content model for projects and writing. Dynamic routes, structured metadata, and publishing-status controls made it possible to add content without rebuilding each page manually.
+4. **Created the Notion content workspace:** I created an editable Notion page for each major part of the website so I could draft, organize, and revise the content before moving it into the codebase.
+5. **Built a repeatable portfolio workflow:** I created two custom Codex skills. The `draft-portfolio-project` skill reads a project's local files, code, Git history, and supplied context, then drafts a public-safe case study using the template and voice documented in `writing-style.md`. Once I approve the copy in Notion, the `publish-portfolio-project` skill converts it into MDX, handles media, runs local verification, and pauses for approval before any GitHub or pull-request write. I wrote the first project manually to establish the reference structure and writing style that the workflow now follows.
+6. **Consolidated my personal content:** For the About, experience, and background content, I brought together existing Markdown notes from prior discussions, my LinkedIn profile, and my résumé. I used that source material to create initial drafts, then manually revised and approved the copy in Notion before publishing it through the same workflow.
+7. **Refined the visual design:** Once the content was in place, I improved the presentation through typography, spacing, images, logos, page composition, project cards, content carousels, calls to action, and responsive layouts.
+8. **Site deployment:** I deployed the site and bought the custom domain through Vercel.
+
+## Features
+
+- **Hero section:** Immediately grabs attention and directs traffic to key sections, including my background, resume, projects, and ways to connect.
+- **Project and writing libraries:** Dedicated space for case studies and research to demonstrate my experience, skill set, methodology, thought process, and learnings.
+- **Notion-to-site workflow:** Repeatable workflow for drafting and publishing projects to the live site.
+  - **Draft portfolio project skill:** Inspects local files, code, Git history, and project context, then creates a Notion case study leveraging my own voice and writing style outlined in `writing-style.md.`
+  - **Publish portfolio project skill:** Converts the approved page to MDX, verifies it locally, and waits for my approval before it pushes to GitHub/Vercel.
+
+## Outcomes & Impact
+
+- **A live personal website and portfolio** deployed on Vercel with four core public surfaces and dynamic project and writing pages to validate my knowledge, skillset, and impact.
+- **A repeatable workflow** including writing style instructions and 2 purpose-built Codex skills with distinct responsibilities for drafting and publishing.
+
+## Lessons Learned
+
+- **Manual first before automating:** Manually designing and writing the first portfolio project helped me think more deliberately about the structure, content, and writing style. I then used that work as a template and a consistent workflow for future projects with customized skills and writing style, saving me time in the long run.
+- **Leverage existing assets for inspiration:** Drawing inspiration from real examples from Dribbble helped me finalize and implement the website design more quickly.
+
+## Links
+
+- **Live site:** [Justin Cornetta Personal Website](http://justincornetta.com)
+- **Repository:** [justincornetta/personal-website](https://github.com/justincornetta/personal-website)
