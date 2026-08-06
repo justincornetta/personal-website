@@ -173,7 +173,7 @@ export function HomepageRedesign() {
                 <Image src={heroImage} alt="" fill priority sizes="(min-width: 900px) 44vw, 100vw" />
               </figure>
             </div>
-            <a className="hero-scroll-cue reveal reveal-6" href="#about" aria-label="Scroll to About Me">
+            <a className="hero-scroll-cue" href="#about" aria-label="Scroll to About Me">
               <span>Scroll</span>
               <span className="hero-scroll-cue__line" aria-hidden="true" />
               <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
