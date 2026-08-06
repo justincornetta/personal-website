@@ -1,40 +1,61 @@
 import type { Metadata } from "next";
-import { ProjectCard } from "@/components/project-card";
+import Link from "next/link";
+import { ClosingContact, RevealMotion } from "@/components/site-redesign-shared";
 import { getPublishedProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Projects & Research",
   description:
-    "Research, analysis, and AI use cases. Case studies from Justin Cornetta's work across web applications, AI workflows, industry reports, and investment analysis.",
+    "Personal projects consisting of web applications, AI workflows and automations, industry reports, and investment analysis.",
 };
+
+function ExternalIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 17 17 7M9 7h8v8" />
+    </svg>
+  );
+}
 
 export default function ProjectsPage() {
   const projects = getPublishedProjects();
 
   return (
-    <section className="page-shell page-head" style={{ paddingBottom: "clamp(3rem, 8vw, 6rem)" }}>
-      <header className="projects-intro">
-        <h1 className="page-title">Projects</h1>
-        <p className="page-lead">
-          Personal projects consisting of web applications, AI workflows &amp; automations, industry
-          reports, and investment analysis, showcasing a wide range of skills, knowledge, and
-          experience.
-        </p>
-      </header>
-      <div className="grid projects-grid">
-        {projects.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
-        ))}
-      </div>
-      {projects.length <= 2 ? (
-        <div className="projects-more" aria-hidden="true">
-          <span className="card__ghost-mark">+</span>
-          <div>
-            <p className="card__ghost-title">More on the way</p>
-            <p className="card__ghost-text">New projects, research, and analysis are in progress.</p>
-          </div>
+    <RevealMotion className="production-page production-page--enhanced motion-stagger">
+      <section className="prod-project-intro-section">
+        <header className="prod-shell prod-page-head prod-projects-intro">
+          <h1 className="prod-page-title reveal reveal-2">Projects &amp; Research</h1>
+          <p className="prod-page-lead reveal reveal-3">
+            Personal projects consisting of web applications, AI workflows &amp; automations,
+            industry reports, and investment analysis
+          </p>
+        </header>
+      </section>
+
+      <section className="prod-project-grid-section" aria-label="Project case studies">
+        <div className="prod-shell prod-projects-grid">
+          {projects.map((project, index) => (
+            <div className={`prod-card-reveal reveal reveal-${Math.min(index + 2, 6)}`} key={project.slug}>
+              <Link className="prod-card" href={`/projects/${project.slug}`}>
+                <div className="prod-card__top">
+                  <h2 className="prod-card__title">{project.title}</h2>
+                  <span className="prod-card__year">{project.published}</span>
+                </div>
+                {project.cover ? (
+                  <div className="prod-cover">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={project.cover} alt="" />
+                  </div>
+                ) : null}
+                <p className="prod-card__desc">{project.summary}</p>
+                <span className="prod-readmore">Read More <ExternalIcon /></span>
+              </Link>
+            </div>
+          ))}
         </div>
-      ) : null}
-    </section>
+      </section>
+
+      <ClosingContact />
+    </RevealMotion>
   );
 }

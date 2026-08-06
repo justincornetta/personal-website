@@ -1,5 +1,14 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export function SiteFooter() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
+  if (pathname === "/" || pathname === "/about" || pathname === "/projects") {
+    return null;
+  }
 
   return (
     <footer className="foot">
