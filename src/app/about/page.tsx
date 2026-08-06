@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import type { HTMLAttributes } from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { AboutCarousel } from "@/components/about-carousel";
 import { mdxComponents } from "@/components/mdx-components";
@@ -12,15 +11,9 @@ export const metadata: Metadata = {
     "Justin Cornetta on the fields he works across: healthcare operations, psychedelic medicine, and investing in Bitcoin, energy, and AI.",
 };
 
-const aboutMdxComponents = {
-  ...mdxComponents,
-  h2: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className={`reveal reveal-2${className ? ` ${className}` : ""}`} {...props} />
-  ),
-};
-
 export default function AboutPage() {
   const about = getAbout();
+  const [intro, ...topics] = about.body.trim().split(/\n(?=## )/);
 
   return (
     <RevealMotion className="production-page production-page--enhanced motion-stagger">
@@ -41,7 +34,14 @@ export default function AboutPage() {
         </figure>
 
         <div className="prod-case-body prod-prose">
-          <MDXRemote source={about.body} components={aboutMdxComponents} />
+          <section className="prod-about-intro reveal reveal-2">
+            <MDXRemote source={intro} components={mdxComponents} />
+          </section>
+          {topics.map((topic, index) => (
+            <section className="prod-about-topic reveal reveal-2" key={`${index}-${topic.slice(0, 48)}`}>
+              <MDXRemote source={topic} components={mdxComponents} />
+            </section>
+          ))}
         </div>
       </section>
 
