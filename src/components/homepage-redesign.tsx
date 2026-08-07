@@ -160,13 +160,12 @@ export function HomepageRedesign() {
           <section id="home" className="section section--paper hero-section">
             <div className="section__inner hero-grid">
               <div className="hero-copy">
-                <span className="status-pill reveal reveal-2">
-                  <span aria-hidden="true" />
-                  Open to work
-                </span>
-                <h1 className="reveal reveal-3">Justin Cornetta</h1>
-                <p className="hero-lede reveal reveal-4">
+                <h1 className="reveal reveal-2">Justin Cornetta</h1>
+                <p className="hero-lede reveal reveal-3">
                   Versatile operator and strategist across healthcare, psychedelic medicine, and financial markets, passionate about learning and building alongside others.
+                </p>
+                <p className="hero-opportunity reveal reveal-4">
+                  Open to ambitious roles, projects, and partnerships.
                 </p>
               </div>
               <figure className="hero-image media-reveal reveal reveal-4">
