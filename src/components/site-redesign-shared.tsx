@@ -75,8 +75,11 @@ export function ClosingContact() {
   return (
     <section className="section closing-section reveal reveal-2">
       <div className="section__inner closing-grid">
-        <div>
-          <h2>Have a project, role, or idea worth talking through? Let&rsquo;s connect.</h2>
+        <div className="closing-copy">
+          <h2>Have a project, role, or idea worth talking through?</h2>
+          <p>
+            I&rsquo;m looking to work with passionate people and teams advancing healthcare, psychedelic medicine, and other emerging fields. If you&rsquo;re hiring, building, or exploring an idea where my experience could help, let&rsquo;s connect.
+          </p>
         </div>
         <div className="closing-links">
           <a href="mailto:justin.cornetta@gmail.com">
