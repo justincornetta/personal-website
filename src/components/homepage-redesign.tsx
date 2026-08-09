@@ -80,7 +80,7 @@ const experience: ExperienceGroup[] = [{
   roles: [{
     role: "President",
     date: "Jan 2023 to May 2024",
-    copy: "Re-launched Rutgers' psychedelic society, recruited a team of seven officers and more than 300 members, and facilitated nine educational events. The group's growth led to an invitation to join the New Jersey Psilocybin Coalition and support advocacy for NJS2283."
+    copy: "Re-launched Rutgers' psychedelic society, recruited a team of seven officers and more than 250 members, and facilitated nine educational events. The group's growth led to an invitation to join the New Jersey Psilocybin Coalition and support advocacy for NJS2283."
   }]
 }, {
   org: "Somatix",
@@ -211,7 +211,7 @@ export function HomepageRedesign() {
                 <div className="about-copy">
                   <div className="about-body reveal reveal-2">
                     <p>I’m drawn to the edge of new and often misunderstood ideas. That instinct has led me to interests spanning healthcare, psychedelic medicine, Bitcoin, energy, technology, and AI. What connects them is a curiosity about ideas that could meaningfully change how people live, work, and understand the world.</p>
-                    <p>The result has been a broad range of experiences. At Teladoc Health, I managed a $187M+ portfolio of health plan and employer clients, drove execution of C-suite priorities, and built a new performance operations function from the ground up. Beyond Teladoc, I am building communities and systems to advance the psychedelic ecosystem, share investment research with an online community on X, and use AI to build tools and improve how I work.</p>
+                    <p>The result has been a broad range of experiences. At Teladoc Health, I managed a $187M+ portfolio of health plan and employer clients and led cross-functional programs tied to C-suite priorities, coordinating work across product, engineering, clinical, and commercial teams. I also built a new performance operations function from the ground up. Beyond Teladoc, I’m building communities and systems to advance the psychedelic ecosystem, sharing investment research with an online community on X, and using AI to build tools and improve how I work.</p>
                     <p>Across these areas, I’ve learned to move quickly, connect ideas across disciplines, and turn complexity into practical action. Read more about my background, interests, and the work that shaped how I think.</p>
                   </div>
                   <Link className="text-link reveal reveal-3" href="/about">
