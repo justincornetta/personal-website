@@ -59,11 +59,11 @@ const experience: ExperienceGroup[] = [{
   }, {
     role: "Program Manager",
     date: "Sep 2024 to Oct 2025",
-    copy: "Implemented AI clinical transcription, care gaps data integrations, and referral workflows into Teladoc's Care Delivery Platform, PRISM, that cut chart completion time 58%, produced $900K+ in annual savings, and drove $1.3M+ in revenue lift. Collaborated with the Chief Patient Experience Officer on Teladoc's patient experience strategy and governance spanning 100M+ members and seven service lines. Led a member access initiative delivering $3.6M+ in recurring savings and a 39-point improvement in member NPS."
+    copy: "Implemented AI clinical transcription, care gaps data integrations, and referral workflows into Teladoc's Care Delivery Platform, PRISM, that cut chart completion time 58%, produced $900K+ in annual savings, and drove $1.3M+ in revenue lift one year after launch. Collaborated with the Chief Patient Experience Officer on Teladoc's patient experience strategy and governance spanning 100M+ members and seven service lines. Led a member access initiative delivering a $3.6M cumulative reserve balance resolution and a 39-point improvement in member NPS."
   }, {
     role: "Client Operations Manager",
     date: "May 2022 to Sep 2024",
-    copy: "Managed $187M+ in ARR and 10M+ lives across 14 employer and health plan clients, serving as the day-to-day operations lead. Led cross-functional remediation for an at-risk client that resulted in a $10M contract renewal and a $20M upsell opportunity within 12 months."
+    copy: "Managed $187M+ in ARR and 10M+ lives across 14 employer and health plan clients, serving as the day-to-day operations lead. Led cross-functional remediation for an at-risk client that resulted in a $10M contract renewal and a $20M signed upsell opportunity within 12 months."
   }]
 }, {
   org: "Intercollegiate Psychedelics Network (IPN)",
