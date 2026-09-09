@@ -4,7 +4,7 @@ import { getPublishedProjects, getPublishedWriting } from "@/lib/content";
 const baseUrl = "https://justincornetta.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/projects", "/writing", "/about"].map((route) => ({
+  const routes = ["", "/projects", "/about"].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
   }));
@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(project.date),
   }));
 
-  const writingRoutes = getPublishedWriting().map((entry) => ({
+  const writingRoutes = getPublishedWriting().filter((entry) => !entry.externalUrl).map((entry) => ({
     url: `${baseUrl}/writing/${entry.slug}`,
     lastModified: new Date(entry.date),
   }));

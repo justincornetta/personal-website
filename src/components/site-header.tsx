@@ -20,7 +20,7 @@ export function SiteHeader() {
       </Link>
       <nav aria-label="Primary">
         {navItems.map((item) => {
-          const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+          const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href) || (item.href === "/projects" && pathname.startsWith("/writing"));
           return (
             <Link
               key={item.href}

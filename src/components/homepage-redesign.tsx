@@ -3,6 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { PortfolioCard } from "@/components/portfolio-card";
+import { ResearchFeature } from "@/components/research-feature";
+import type { ProjectMeta, WritingMeta } from "@/lib/content";
+import { initiatives, research } from "@/lib/portfolio";
 import { ClosingContact, useRevealMotion } from "@/components/site-redesign-shared";
 const heroImage = "/images/hero-portrait.png";
 const aboutOne = "/images/about/01.jpg";
@@ -10,9 +14,6 @@ const aboutFour = "/images/about/04.jpg";
 const aboutFive = "/images/about/05.jpg";
 const aboutSeven = "/images/about/07.jpg";
 const aboutEight = "/images/about/08.jpg";
-const websiteCover = "/images/projects/personal-website/01.png";
-const analyticsCover = "/images/projects/ipn-operations-analytics/01.png";
-const ipnCover = "/images/projects/ipn-member-portal/cover.jpg";
 const teladocLogo = "/images/experience/teladoc-health-transparent.png";
 const ipnLogo = "/images/experience/ipn.png";
 const somatixLogo = "/images/experience/somatix-transparent.png";
@@ -118,22 +119,6 @@ const education = [{
   graduation: "May 2023",
   activities: "Varsity Men's Track & Field and Cross Country Leadership Council; President, RU Psyched: Rutgers Psychedelic Society"
 }];
-const projects = [{
-  title: "IPN Member Portal",
-  copy: "Replaced a fragmented member experience with one purpose-built platform for a community spanning 2,100+ members across 70+ countries.",
-  image: ipnCover,
-  href: "/projects/ipn-member-portal"
-}, {
-  title: "IPN Analytics & Data Infrastructure",
-  copy: "Company-wide analytics infrastructure providing daily insights into member growth, demographics, portal utilization, events, marketing, social media, and website performance and trends.",
-  image: analyticsCover,
-  href: "/projects/ipn-operations-analytics"
-}, {
-  title: "Personal Website & Portfolio Workflows",
-  copy: "A personal site and repeatable publishing workflow that turns my experience and work into evidence-backed proof for employers and potential business partners.",
-  image: websiteCover,
-  href: "/projects/personal-website"
-}];
 function ArrowIcon({
   direction = "right"
 }: {
@@ -143,12 +128,7 @@ function ArrowIcon({
       {direction === "left" ? <path d="m15 18-6-6 6-6" /> : <path d="m9 18 6-6-6-6" />}
     </svg>;
 }
-function ExternalIcon() {
-  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M7 17 17 7M8 7h9v9" />
-    </svg>;
-}
-export function HomepageRedesign() {
+export function HomepageRedesign({ projects, writing }: { projects: ProjectMeta[]; writing: WritingMeta[] }) {
   const [slide, setSlide] = useState(0);
   const siteRef = useRevealMotion();
   const showSlide = (next: number) => {
@@ -272,18 +252,11 @@ export function HomepageRedesign() {
           <section id="projects" className="section section--sand projects-section">
             <div className="section__inner">
               <div className="section-heading section-heading--stacked reveal reveal-1">
-                <h2>Projects &amp; Research</h2>
-                <p>Personal projects consisting of web applications, AI workflows &amp; automations, industry reports, and investment analysis</p>
+                <h2>{initiatives.title}</h2>
+                <p>{initiatives.description}</p>
               </div>
-              <div className="project-grid">
-                {projects.map((project, index) => <Link key={project.title} className={`project-card reveal reveal-${index + 2}`} href={project.href} aria-label={`Read more about ${project.title}`}>
-                    <div className="project-card__image media-reveal">
-                      <Image src={project.image} alt="" fill sizes="(min-width: 900px) 33vw, 100vw" />
-                    </div>
-                    <h3>{project.title}</h3>
-                    <p>{project.copy}</p>
-                    <span className="project-card__link">Read More <ExternalIcon /></span>
-                  </Link>)}
+              <div className="portfolio-grid">
+                {projects.map((project, index) => <PortfolioCard key={project.slug} title={project.title} summary={project.summary} cover={project.cover} href={`/projects/${project.slug}`} className={`reveal reveal-${Math.min(index + 2, 6)}`} />)}
               </div>
               <div className="projects-footer reveal reveal-5">
                 <Link className="button button--primary" href="/projects">
@@ -293,6 +266,21 @@ export function HomepageRedesign() {
               </div>
             </div>
           </section>
+
+          {writing.length > 0 && <section id="research" className="section section--sand home-research-section" aria-labelledby="home-research-title">
+            <div className="section__inner">
+              <div className="section-heading section-heading--stacked reveal reveal-1">
+                <h2 id="home-research-title">{research.title}</h2>
+                <p>{research.description}</p>
+              </div>
+              {writing.length === 1 ? <div className="reveal reveal-2"><ResearchFeature entry={writing[0]} /></div> : <div className="portfolio-grid">
+                {writing.map((entry) => <PortfolioCard key={entry.slug} title={entry.title} summary={entry.summary} cover={entry.cover} href={entry.externalUrl ?? `/writing/${entry.slug}`} label={entry.series} containCover />)}
+              </div>}
+              <div className="projects-footer reveal reveal-3">
+                <Link className="button button--primary" href="/projects#research">View All Research <ArrowIcon /></Link>
+              </div>
+            </div>
+          </section>}
 
           <ClosingContact />
         </div>

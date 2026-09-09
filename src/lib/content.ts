@@ -55,6 +55,11 @@ export type WritingMeta = {
   featured: boolean;
   status: "published" | "draft" | "private";
   disclosure?: string;
+  cover?: string;
+  series?: string;
+  seriesSlug?: string;
+  chapter?: number;
+  externalUrl?: string;
 };
 
 export type ContentEntry<T> = T & { body: string };
@@ -141,6 +146,11 @@ function normalizeWriting(data: matter.GrayMatterFile<string>["data"]): WritingM
     featured: Boolean(data.featured),
     status: String(data.status ?? "draft") as WritingMeta["status"],
     disclosure: data.disclosure ? String(data.disclosure) : undefined,
+    cover: data.cover ? String(data.cover) : undefined,
+    series: data.series ? String(data.series) : undefined,
+    seriesSlug: data.seriesSlug ? String(data.seriesSlug) : undefined,
+    chapter: Number.isFinite(Number(data.chapter)) && Number(data.chapter) > 0 ? Number(data.chapter) : undefined,
+    externalUrl: data.externalUrl ? String(data.externalUrl) : undefined,
   };
 }
 

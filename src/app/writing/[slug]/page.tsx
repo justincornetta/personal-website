@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { ArrowLeft } from "lucide-react";
 import { mdxComponents } from "@/components/mdx-components";
-import { TagList } from "@/components/tags";
 import { getPublishedWriting, getWritingBySlug } from "@/lib/content";
 
-type WritingPageProps = {
-  params: Promise<{ slug: string }>;
-};
+type WritingPageProps = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
   return getPublishedWriting().map((entry) => ({ slug: entry.slug }));
@@ -18,53 +16,42 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: WritingPageProps): Promise<Metadata> {
   const { slug } = await params;
   const entry = getWritingBySlug(slug);
-
-  if (!entry) {
-    return {};
-  }
-
+  if (!entry) return {};
   return {
     title: entry.title,
     description: entry.summary,
+    alternates: { canonical: entry.externalUrl ?? `/writing/${entry.slug}` },
+    openGraph: {
+      title: entry.title,
+      description: entry.summary,
+      type: "article",
+      url: entry.externalUrl ?? `/writing/${entry.slug}`,
+      publishedTime: entry.date,
+      ...(entry.cover ? { images: [{ url: entry.cover, width: 1200, height: 630, alt: entry.title }] } : {}),
+    },
   };
 }
 
 export default async function WritingDetailPage({ params }: WritingPageProps) {
   const { slug } = await params;
   const entry = getWritingBySlug(slug);
-
-  if (!entry) {
-    notFound();
-  }
-
+  if (!entry) notFound();
+  if (entry.externalUrl) permanentRedirect(entry.externalUrl);
   return (
-    <article
-      className="page-shell case"
-      style={{ paddingBottom: "clamp(3rem, 8vw, 6rem)" }}
-    >
-      <Link href="/writing" className="case__back">
-        <ArrowLeft size={16} />
-        Back to Writing
-      </Link>
-      <header>
-        <p className="eyebrow" style={{ marginTop: "1.4rem" }}>
-          {entry.category}
-        </p>
-        <h1 className="case__title" style={{ marginTop: "0.55rem" }}>
-          {entry.title}
-        </h1>
-        <p className="case__sub">{entry.summary}</p>
-        <div className="mt-6">
-          <TagList items={entry.tags} />
+    <article className="research-article">
+      <div className="research-article__inner">
+        <Link href="/projects#research" className="research-back"><ArrowLeft size={18} aria-hidden="true" /> Market &amp; Investment Research</Link>
+        <header>
+          <p className="portfolio-label">{entry.series ?? entry.category}{entry.chapter ? ` · Chapter ${entry.chapter}` : ""}</p>
+          <h1>{entry.title}</h1>
+          <p className="research-lead">{entry.summary}</p>
+          <p className="research-date">Justin Cornetta · <time dateTime={entry.date}>{new Date(entry.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })}</time></p>
+        </header>
+        {entry.cover && <Image className="research-article__cover" src={entry.cover} alt={`Cover for ${entry.title}`} width={1200} height={630} priority sizes="(min-width: 850px) 800px, 94vw" />}
+        <div className="research-article__body prose-content">
+          {entry.disclosure && <p><strong>Disclosure:</strong> {entry.disclosure}</p>}
+          <MDXRemote source={entry.body} components={mdxComponents} />
         </div>
-      </header>
-      <div className="case__body prose-content">
-        {entry.disclosure ? (
-          <div className="mb-10 rounded-2xl border border-[var(--border)] bg-white/72 p-5 text-sm leading-6 text-[var(--muted)]">
-            <strong className="text-[var(--ink)]">Disclosure:</strong> {entry.disclosure}
-          </div>
-        ) : null}
-        <MDXRemote source={entry.body} components={mdxComponents} />
       </div>
     </article>
   );
