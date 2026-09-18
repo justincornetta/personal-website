@@ -5,5 +5,5 @@ export const initiatives = {
 
 export const research = {
   title: "Market & Investment Research",
-  description: "Market and investment research across healthcare, psychedelic medicine, energy, AI infrastructure, technology, and digital assets.",
+  description: "Selected research and perspectives across healthcare, psychedelic medicine, energy, AI infrastructure, technology, and digital assets.",
 };
