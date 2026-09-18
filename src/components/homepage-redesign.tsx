@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PortfolioCard } from "@/components/portfolio-card";
 import { ResearchFeature } from "@/components/research-feature";
+import { FeaturedXResearch } from "@/components/featured-x-research";
 import type { ProjectMeta, WritingMeta } from "@/lib/content";
 import { initiatives, research } from "@/lib/portfolio";
 import { ClosingContact, useRevealMotion } from "@/components/site-redesign-shared";
@@ -273,10 +274,9 @@ export function HomepageRedesign({ projects, writing }: { projects: ProjectMeta[
                 <h2 id="home-research-title">{research.title}</h2>
                 <p>{research.description}</p>
               </div>
-              {writing.length === 1 ? <div className="reveal reveal-2"><ResearchFeature entry={writing[0]} /></div> : <div className="portfolio-grid">
-                {writing.map((entry) => <PortfolioCard key={entry.slug} title={entry.title} summary={entry.summary} cover={entry.cover} href={entry.externalUrl ?? `/writing/${entry.slug}`} label={entry.series} containCover />)}
-              </div>}
-              <div className="projects-footer reveal reveal-3">
+              <div className="reveal reveal-2"><ResearchFeature entry={writing.find((entry) => entry.slug === "approved-then-what") ?? writing[0]} /></div>
+              <FeaturedXResearch surface="home" />
+              <div className="projects-footer">
                 <Link className="button button--primary" href="/projects#research">View All Research <ArrowIcon /></Link>
               </div>
             </div>

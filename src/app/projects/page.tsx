@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ClosingContact, RevealMotion } from "@/components/site-redesign-shared";
 import { PortfolioCard } from "@/components/portfolio-card";
+import { ResearchFeature } from "@/components/research-feature";
+import { FeaturedXResearch } from "@/components/featured-x-research";
 import { getPublishedProjects, getPublishedWriting } from "@/lib/content";
 import { initiatives, research } from "@/lib/portfolio";
 
@@ -12,6 +14,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   const projects = getPublishedProjects();
   const writing = getPublishedWriting();
+  const featuredWriting = writing.find((entry) => entry.slug === "approved-then-what") ?? writing[0];
   return (
     <RevealMotion className="portfolio-page motion-stagger">
       <div className="section__inner">
@@ -32,9 +35,11 @@ export default function ProjectsPage() {
             <h2 id="research-title">{research.title}</h2>
             <p>{research.description}</p>
           </header>
-          <div className="portfolio-grid">
-            {writing.map((entry, index) => <PortfolioCard key={entry.slug} title={entry.title} summary={entry.summary} cover={entry.cover} href={entry.externalUrl ?? `/writing/${entry.slug}`} label={entry.series ? `${entry.series}${entry.chapter ? ` · Chapter ${entry.chapter}` : ""}` : undefined} containCover className={`reveal reveal-${Math.min(index + 2, 6)}`} />)}
-          </div>
+          <div className="reveal reveal-2"><ResearchFeature entry={featuredWriting} /></div>
+          {writing.length > 1 && <div className="portfolio-grid">
+            {writing.filter((entry) => entry.slug !== featuredWriting.slug).map((entry) => <PortfolioCard key={entry.slug} title={entry.title} summary={entry.summary} cover={entry.cover} href={entry.externalUrl ?? `/writing/${entry.slug}`} label={entry.series} containCover />)}
+          </div>}
+          <FeaturedXResearch surface="projects" />
         </section>}
       </div>
       <ClosingContact />

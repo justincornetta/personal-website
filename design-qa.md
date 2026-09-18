@@ -1,70 +1,88 @@
-# Design QA — Market & Investment Research
+# Featured research design QA
 
 final result: passed
 
-## Visual target and approved revisions
+## Scope and visual truth
 
-Archive reference: `/Users/jcornetta/.codex/generated_images/01a08316-49d5-7a43-b025-4e7aa0010ad9/exec-241cd07e-0ca3-4518-bf61-c219aa4613b7.png` (1122 × 1402).
-Homepage horizontal-feature reference: `/Users/jcornetta/.codex/generated_images/01a08316-49d5-7a43-b025-4e7aa0010ad9/exec-bc2b6a07-2b75-479d-a4d5-b90d48a41e8b.png` (1756 × 896).
-The user's later decisions override mock copy: Home / Projects / About, Initiatives & AI Use Cases, Market & Investment Research, supplied descriptions, no placeholders, one horizontal homepage feature, vertical archive cards.
+Homepage reference: /Users/jcornetta/.codex/generated_images/01a0b168-ba31-7991-b641-ce118b953725/exec-f0d84220-67be-4764-b042-0e782c6f43eb.png (1073 × 1466).
+Projects reference: /Users/jcornetta/.codex/generated_images/01a0b168-ba31-7991-b641-ce118b953725/exec-90e4aa04-ca88-48ea-bdef-63abb8e6d6a0.png (1048 × 1501).
+
+Implementation: http://localhost:3016/#research and http://localhost:3016/projects#research. Light theme, research sections with all images loaded and three curated posts.
+
+Desktop CSS viewports: 1073 × 1466 homepage, 1048 × 1501 Projects; devicePixelRatio 1. Browser captures are 1058 × 1446 and 1033 × 1480 respectively. The capture service slightly downsamples; full-view boards normalize both sides to 600px wide. Focused card comparison normalizes the Projects capture to its CSS dimensions before cropping. Mock navigation/canvas margins differ from the existing site's header and section placement; comparisons assess the research content region, not those surrounding areas.
 
 ## Evidence
 
-Local implementation: http://127.0.0.1:4317
-Screenshots are under `/Users/jcornetta/Code/personal-website-research/qa/`:
+- qa-artifacts/home-desktop.jpg
+- qa-artifacts/projects-desktop.jpg
+- qa-artifacts/comparison-home.png: reference and homepage together.
+- qa-artifacts/comparison-projects.png: reference and Projects together.
+- qa-artifacts/comparison-card.png: readable focused comparison of screenshot frame, metadata, headline, takeaway, and source link.
+- qa-artifacts/projects-mobile.jpg and projects-mobile-card.jpg: stacked flagship and card captures.
+- qa-artifacts/home-mobile.jpg and home-tablet.jpg: responsive supporting captures.
 
-- `projects-desktop-top.png`: focused desktop title, navigation, initiative cards.
-- `projects-desktop-full.png`: full archive after scrolling through reveal animations (1107 × 2525).
-- `projects-research-desktop.png`: focused research category and article card.
-- `home-research-desktop.png`: horizontal homepage feature and links.
-- `home-research-mobile.png`: stacked homepage feature.
-- `projects-research-mobile.png`: mobile archive research card.
-- `article-desktop.png` and `article-mobile.png`: historical screenshots of the summary removed by the latest revision.
+The focused comparison was necessary to assess the user-requested thin gray frame and screenshot readability; full-view boards alone are insufficient for those details.
 
-Desktop CSS viewport 1122 × 1402, mobile 390 × 844. Also checked 768 × 1024 and 320 × 740. Desktop screenshot content width is 1107 pixels after scrollbar exclusion, not a 2× density capture. Reference and implementation were opened together in the same comparison call, including a focused research capture. The full archive is longer than the reference because it preserves the already-published Travel Planner project and the existing closing contact section. It is not a pixel-identical content state; comparisons therefore use corresponding sections and actual site tokens, not full-image height.
+## Comparison history and fixes
 
-## Findings and fidelity review
+Initial board: qa-artifacts/comparison-before.png. Initial result blocked.
 
-No actionable P0/P1/P2 findings remain for the approved scope.
+1. [P2, resolved] Desktop tweet captures made the text too dense. Recaptured authentic posts at a narrower width, extracted the post area, and optimized three WebP assets. Final full-view and focused boards show readable excerpts at the card width.
+2. [P2, resolved] Main research and flagship headings were undersized. Increased responsive research heading scale and tuned the flagship body width and type so its title remains on one line at the reference desktop sizes.
+3. [P2, resolved] Flagship cover region was too shallow. Added a 1.65 aspect-ratio cream frame containing the existing real cover without stretching or cutting its content.
+4. [P2, resolved] Homepage CTA could be inside the viewport while hidden by the existing reveal observer's bottom margin. Removed the CTA's reveal class. Verified opacity 1 and successful navigation.
+5. [P2, resolved] Small description text on beige had insufficient contrast. Darkened research section descriptions to #646159; card text retains the existing muted color on white.
 
-- Typography: existing Geist, black semibold headings, tighter display tracking, and readable gray body text retained. Archive section headings remain subordinate to the page title. Long titles wrap without clipping.
-- Layout: three equal desktop columns, two on tablet, one on mobile. Cover/title/summary/Read More order is shared across initiative and research cards. One research card retains one column width. Homepage feature uses two columns on desktop and stacks below 800px. No horizontal overflow at tested sizes.
-- Colors: existing warm sand/paper/surface tokens reused; approved article artwork retains its own cream/navy/teal brand within the cover.
-- Imagery: real existing project images and the approved article cover used. Cover artwork is contained rather than cropped in the archive. Browser checks found no broken images on the homepage. Existing source screenshots are retained rather than AI-generated approximations.
-- Copy: final category labels and descriptions applied centrally. EOSE and draft placeholder content are absent. Research cards link directly to Substack with one Read More CTA. The series landing page is removed; the old local article URL redirects to Substack.
-- Interaction: primary navigation, initiative card, research card, homepage Read More, View All Research, direct article-to-Substack, and legacy Writing redirect verified in browser. The latest homepage CTA was clicked and opened the correct Substack article.
+Post-fix evidence: final homepage and Projects comparison boards plus focused card comparison. No actionable P0/P1/P2 issues remain.
 
-## Review history
+## Required fidelity surfaces
 
-Initial viewport capture happened during reveal animation; captured again after animation and normal scrolling. No animation defect found. Full-page evidence was recaptured from the top after visiting all sections, avoiding hidden offscreen reveal content in the screenshot.
-The browser flagged an above-the-fold initiative image as lazy-loaded. Added eager loading for the first archive card; lint and production build rerun successfully. No layout fix was required after the final comparison.
+- Typography: existing Geist, near-black headings, responsive hierarchy; long Eos/Bitcoin headlines wrap naturally without truncation. This is accepted over forcing generated mock text onto one line.
+- Spacing/layout: full-width primary Beyond Approval feature; three desktop cards; two-column tablet grid with centered third card; single-column mobile. No horizontal overflow at 320, 390, 768, 1048, or 1073 CSS px.
+- Colors/tokens: existing warm beige background and black pills; white modules with 1px #b6b0a6 outlines; screenshot frames 1px #b8b8b8 gray. Muted card text on white has approximately 4.87:1 contrast.
+- Image quality: actual existing Beyond Approval cover and genuine X screenshots replace generated mock imagery. No fabricated tweet text or placeholder art. Excerpts crop vertically from the top; full posts remain linked.
+- Copy/content: curated IREN, EOSE, and Bitcoin perspectives with company/industry, original date, editorial headline, and one-sentence takeaway. Homepage says Selected rather than Recent because curation spans dates.
+- Icons: existing Lucide ArrowUpRight used for the new source links and external CTA. Existing global navigation/footer retained.
 
-## Verification
+## Functional and accessibility verification
 
-- `npm ci`: passed. No repo-provided browser runtime or QA command exists; used Codex in-app browser.
-- `npm run lint`: passed.
-- `npm run build`: passed, including TypeScript and static route generation.
-- `git diff --check`: passed.
-- Homepage, Projects archive and sitemap return HTTP 200. Removed series route returns 404; legacy article route returns 308 to Substack.
-- Draft and unknown article slugs return HTTP 404.
-- Sitemap excludes external articles, the removed series page, and drafts.
-- Browser console error check: no errors returned. No framework error overlay observed.
-- Responsive checks: 1122, 768, 390 and 320 CSS-pixel widths.
+- Homepage View All Research click navigated to /projects#research.
+- Read on Substack opened Approved, Then What? on Beyond Approval.
+- Featured IREN link opened the exact source post; all three source hrefs match the captured posts.
+- See more insights on X opened Justin Cornetta (@jmjcapital).
+- All four research images loaded on both pages.
+- Semantic sections, nested headings, article cards, descriptive link labels, image descriptions, and machine-readable dates verified. Keyboard Tab exposes the existing 2px violet focus outline.
+- Mobile feature and cards stack; metadata wraps safely at 320px; existing reduced-motion styling applies.
 
-## Caveats and follow-up
+## Build and runtime checks
 
-This is a local build; no push, PR, or deployment has occurred. Existing dependency audit findings and Next.js's parent-lockfile workspace-root warning are outside this content/layout change. The build completes successfully. Original project thumbnails contain small UI text that is naturally unreadable at card size, as on the existing site. The extended article remains on Substack.
+- npm ci: passed; no repo-provided browser QA installer/script exists.
+- npm run lint: passed.
+- npm run build: passed, including TypeScript and static generation of all 13 routes.
+- git diff --check: passed.
+- Local dev server: npm run dev -- --port 3016.
+- Console checked. One historical hydration warning is caused solely by Grammarly adding data-new-gr-c-s-check-loaded/data-gr-ext-installed to body before hydration. No application-origin runtime errors or broken workflows found. The earlier LCP image warning was addressed with eager cover loading.
+- Next reports a workspace-root warning due to an unrelated parent lockfile; build succeeds. Configuration was kept within the research scope.
+- In-app Browser capture was clipped/scaled incorrectly; Chrome fallback used under Product Design's documented browser rule. QA zoom normalized to 100%; temporary viewport overrides reset after verification.
+
+## Accepted constraints and follow-up polish
+
+- Existing site header, Projects initiatives, homepage sections, and closing contact remain; no new routes or mock breadcrumbs were introduced.
+- Real cover artwork differs from the regenerated mock artwork; the original published asset is authoritative.
+- [P3] Genuine owner-view screenshots include X's Boost control in two image headers. A future logged-out capture could remove that incidental platform UI.
+- Detailed QA artifacts stay local and are gitignored; final desktop screenshots are included under docs/qa/featured-research for PR review.
+- The user approved creating and merging the PR after reviewing the local implementation and preview-height adjustment.
 
 ## Implementation checklist
 
-- [x] Agreed labels and descriptions
-- [x] Horizontal homepage research feature
-- [x] Shared vertical archive cards
-- [x] Direct Substack article links; removed series page
-- [x] Mobile and desktop browser review
-- [x] Lint, production build, and route checks
-- [ ] User review and publishing approval
+### Follow-up: match Projects preview height to homepage
 
-## Latest requested edits
+Removed the Projects-only square preview override. Both pages now use the same 1.24 aspect ratio on desktop/tablet and retain the shared 1.1 mobile ratio. At a 1073px viewport, all three previews on both routes measure approximately 297.33px wide by 239.78px high. At 390px, Projects previews measure 288.18px high with no horizontal overflow or framework overlay. All preview images load; current console check returns no errors or warnings. Lint, production build, and git diff --check pass after this change.
 
-Updated initiative subtitle and research summary exactly as supplied. Homepage and Projects research cards use the original article URL; removed Explore the series. Lint and production build passed again. Desktop/mobile browser checks verified one feature CTA, correct copy, no horizontal overflow, no console errors, and successful navigation to the Substack article.
+Evidence: qa-artifacts/home-matched-preview-height.jpg and qa-artifacts/projects-matched-preview-height.jpg. This user-requested height adjustment supersedes the taller Projects preview in the original mockup.
+
+- [x] Build shared featured-post component and curated content data.
+- [x] Add flagship and selected posts to both existing pages.
+- [x] Use approved subtle gray borders and real assets.
+- [x] Verify responsive layouts, links, image loads, and keyboard focus.
+- [x] Pass lint, production build, whitespace checks, and paired visual comparisons.
