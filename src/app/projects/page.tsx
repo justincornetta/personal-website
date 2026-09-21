@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   const projects = getPublishedProjects();
   const writing = getPublishedWriting();
-  const featuredWriting = writing.find((entry) => entry.slug === "approved-then-what") ?? writing[0];
+  const featuredWriting = writing.filter((entry) => entry.seriesSlug === "beyond-approval");
+  const remainingWriting = writing.filter((entry) => entry.seriesSlug !== "beyond-approval");
   return (
     <RevealMotion className="portfolio-page motion-stagger">
       <div className="section__inner">
@@ -35,9 +36,9 @@ export default function ProjectsPage() {
             <h2 id="research-title">{research.title}</h2>
             <p>{research.description}</p>
           </header>
-          <div className="reveal reveal-2"><ResearchFeature entry={featuredWriting} /></div>
-          {writing.length > 1 && <div className="portfolio-grid">
-            {writing.filter((entry) => entry.slug !== featuredWriting.slug).map((entry) => <PortfolioCard key={entry.slug} title={entry.title} summary={entry.summary} cover={entry.cover} href={entry.externalUrl ?? `/writing/${entry.slug}`} label={entry.series} containCover />)}
+          <div className="reveal reveal-2"><ResearchFeature entries={featuredWriting.length > 0 ? featuredWriting : writing.slice(0, 1)} /></div>
+          {remainingWriting.length > 0 && <div className="portfolio-grid">
+            {remainingWriting.map((entry) => <PortfolioCard key={entry.slug} title={entry.title} summary={entry.summary} cover={entry.cover} href={entry.externalUrl ?? `/writing/${entry.slug}`} label={entry.series} containCover />)}
           </div>}
           <FeaturedXResearch surface="projects" />
         </section>}
