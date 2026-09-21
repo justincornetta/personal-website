@@ -56,8 +56,12 @@ export type WritingMeta = {
   status: "published" | "draft" | "private";
   disclosure?: string;
   cover?: string;
+  coverFit?: "contain" | "cover";
+  coverPosition?: string;
   series?: string;
   seriesSlug?: string;
+  seriesLabel?: string;
+  seriesOrder?: number;
   chapter?: number;
   externalUrl?: string;
 };
@@ -147,8 +151,12 @@ function normalizeWriting(data: matter.GrayMatterFile<string>["data"]): WritingM
     status: String(data.status ?? "draft") as WritingMeta["status"],
     disclosure: data.disclosure ? String(data.disclosure) : undefined,
     cover: data.cover ? String(data.cover) : undefined,
+    coverFit: data.coverFit === "cover" ? "cover" : data.coverFit === "contain" ? "contain" : undefined,
+    coverPosition: data.coverPosition ? String(data.coverPosition) : undefined,
     series: data.series ? String(data.series) : undefined,
     seriesSlug: data.seriesSlug ? String(data.seriesSlug) : undefined,
+    seriesLabel: data.seriesLabel ? String(data.seriesLabel) : undefined,
+    seriesOrder: Number.isFinite(Number(data.seriesOrder)) && Number(data.seriesOrder) > 0 ? Number(data.seriesOrder) : undefined,
     chapter: Number.isFinite(Number(data.chapter)) && Number(data.chapter) > 0 ? Number(data.chapter) : undefined,
     externalUrl: data.externalUrl ? String(data.externalUrl) : undefined,
   };

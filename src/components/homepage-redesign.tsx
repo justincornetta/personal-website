@@ -274,7 +274,7 @@ export function HomepageRedesign({ projects, writing }: { projects: ProjectMeta[
                 <h2 id="home-research-title">{research.title}</h2>
                 <p>{research.description}</p>
               </div>
-              <div className="reveal reveal-2"><ResearchFeature entry={writing.find((entry) => entry.slug === "approved-then-what") ?? writing[0]} /></div>
+              <div className="reveal reveal-2"><ResearchFeature entries={writing} /></div>
               <FeaturedXResearch surface="home" />
               <div className="projects-footer">
                 <Link className="button button--primary" href="/projects#research">View All Research <ArrowIcon /></Link>
