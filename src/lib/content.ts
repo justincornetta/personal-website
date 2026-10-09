@@ -4,7 +4,7 @@ import matter from "gray-matter";
 
 const contentRoot = path.join(process.cwd(), "content");
 
-export type GalleryItem = { src: string; caption: string };
+export type GalleryItem = { src: string; caption: string; previewPosition?: "top left" | "bottom left" | "center" };
 
 export type AboutMedia = {
   type: "image" | "video";

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
-  const projects = getPublishedProjects();
+  const projects = getPublishedProjects().sort((a, b) => b.date.localeCompare(a.date));
   const writing = getPublishedWriting();
   const featuredWriting = writing.filter((entry) => entry.seriesSlug === "beyond-approval");
   const remainingWriting = writing.filter((entry) => entry.seriesSlug !== "beyond-approval");
@@ -28,7 +28,7 @@ export default function ProjectsPage() {
             <p>{initiatives.description}</p>
           </header>
           <div className="portfolio-grid">
-            {projects.map((project, index) => <PortfolioCard eager={index === 0} key={project.slug} title={project.title} summary={project.summary} cover={project.cover} href={`/projects/${project.slug}`} className={`reveal reveal-${Math.min(index + 2, 6)}`} />)}
+            {projects.map((project, index) => <PortfolioCard eager={index < 3} key={project.slug} title={project.title} summary={project.summary} cover={project.cover} href={`/projects/${project.slug}`} className={`reveal reveal-${Math.min(index + 2, 6)}`} />)}
           </div>
         </section>
         {writing.length > 0 && <section className="portfolio-section" id="research" aria-labelledby="research-title">
