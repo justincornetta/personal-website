@@ -3,11 +3,22 @@
 import { useEffect, useRef, useState } from "react";
 import type { GalleryItem } from "@/lib/content";
 
-export function GalleryCarousel({ items }: { items: GalleryItem[] }) {
+export function GalleryCarousel({
+  items,
+  title = "Project screenshots",
+  subtitle,
+  inline = false,
+}: {
+  items: GalleryItem[];
+  title?: string;
+  subtitle?: string;
+  inline?: boolean;
+}) {
   const trackRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [slideIndex, setSlideIndex] = useState(0);
 
   useEffect(() => {
     if (activeIndex === null) return;
@@ -71,26 +82,31 @@ export function GalleryCarousel({ items }: { items: GalleryItem[] }) {
   };
 
   return (
-    <section className="gallery" aria-label="Gallery">
+    <section className={`gallery${inline ? " gallery--inline" : ""}`} aria-label={inline ? title : "Gallery"}>
       <div className="gallery__head">
         <div>
-          <p className="eyebrow">Gallery</p>
-          <h2 className="sec-title">Project screenshots</h2>
+          {inline ? <h3>{title}</h3> : <><p className="eyebrow">Gallery</p><h2 className="sec-title">{title}</h2></>}
+          {subtitle ? <p className="gallery__subtitle">{subtitle}</p> : null}
         </div>
         <div className="rail-controls">
-          <button className="icon-btn" aria-label="Previous image" onClick={() => scroll(-1)}>
+          {inline ? <span className="gallery__count" aria-live="polite">{slideIndex + 1} / {items.length}</span> : null}
+          <button className="icon-btn" aria-label="Previous image" disabled={inline && slideIndex === 0} onClick={() => scroll(-1)}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M15 18l-6-6 6-6" />
             </svg>
           </button>
-          <button className="icon-btn" aria-label="Next image" onClick={() => scroll(1)}>
+          <button className="icon-btn" aria-label="Next image" disabled={inline && slideIndex === items.length - 1} onClick={() => scroll(1)}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 18l6-6-6-6" />
             </svg>
           </button>
         </div>
       </div>
-      <div className="gallery__track" ref={trackRef} tabIndex={0} aria-label="Screenshots, scrollable">
+      <div className="gallery__track" ref={trackRef} tabIndex={0} aria-label="Screenshots, scrollable" onScroll={inline ? (event) => {
+        const track = event.currentTarget;
+        const slide = track.querySelector<HTMLElement>(".gallery__slide");
+        if (slide) setSlideIndex(Math.min(items.length - 1, Math.max(0, Math.round(track.scrollLeft / (slide.offsetWidth + 16)))));
+      } : undefined}>
         {items.map((item, i) => (
           <figure className="gallery__slide" key={item.src}>
             <button
@@ -100,8 +116,8 @@ export function GalleryCarousel({ items }: { items: GalleryItem[] }) {
               onClick={(event) => openLightbox(i, event.currentTarget)}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={item.src} alt="" loading="lazy" />
-              <span className="gallery__hint" aria-hidden="true">Click to enlarge</span>
+              <img src={item.src} alt="" loading="lazy" style={{ objectPosition: item.previewPosition ?? "top left" }} />
+              <span className="gallery__hint" aria-hidden="true">View full screenshot</span>
             </button>
             {item.caption ? <figcaption className="gallery__cap">{item.caption}</figcaption> : null}
           </figure>
