@@ -10,7 +10,7 @@
 
 ## Git
 - Last merged PR on main: Update AI Agent Avengers title and cover (#22), `9f5de9e`.
-- Open work: draft PR #23, branch `feature/multi-ai-agent-setup`. Claude Code wrote the first commit (`7fc7ed0`). Follow-up `7f0464d` wires approved copy and Codex v1 art. The layout rebuild with the real art is the commit after that; a `package-lock.json`-only commit follows it. Not pushed yet. Earlier preview: https://personal-website-as7k077bm-justin-cornetta.vercel.app/projects (Vercel SSO), which shows the older layout.
+- Open work: draft PR #23, branch `feature/multi-ai-agent-setup`. Claude Code wrote the first commit (`7fc7ed0`). Follow-up `7f0464d` wires approved copy and Codex v1 art. Layout rebuild with real avatar photos and inlined v2 SVGs: `894e7ad`. Lockfile-only commit so `npm ci` passes: `f9abf14`. Full-section review screenshots (1440 and 390) are in `/workspace/design/multi-ai-agent-setup/qa/v2/`. Earlier preview still shows the old layout until this push deploys.
 
 ## Next steps
 1. Justin reviews the new layout (push for a fresh preview when ready). Do not merge without his OK.
