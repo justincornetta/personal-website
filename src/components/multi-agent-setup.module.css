@@ -103,6 +103,17 @@
   color: var(--ink-blue-soft);
   background: rgba(251, 245, 228, 0.88);
 }
+.label {
+  margin-top: 4px;
+  max-width: 28cqw;
+  padding: 0 6px;
+  font-size: clamp(10px, 1.4cqw, 13px);
+  line-height: 1.25;
+  color: var(--ink-blue-soft);
+  background: rgba(251, 245, 228, 0.88);
+  border-radius: 6px;
+}
+div.node { cursor: default; }
 
 .wide { width: 78cqw; }
 .wide .art { width: 100%; height: auto; aspect-ratio: 8 / 1; }

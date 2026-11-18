@@ -1,12 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Justin" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-<title>Justin</title>
-
-<circle cx="64" cy="40" r="24" fill="#fffaf0"/>
-<path d="M42 34 Q48 14 66 16 Q84 16 86 34 Q76 24 64 26 Q52 26 42 34Z" fill="#2a3fb5"/>
-<circle cx="54" cy="42" r="6" fill="#fffaf0"/><circle cx="74" cy="42" r="6" fill="#fffaf0"/>
-<circle id="pupil-left" cx="54" cy="42" r="2.6" fill="#2a3fb5" stroke="none"/><circle id="pupil-right" cx="74" cy="42" r="2.6" fill="#2a3fb5" stroke="none"/>
-<path d="M56 54 Q64 60 72 54"/>
-<path d="M36 112 Q36 76 64 74 Q92 76 92 112Z" fill="#fffaf0"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="justin-title justin-desc">
+<title id="justin-title">Justin</title>
+<desc id="justin-desc">Simple hand-drawn person with short hair and a relaxed collared shirt; a symbolic portrait of Justin.</desc>
+<g stroke="#153F78" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M26 118 Q60 112 104 119 Q66 124 26 122" fill="#D9EAF5" stroke-width="0" /><path d="M28 116 Q28 91 48 85 L80 85 Q102 91 101 117 Z" fill="#D9EAF5" stroke-width="2.6" /><path d="M53 77 52 88 Q64 97 76 88 L75 77" fill="#F6F4EF" stroke-width="2.6" /><path d="M37 49 Q27 43 30 59 Q31 65 38 64 M91 49 Q101 43 98 59 Q97 65 90 64" fill="#F6F4EF" stroke-width="2.6" /><path d="M38 34 Q64 18 89 35 L90 61 Q88 83 66 86 Q42 83 38 63 Z" fill="#F6F4EF" stroke-width="2.6" /><path d="M36 48 Q27 27 43 23 Q44 11 58 17 Q77 9 87 24 Q99 28 91 48 L83 34 Q60 43 48 31 L40 49 Z" fill="#153F78" stroke-width="2.6" /><g id="eyes"><circle cx="50" cy="55" r="8.5" fill="#F6F4EF" /><circle cx="78" cy="55" r="8.5" fill="#F6F4EF" /><g id="pupil-left" fill="#153F78" stroke="none"><ellipse cx="51" cy="56" rx="3.5" ry="4.7"/></g><g id="pupil-right" fill="#153F78" stroke="none"><ellipse cx="79" cy="56" rx="3.5" ry="4.7"/></g></g><path d="M55 71 Q64 77 74 70" fill="none" stroke-width="2.3" /><path d="M47 88 55 98 64 93 73 99 82 88 M43 106 42 117 M86 105 88 117" fill="none" stroke-width="2.2" /></g>
 </svg>

@@ -1,15 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Cornbot" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-<title>Cornbot</title>
-
-<path d="M36.0 26.2 L90.8 25.2 Q103.8 26.0 102.7 38.0 L105.2 60.0 Q104.3 71.7 92.0 71.3 L36.9 72.5 Q22.6 72.0 23.2 60.0 L24.6 38.0 Q22.9 26.2 36.0 26.0Z" fill="#fffaf0"/>
-<path d="M63.4 13.1 L63.9 26.9"/><circle cx="64" cy="11" r="4" fill="#2a3fb5"/>
-<circle cx="46" cy="48" r="9" fill="#fffaf0"/><circle cx="82" cy="48" r="9" fill="#fffaf0"/>
-<circle id="pupil-left" cx="46" cy="48" r="4" fill="#2a3fb5" stroke="none"/><circle id="pupil-right" cx="82" cy="48" r="4" fill="#2a3fb5" stroke="none"/>
-<path d="M52 62 Q64 67 76 62"/>
-<path d="M40.8 77.8 L87.5 77.0 Q93.7 78.2 94.5 86.0 L93.3 106.0 Q92.9 115.6 86.0 113.8 L41.1 114.2 Q33.5 112.9 34.9 106.0 L33.5 86.0 Q33.5 76.7 42.0 79.4Z" fill="#fffaf0"/>
-<path d="M33.5 86.8 L17.9 99.5"/><path d="M94.2 85.8 L110.5 100.3"/><path d="M47.3 113.4 L45.9 123.2"/><path d="M79.1 113.8 L82.4 124.3"/>
-<path d="M52 26 Q56 12 64 14 Q72 12 76 26" fill="#f2d16b"/><path d="M60 18 L60 26M68 18 L68 26"/>
-<g stroke-width="2.4"><path d="M54 98 L64 86 L74 98 L64 108Z"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="cornbot-title cornbot-desc">
+<title id="cornbot-title">Cornbot</title>
+<desc id="cornbot-desc">Friendly sketch robot with a corn-shaped antenna and leaf badge.</desc>
+<g stroke="#153F78" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M28 118 Q63 113 99 119 Q73 124 30 122" fill="#D9EAF5" stroke-width="0" /><path d="M42 102 39 116 50 117 M82 102 86 116 75 117 M35 82 Q21 83 23 99 M93 82 Q107 84 104 99" fill="none" stroke-width="2.6" /><path d="M42 78 Q62 74 84 78 L91 101 Q66 108 37 102 Z" fill="#D9EAF5" stroke-width="2.6" /><path d="M29 45 23 46 23 61 29 62 M98 45 104 46 104 60 98 62" fill="#D9EAF5" stroke-width="2.6" /><path d="M34 31 Q60 27 91 31 Q97 32 98 40 L97 68 Q95 77 87 78 L40 78 Q31 77 30 69 L29 42 Q29 33 34 31" fill="#F6F4EF" stroke-width="2.6" /><path d="M36 34 Q63 31 88 34 M34 67 Q33 71 39 73" fill="none" stroke-width="1.1" opacity=".48"/><g id="eyes"><circle cx="50" cy="54" r="8.5" fill="#F6F4EF" /><circle cx="78" cy="54" r="8.5" fill="#F6F4EF" /><g id="pupil-left" fill="#153F78" stroke="none"><ellipse cx="51" cy="55" rx="3.5" ry="4.7"/></g><g id="pupil-right" fill="#153F78" stroke="none"><ellipse cx="79" cy="55" rx="3.5" ry="4.7"/></g></g><path d="M56 68 Q64 73 72 67" fill="none" stroke-width="2.2" /><path d="M60 29 Q49 10 61 7 Q76 5 71 24 L66 30" fill="#D9EAF5" stroke-width="2.6" /><path d="M58 15 70 14 M58 20 69 19 M63 8 63 25" fill="none" stroke-width="1.5" /><path d="M60 28 Q50 28 49 18 Q56 19 60 28 M66 29 Q77 27 79 18 Q70 19 66 29" fill="#F6F4EF" stroke-width="2.6" /><path d="M64 98 Q49 94 54 84 Q65 85 64 98 Q77 93 75 85 Q65 84 64 98" fill="#F6F4EF" stroke-width="2.6" /></g>
 </svg>

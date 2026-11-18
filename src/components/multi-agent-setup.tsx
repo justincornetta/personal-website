@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   claudeOnGrokBotCallout,
   groupLabels,
+  justinLabel,
   justinToolsCallout,
   lede,
   nodes,
@@ -214,17 +215,34 @@ export function MultiAgentSetup() {
           </svg>
           {items.map((item) => {
             if (item.t === "text") {
+              if (!item.text) return null;
               const style = { "--x": item.x, "--y": item.y, "--w": item.w } as CSSProperties;
               return <p key={item.key} className={`${styles.text} ${styles[item.cls]}`} style={style}>{item.text}</p>;
             }
             const node = nodes.find((n) => n.id === item.id)!;
-            const hasEyes = node.kind === "person" || node.kind === "bot" || node.kind === "hub";
+            const hasEyes = node.kind === "person" || node.kind === "bot" || node.kind === "hub" || node.kind === "tool";
             const style = { "--x": item.x, "--y": item.y } as CSSProperties;
+            const className = `${styles.node}${item.wide ? ` ${styles.wide}` : ""}${item.full ? ` ${styles.full}` : ""}`;
+            const art = (
+              <span className={styles.art} data-art={node.art}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={node.art} alt="" loading="lazy" decoding="async" draggable={false} />
+              </span>
+            );
+            if (node.hasCard === false) {
+              return (
+                <div key={node.id} className={className} style={style} data-eyes={hasEyes ? node.id : undefined}>
+                  {art}
+                  <span className={styles.name}>{node.name}</span>
+                  {node.id === "justin" ? <span className={styles.label}>{justinLabel}</span> : null}
+                </div>
+              );
+            }
             return (
               <button
                 key={node.id}
                 type="button"
-                className={`${styles.node}${item.wide ? ` ${styles.wide}` : ""}${item.full ? ` ${styles.full}` : ""}`}
+                className={className}
                 style={style}
                 data-eyes={hasEyes ? node.id : undefined}
                 aria-haspopup="dialog"
@@ -234,10 +252,7 @@ export function MultiAgentSetup() {
                   setOpenId(node.id);
                 }}
               >
-                <span className={styles.art} data-art={node.art}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={node.art} alt="" loading="lazy" decoding="async" draggable={false} />
-                </span>
+                {art}
                 <span className={styles.name}>{node.name}</span>
                 {node.role ? <span className={styles.role}>{node.role}</span> : null}
               </button>
@@ -265,16 +280,19 @@ export function MultiAgentSetup() {
                 <path d="M6 6l12 12M18 6L6 18" />
               </svg>
             </button>
-            <h3 id="multi-ai-agent-card-title">{open.name}</h3>
-            {open.role ? <p className={styles.cardRole}>{open.role}</p> : null}
+            <h3 id="multi-ai-agent-card-title">{open.cardTitle ?? open.name}</h3>
             <p className={styles.oneLiner}>{open.oneLiner}</p>
-            <ul>
-              {open.useCases.map((useCase) => <li key={useCase}>{useCase}</li>)}
-            </ul>
-            <Link className={styles.readMore} href={open.readMoreHref} onClick={close}>
-              {open.readMoreLabel ?? "Read more"}
-              <span className="sr-only"> about {open.name}</span>
-            </Link>
+            {open.useCases.length > 0 ? (
+              <ul>
+                {open.useCases.map((useCase) => <li key={useCase}>{useCase}</li>)}
+              </ul>
+            ) : null}
+            {open.readMoreHref ? (
+              <Link className={styles.readMore} href={open.readMoreHref} onClick={close}>
+                {open.readMoreLabel ?? "Read more"}
+                <span className="sr-only"> about {open.cardTitle ?? open.name}</span>
+              </Link>
+            ) : null}
           </div>
         </div>
       ) : null}

@@ -1,15 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Eos Mafia" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-<title>Eos Mafia</title>
-
-<path d="M37.5 27.0 L93.4 25.1 Q103.4 25.6 105.3 38.0 L104.6 60.0 Q105.2 71.7 92.0 71.6 L36.9 70.9 Q24.9 72.2 24.3 60.0 L23.5 38.0 Q24.4 24.7 36.0 25.8Z" fill="#fffaf0"/>
-<path d="M63.8 13.2 L63.0 25.5"/><circle cx="64" cy="11" r="4" fill="#2a3fb5"/>
-<circle cx="46" cy="48" r="9" fill="#fffaf0"/><circle cx="82" cy="48" r="9" fill="#fffaf0"/>
-<circle id="pupil-left" cx="46" cy="48" r="4" fill="#2a3fb5" stroke="none"/><circle id="pupil-right" cx="82" cy="48" r="4" fill="#2a3fb5" stroke="none"/>
-<path d="M52 62 Q64 67 76 62"/>
-<path d="M40.4 79.5 L86.4 77.2 Q93.2 79.4 93.2 86.0 L94.7 106.0 Q94.4 113.7 86.0 115.1 L40.7 112.8 Q32.4 114.8 35.2 106.0 L34.5 86.0 Q32.4 76.5 42.0 77.0Z" fill="#fffaf0"/>
-<path d="M33.6 87.0 L17.0 99.0"/><path d="M93.5 86.1 L110.2 99.2"/><path d="M47.5 113.9 L45.2 124.0"/><path d="M79.1 114.1 L82.4 124.4"/>
-<path d="M36 28 L92 28M46 28 L48 12 L80 12 L82 28" fill="#fffaf0"/>
-<g stroke-width="2.4"><path d="M54 92 L64 108 L74 92Z"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="eos-mafia-title eos-mafia-desc">
+<title id="eos-mafia-title">Eos Mafia</title>
+<desc id="eos-mafia-desc">Friendly sketch robot with a sunrise crest and a linked-node badge.</desc>
+<g stroke="#153F78" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M28 118 Q63 113 99 119 Q73 124 30 122" fill="#D9EAF5" stroke-width="0" /><path d="M42 102 39 116 50 117 M82 102 86 116 75 117 M35 82 Q21 83 23 99 M93 82 Q107 84 104 99" fill="none" stroke-width="2.6" /><path d="M42 78 Q62 74 84 78 L91 101 Q66 108 37 102 Z" fill="#D9EAF5" stroke-width="2.6" /><path d="M29 45 23 46 23 61 29 62 M98 45 104 46 104 60 98 62" fill="#D9EAF5" stroke-width="2.6" /><path d="M34 31 Q60 27 91 31 Q97 32 98 40 L97 68 Q95 77 87 78 L40 78 Q31 77 30 69 L29 42 Q29 33 34 31" fill="#F6F4EF" stroke-width="2.6" /><path d="M36 34 Q63 31 88 34 M34 67 Q33 71 39 73" fill="none" stroke-width="1.1" opacity=".48"/><g id="eyes"><circle cx="50" cy="54" r="8.5" fill="#F6F4EF" /><circle cx="78" cy="54" r="8.5" fill="#F6F4EF" /><g id="pupil-left" fill="#153F78" stroke="none"><ellipse cx="51" cy="55" rx="3.5" ry="4.7"/></g><g id="pupil-right" fill="#153F78" stroke="none"><ellipse cx="79" cy="55" rx="3.5" ry="4.7"/></g></g><path d="M56 68 Q64 73 72 67" fill="none" stroke-width="2.2" /><path d="M45 28 Q64 8 83 28" fill="#D9EAF5" stroke-width="2.6" /><path d="M64 9 64 4 M45 16 41 11 M83 16 87 11" fill="none" stroke-width="2" /><path d="M55 96 64 85 74 96 55 96" fill="none" stroke-width="1.8" /><circle cx="55" cy="96" r="3" fill="#F6F4EF" /><circle cx="64" cy="85" r="3" fill="#F6F4EF" /><circle cx="74" cy="96" r="3" fill="#F6F4EF" /></g>
 </svg>
