@@ -131,7 +131,7 @@
 .computerNote {
   margin: -2px 0 0;
   align-self: flex-start;
-  max-width: 11ch;
+  max-width: 24ch; /* two short lines at most under the computer node */
   padding-left: 8px;
   border-left: 2px dashed var(--ink-blue-soft);
   font-size: 13px;
