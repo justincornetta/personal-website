@@ -3,7 +3,8 @@
 
 .section {
   --ink-blue: #2a3fb5;
-  --ink-blue-soft: #5d70d6;
+  --ink-blue-soft: #5d70d6; /* lines and borders only (4.1:1 on cream) */
+  --ink-blue-text: #4659c4; /* small text: 5.5:1 on cream */
   --paper-cream: #fbf5e4;
   --hand: "Segoe Print", "Bradley Hand", "Chalkboard SE", "Marker Felt", "Comic Neue", "Comic Sans MS", cursive;
 }
@@ -23,125 +24,217 @@
   overflow: hidden;
 }
 
-.canvas {
-  --art: clamp(44px, 7.4cqw, 74px);
+/* ---------------------------------------------------------------------------------------------------
+   Tree. Plain grid in normal flow, no coordinates. DOM order = tab order = mobile stack order:
+   Justin, Grok Bot branch, Tin Can bridge, Coding tools, Notion.
+   Desktop/tablet: [Grok Bot branch] ---Tin Can--- [Coding tools], Justin above, Notion below.
+   --------------------------------------------------------------------------------------------------- */
+.tree {
+  --art: clamp(58px, 7.2vw, 80px);
+  --gap: 14px;
+  --line: 2px dashed var(--ink-blue);
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(176px, 0.95fr) minmax(0, 1fr);
+  grid-template-areas:
+    "top top top"
+    "rail rail rail"
+    "grok bridge tools"
+    "base base base";
+  column-gap: var(--gap);
+  width: 100%;
+}
+
+.top { grid-area: top; justify-self: center; }
+
+/* Connector from Justin to the two branches (subgrid so the drops land on the branch centres). */
+.rail {
+  grid-area: rail;
   position: relative;
+  display: grid;
+  grid-template-columns: subgrid;
+  height: 46px;
+  opacity: 0.7;
+}
+.railStem { position: absolute; left: 50%; top: 0; height: 23px; border-left: var(--line); }
+.railL, .railM, .railR { position: relative; }
+.railL::before { content: ""; position: absolute; left: 50%; right: calc(var(--gap) * -1); top: 22px; border-top: var(--line); }
+.railM::before { content: ""; position: absolute; left: calc(var(--gap) * -1); right: calc(var(--gap) * -1); top: 22px; border-top: var(--line); }
+.railR::before { content: ""; position: absolute; left: calc(var(--gap) * -1); right: 50%; top: 22px; border-top: var(--line); }
+.railL::after, .railR::after { content: ""; position: absolute; left: 50%; top: 22px; bottom: 0; border-left: var(--line); }
+
+.branch { min-width: 0; }
+
+/* Grok Bot branch: a clearly labelled section. */
+.grok {
+  grid-area: grok;
   container-type: inline-size;
-  aspect-ratio: 1000 / 1200;
-  width: 100%;
-}
-
-.frame {
-  position: absolute;
-  left: 2%; top: 33%; width: 74%; height: 54%;
-  border: 2px dashed var(--ink-blue-soft);
-  border-radius: 22px 30px 24px 28px;
-  background: rgba(255, 255, 255, 0.28);
-}
-
-.lines {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  fill: none;
-  stroke: var(--ink-blue);
-  stroke-width: 1.8;
-  stroke-dasharray: 7 7;
-  stroke-linecap: round;
-  opacity: 0.6;
-  vector-effect: non-scaling-stroke;
-}
-.lines path { vector-effect: non-scaling-stroke; }
-
-.node {
-  position: absolute;
-  left: calc(var(--x) * 1%);
-  top: calc(var(--y) * 1%);
-  transform: translate(-50%, calc(var(--art) * -0.5));
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: max(11cqw, 76px);
-  min-height: 44px;
+  padding: 16px 12px 18px;
+  border: 2px dashed var(--ink-blue-soft);
+  border-radius: 22px 30px 24px 28px;
+  background: transparent;
+}
+.branchTitle { margin: 0; font: inherit; }
+.stem { flex: none; height: 22px; border-left: var(--line); opacity: 0.7; }
+.groups { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 10px; width: 100%; }
+.group {
+  flex: 0 1 auto;
+  margin: 0;
+  padding: 6px 8px 8px;
+  border: 1.5px dashed rgba(93, 112, 214, 0.55);
+  border-radius: 14px 18px 14px 16px;
+  text-align: center;
+}
+.groupWide { flex-basis: 100%; }
+.groupLabel {
+  display: inline-block;
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink-blue);
+  text-decoration: underline wavy rgba(93, 112, 214, 0.55);
+  text-underline-offset: 4px;
+}
+.groupNodes { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px; }
+
+/* Tin Can bridge: one horizontal link between the two branches. */
+.bridge {
+  grid-area: bridge;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   padding: 0;
+}
+.bridgeNodes {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  /* run the link out to both branch frames */
+  width: calc(100% + var(--gap) * 2);
+  margin: 0 calc(var(--gap) * -1);
+}
+.bridgeNodes::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: calc(var(--art) / 2);
+  border-top: var(--line);
+  opacity: 0.85;
+}
+.bridgeNodes .node { background: var(--paper-cream); border-radius: 12px; }
+.caption {
+  margin: 0;
+  padding: 6px 8px;
+  max-width: 30ch;
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: center;
+  color: var(--ink-blue-text);
+  background: rgba(251, 245, 228, 0.92);
+  border-radius: 8px;
+}
+
+/* Coding tools branch. */
+.tools { grid-area: tools; display: flex; flex-direction: column; gap: 12px; }
+.callout {
+  margin: 0;
+  padding: 8px 10px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--ink-blue);
+  border: 1.5px dashed var(--ink-blue-soft);
+  border-radius: 12px 14px 12px 16px;
+  background: rgba(251, 245, 228, 0.9);
+}
+.toolsPanel {
+  padding: 10px 10px 12px;
+  border: 2px dashed var(--ink-blue-soft);
+  border-radius: 22px 28px 24px 26px;
+  background: transparent;
+  text-align: center;
+}
+.toolNodes { display: flex; flex-direction: column; gap: 6px; }
+.toolNodes .node { width: 100%; flex-direction: row; justify-content: flex-start; gap: 8px; text-align: left; }
+.toolNodes .name { flex: 1; margin: 0; }
+
+/* Notion: full-width base. */
+.base {
+  grid-area: base;
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 10px 12px;
+  border: 2px dashed var(--ink-blue-soft);
+  border-radius: 20px 26px 22px 24px;
+  background: transparent;
+}
+.base .node { width: auto; flex-direction: row; gap: 12px; }
+.base .name { font-size: 17px; }
+
+/* Nodes. */
+.node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 86px;
+  min-height: 44px;
+  padding: 2px;
   border: 0;
   background: none;
   color: inherit;
   font: inherit;
   text-align: center;
   cursor: pointer;
-  z-index: 1;
 }
+div.node { cursor: default; }
 .node:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 10px; }
 
 .art {
   position: relative;
   display: block;
+  flex: none;
   width: var(--art);
   height: var(--art);
   transition: transform 0.2s ease;
 }
-.art img, .inlineArt { display: block; width: 100%; height: 100%; }
-.inlineArt { position: absolute; inset: 0; }
-.tracking .art img { visibility: hidden; }
+.artSvg { display: block; width: 100%; height: 100%; overflow: visible; }
+/* The v2 rasters are off-white squares (about #f8f2ea). `darken` against the cream paper keeps the paper
+   colour, so the square edge disappears. It sits on the element that also gets the hover transform. */
+.artV2 { mix-blend-mode: darken; border-radius: 16%; overflow: hidden; }
+.ink { fill: none; stroke: var(--ink-blue); stroke-linecap: round; stroke-linejoin: round; }
 .node:hover .art, .node:focus-visible .art { transform: rotate(-3deg) scale(1.05); }
+
+.k_hub { width: 130px; }
+.k_hub .art { width: calc(var(--art) * 1.25); height: calc(var(--art) * 1.25); }
+.k_hub .name { font-size: 17px; }
+
+.top .node.person { cursor: default; width: min(100%, 300px); }
+.person .art { width: calc(var(--art) * 1.15); height: calc(var(--art) * 1.15); }
+.person .name { font-size: 18px; }
 
 .name {
   margin-top: 2px;
-  padding: 0 4px;
-  font-size: clamp(11px, 1.7cqw, 16px);
+  font-size: 13px;
   font-weight: 700;
   line-height: 1.15;
-  background: rgba(251, 245, 228, 0.88);
-  border-radius: 6px;
+  color: var(--ink-blue);
 }
 .role {
-  font-size: clamp(10px, 1.4cqw, 13px);
-  line-height: 1.1;
-  color: var(--ink-blue-soft);
-  background: rgba(251, 245, 228, 0.88);
+  font-size: 11px;
+  line-height: 1.15;
+  color: var(--ink-blue-text);
 }
 .label {
   margin-top: 4px;
-  max-width: 28cqw;
-  padding: 0 6px;
-  font-size: clamp(10px, 1.4cqw, 13px);
-  line-height: 1.25;
-  color: var(--ink-blue-soft);
-  background: rgba(251, 245, 228, 0.88);
-  border-radius: 6px;
-}
-div.node { cursor: default; }
-
-.wide { width: 78cqw; }
-.wide .art { width: 100%; height: auto; aspect-ratio: 8 / 1; }
-.wide { transform: translate(-50%, calc(-4.9cqw)); }
-.wide .name { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: clamp(13px, 2cqw, 20px); }
-
-.text {
-  position: absolute;
-  left: calc(var(--x) * 1%);
-  top: calc(var(--y) * 1%);
-  width: calc(var(--w) * 1%);
-  margin: 0;
-  font-size: clamp(10px, 1.45cqw, 14px);
+  font-size: 13px;
   line-height: 1.3;
-  z-index: 1;
-}
-.callout, .caption { color: var(--ink-blue); }
-.callout { padding: 6px 8px; border: 1.5px dashed var(--ink-blue-soft); border-radius: 10px; background: rgba(251, 245, 228, 0.9); }
-.caption { text-align: center; color: var(--ink-blue-soft); background: rgba(251, 245, 228, 0.92); border-radius: 6px; }
-.group {
-  width: auto;
-  padding: 0 8px;
-  font-size: clamp(11px, 1.8cqw, 17px);
-  font-weight: 700;
-  text-decoration: underline wavy rgba(93, 112, 214, 0.5);
-  text-underline-offset: 4px;
-  background: rgba(251, 245, 228, 0.92);
-  border-radius: 6px;
+  color: var(--ink-blue-text);
 }
 
 /* Detail card: a sheet over the chart. */
@@ -168,10 +261,11 @@ div.node { cursor: default; }
   font-family: var(--hand);
 }
 .card h3 { margin: 0; padding-right: 48px; font-size: 26px; line-height: 1.15; }
-.cardRole { margin: 4px 0 0; color: var(--ink-blue-soft); font-size: 15px; }
+.cardRole { margin: 4px 0 0; color: var(--ink-blue-text); font-size: 15px; }
 .oneLiner { margin: 14px 0 10px; font-size: 16px; line-height: 1.45; }
-.card ul { margin: 0 0 18px; padding-left: 20px; font-size: 15px; line-height: 1.5; }
-.card li::marker { color: var(--ink-blue-soft); }
+.card ul { margin: 0 0 16px; padding-left: 20px; font-size: 15px; line-height: 1.45; }
+.card li { margin: 0 0 4px; padding-left: 2px; }
+.card li::marker { color: var(--ink-blue); }
 .readMore {
   display: inline-flex;
   align-items: center;
@@ -196,37 +290,46 @@ div.node { cursor: default; }
 .close svg { width: 22px; height: 22px; }
 .close:hover { background: rgba(93, 112, 214, 0.14); }
 
-/* Tablet: same chart, smaller nodes and text via cqw units. */
+/* Tablet: tighter columns and smaller art. */
 @media (max-width: 900px) {
   .sheet { padding: 10px; }
+  .tree { --gap: 10px; grid-template-columns: minmax(0, 1.8fr) minmax(150px, 0.9fr) minmax(0, 1fr); }
+  .node { width: 78px; }
+  .name { font-size: 12px; }
+  .group { padding: 5px 5px 6px; }
+  .caption { font-size: 12px; }
 }
 
-/* Mobile: stack the same story top to bottom. No connectors, no horizontal scroll. */
+/* Mobile: the same story stacked top to bottom, no horizontal scroll. */
 @media (max-width: 719px) {
-  .canvas {
-    container-type: normal;
-    aspect-ratio: auto;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px 8px;
+  .tree {
     --art: 64px;
+    --gap: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
   }
-  .frame, .lines { display: none; }
-  .node, .wide {
-    position: static;
-    transform: none;
-    width: auto;
-    min-width: 0;
-    padding: 8px 0;
+  .top { align-self: center; }
+  .rail { display: block; height: 28px; }
+  .railL, .railM, .railR { display: none; }
+  .railStem { height: 28px; }
+  .grok, .bridge, .tools { margin-top: 0; }
+  .bridge, .tools { margin-top: 28px; position: relative; }
+  .bridge::before, .tools::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: -28px; height: 28px;
+    border-left: var(--line);
+    opacity: 0.7;
   }
-  .full { grid-column: 1 / -1; }
-  .name { font-size: 14px; }
-  .role { font-size: 12px; }
-  .text { position: static; width: auto; font-size: 13px; }
-  .group { grid-column: 1 / -1; justify-self: start; margin-top: 8px; font-size: 15px; }
-  .callout, .caption { grid-column: 1 / -1; }
-  .wide .art { width: 100%; height: auto; }
-  .wide .name { position: static; transform: none; }
+  .bridge { align-self: stretch; }
+  .bridgeNodes { width: 100%; margin: 0; justify-content: center; gap: 36px; }
+  .bridgeNodes::before { left: 25%; right: 25%; }
+  .caption { max-width: none; font-size: 13px; }
+  .toolNodes .node { padding: 4px 6px; }
+  .base { margin-top: 28px; }
+  .node { width: 88px; }
+  .name { font-size: 13px; }
   .overlay { align-items: end; padding: 0; }
   .card { width: 100%; max-height: 85dvh; border-radius: 20px 20px 0 0; }
 }
