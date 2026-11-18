@@ -221,9 +221,6 @@ div.node { cursor: default; }
   transition: transform 0.2s ease;
 }
 .artSvg { display: block; width: 100%; height: 100%; overflow: visible; }
-/* The v2 rasters are off-white squares (about #f8f2ea). `darken` against the cream paper keeps the paper
-   colour, so the square edge disappears. It sits on the element that also gets the hover transform. */
-.artV2 { mix-blend-mode: darken; border-radius: 16%; overflow: hidden; }
 .ink { fill: none; stroke: var(--ink-blue); stroke-linecap: round; stroke-linejoin: round; }
 .node:hover .art, .node:focus-visible .art { transform: rotate(-3deg) scale(1.05); }
 

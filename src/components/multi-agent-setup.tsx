@@ -115,7 +115,7 @@ function PhotoArt({ node, uid }: { node: AgentNode; uid: string }) {
 }
 
 // --- v2 SVG, inlined ---------------------------------------------------------------------------------
-// The raster is the 512px image from the v2 file; the pupil groups are copied from it. Only the outer
+// The raster is the 512px transparent v3 image; the pupil groups are copied from it. Only the outer
 // group is translated, so each pupil keeps its own rotation.
 function V2PupilGroup({ pupil, side, uid }: { pupil: V2Pupil; side: "left" | "right"; uid: string }) {
   return (
@@ -232,7 +232,7 @@ export function MultiAgentSetup() {
     const hasEyes = Boolean(node.pupils || node.eyes);
     const uid = `${uidBase}-${node.id}`;
     const art = (
-      <span className={`${styles.art} ${node.pupils ? styles.artV2 : ""}`}>
+      <span className={styles.art}>
         {node.pupils ? <V2Art node={node} uid={uid} /> : <PhotoArt node={node} uid={uid} />}
       </span>
     );
