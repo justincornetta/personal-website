@@ -12,7 +12,7 @@
 
 ## Git
 - Last merged PR on main: Update AI Agent Avengers title and cover (#22), `9f5de9e`.
-- Open work: draft PR #23, branch `feature/multi-ai-agent-setup`. Claude Code wrote the first commit (`7fc7ed0`). Follow-up `7f0464d` wires approved copy and Codex v1 art. Layout rebuild with real avatar photos and inlined v2 SVGs: `894e7ad`. Lockfile-only commit so `npm ci` passes: `f9abf14`. Full-section review screenshots (1440 and 390) are in `/workspace/design/multi-ai-agent-setup/qa/v2/`. Layout follow-up (right column balance, computer line, copy status) is in the next commit on this branch, not pushed. Earlier preview still shows the old layout until this push deploys.
+- Open work: draft PR #23, branch `feature/multi-ai-agent-setup`. Claude Code wrote the first commit (`7fc7ed0`). Follow-up `7f0464d` wires approved copy and Codex v1 art. Layout rebuild with real avatar photos and inlined v2 SVGs: `894e7ad`. Lockfile-only commit so `npm ci` passes: `f9abf14`. Layout follow-up (right column balance, computer line): `3a2a9b8`, computer-note wrap fix: `1760da0`. v3 transparent art swap (mix-blend removed): `998eb61`. Full-section review screenshots (1440 and 390) are in `/workspace/design/multi-ai-agent-setup/qa/v3/`.
 
 ## Next steps
 1. Justin reviews the layout follow-up and runs QA (push for a fresh preview when ready). Do not merge without his OK. Layout follow-ups on this branch are unchanged by the v3 swap; draft PR #23 stays open.
