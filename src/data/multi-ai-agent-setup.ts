@@ -136,6 +136,9 @@ export const tinCanCaption =
 export const justinToolsCallout =
   "I work in Claude Code, Codex, and Cursor myself. The bots can also hand work to those tools.";
 
+// Approved line shown beside Grok Bot's computer node (desktop and mobile).
+export const computerNote = "My Grok Bots can also run Claude Code here.";
+
 export const justinLabel =
   "I set the work, make the decisions, and approve anything that gets sent, published, or paid for.";
 
@@ -143,7 +146,7 @@ export const justinLabel =
 export const claudeOnGrokBotCallout = "";
 export const notionCaption = "";
 
-// Hand-lettered group labels drawn inside the chart. Not in the approved copy file.
+// Hand-lettered group labels drawn inside the chart. "Coding tools" is approved copy.
 export const groupLabels = {
   workspace: "Workspace",
   builds: "Builds and design",

@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import {
+  computerNote,
   groupLabels,
   justinLabel,
   justinToolsCallout,
@@ -307,6 +308,7 @@ export function MultiAgentSetup() {
               {renderNode("grok-bot-computer")}
               {renderNode("agent-tin-can")}
             </div>
+            <p className={styles.computerNote}>{computerNote}</p>
             <p className={styles.caption}>{tinCanCaption}</p>
           </section>
 
