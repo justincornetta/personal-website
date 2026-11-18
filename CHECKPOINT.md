@@ -9,7 +9,7 @@
 
 ## Git
 - Last merged PR on main: Update AI Agent Avengers title and cover (#22), `9f5de9e`.
-- Open work: branch `feature/multi-ai-agent-setup`. Claude Code wrote the first commit (`7fc7ed0`). A follow-up commit wires approved copy and Codex v1 art.
+- Open work: draft PR #23, branch `feature/multi-ai-agent-setup`. Claude Code wrote the first commit (`7fc7ed0`). Follow-up `7f0464d` wires approved copy and Codex v1 art. Preview: https://personal-website-as7k077bm-justin-cornetta.vercel.app/projects (Vercel SSO).
 
 ## Next steps
 1. If Codex v2 art arrives, drop it in (same filenames / pupil ids or raster + eye overlay) and recheck eye-tracking.
