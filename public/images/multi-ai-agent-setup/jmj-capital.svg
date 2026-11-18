@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="JMJ Capital" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<title>JMJ Capital</title>
+
+<path d="M34.6 25.2 L92.0 26.1 Q104.1 27.4 102.7 38.0 L103.5 60.0 Q102.7 70.9 92.0 70.9 L35.5 70.8 Q23.4 70.7 23.7 60.0 L23.4 38.0 Q25.0 25.9 36.0 26.1Z" fill="#fffaf0"/>
+<path d="M64.8 14.3 L62.7 26.5"/><circle cx="64" cy="11" r="4" fill="#2a3fb5"/>
+<circle cx="46" cy="48" r="9" fill="#fffaf0"/><circle cx="82" cy="48" r="9" fill="#fffaf0"/>
+<circle id="pupil-left" cx="46" cy="48" r="4" fill="#2a3fb5" stroke="none"/><circle id="pupil-right" cx="82" cy="48" r="4" fill="#2a3fb5" stroke="none"/>
+<path d="M52 62 Q64 67 76 62"/>
+<path d="M41.9 77.2 L86.9 77.2 Q94.4 77.8 93.9 86.0 L95.2 106.0 Q92.7 114.0 86.0 113.7 L41.1 114.9 Q34.6 113.0 34.7 106.0 L32.7 86.0 Q33.9 78.8 42.0 76.6Z" fill="#fffaf0"/>
+<path d="M33.8 85.6 L17.0 99.9"/><path d="M94.4 85.6 L109.1 100.0"/><path d="M47.9 114.1 L45.0 124.6"/><path d="M79.9 114.4 L82.5 123.2"/>
+<path d="M44 26 L84 26 L84 18 L44 18Z" fill="#fffaf0"/>
+<g stroke-width="2.4"><path d="M52 108 L60 96 L68 102 L78 88"/></g>
+</svg>

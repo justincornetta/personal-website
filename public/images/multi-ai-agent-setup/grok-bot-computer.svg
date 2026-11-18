@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Grok Bot's computer" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<title>Grok Bot's computer</title>
+
+<path d="M24.9 20.8 L104.6 18.8 Q113.1 20.0 113.0 28.0 L111.7 78.0 Q112.2 85.0 104.0 87.1 L23.3 86.7 Q16.1 84.7 16.9 78.0 L17.4 28.0 Q15.7 21.0 24.0 19.8Z" fill="#fffaf0"/>
+<path d="M48 108 H80M64 86 V108"/>
+<path d="M32 40 L46 52 L32 64M56 66 H84"/>
+<circle cx="102" cy="76" r="3" fill="#2a3fb5"/>
+</svg>

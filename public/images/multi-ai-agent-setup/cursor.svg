@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Cursor" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<title>Cursor</title>
+
+<path d="M24.9 24.6 L102.7 24.7 Q113.3 25.4 114.4 34.0 L115.5 94.0 Q114.6 105.4 104.0 103.0 L24.8 102.5 Q13.5 104.3 13.5 94.0 L15.2 34.0 Q14.2 23.3 24.0 22.9Z" fill="#fffaf0"/><path d="M13.3 43.6 L114.3 44.4"/>
+<path d="M44 58 L44 96 L54 86 L62 102 L70 98 L62 82 L76 82Z" fill="#2a3fb5"/>
+</svg>

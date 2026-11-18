@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Designer" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<title>Designer</title>
+
+<path d="M35.8 24.6 L93.5 26.2 Q104.5 25.7 104.8 38.0 L104.9 60.0 Q104.0 71.8 92.0 73.2 L36.7 70.6 Q23.6 71.9 25.6 60.0 L24.5 38.0 Q22.9 26.6 36.0 24.9Z" fill="#fffaf0"/>
+<path d="M63.4 14.1 L62.6 25.0"/><circle cx="64" cy="11" r="4" fill="#2a3fb5"/>
+<circle cx="46" cy="48" r="9" fill="#fffaf0"/><circle cx="82" cy="48" r="9" fill="#fffaf0"/>
+<circle id="pupil-left" cx="46" cy="48" r="4" fill="#2a3fb5" stroke="none"/><circle id="pupil-right" cx="82" cy="48" r="4" fill="#2a3fb5" stroke="none"/>
+<path d="M52 62 Q64 67 76 62"/>
+<path d="M43.5 78.0 L84.5 77.6 Q93.0 78.5 93.1 86.0 L94.8 106.0 Q93.4 115.3 86.0 114.3 L41.7 115.1 Q33.0 113.5 33.7 106.0 L35.3 86.0 Q34.2 76.7 42.0 76.9Z" fill="#fffaf0"/>
+<path d="M34.0 85.5 L17.8 100.0"/><path d="M93.7 85.1 L109.1 100.5"/><path d="M47.9 114.1 L46.8 123.2"/><path d="M79.8 113.4 L81.8 123.1"/>
+<path d="M42 26 Q64 6 86 26"/>
+<g stroke-width="2.4"><path d="M52 106 L76 90 L80 96 L56 110Z"/><path d="M52 106 L50 112 L56 110"/></g>
+</svg>

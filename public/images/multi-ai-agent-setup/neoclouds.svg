@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Neoclouds" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<title>Neoclouds</title>
+
+<path d="M37.4 25.4 L93.2 26.5 Q104.7 24.4 102.8 38.0 L103.4 60.0 Q104.0 72.8 92.0 72.3 L36.9 73.5 Q25.3 71.1 23.0 60.0 L24.6 38.0 Q23.3 27.0 36.0 25.5Z" fill="#fffaf0"/>
+<path d="M63.8 13.5 L62.6 26.8"/><circle cx="64" cy="11" r="4" fill="#2a3fb5"/>
+<circle cx="46" cy="48" r="9" fill="#fffaf0"/><circle cx="82" cy="48" r="9" fill="#fffaf0"/>
+<circle id="pupil-left" cx="46" cy="48" r="4" fill="#2a3fb5" stroke="none"/><circle id="pupil-right" cx="82" cy="48" r="4" fill="#2a3fb5" stroke="none"/>
+<path d="M52 62 Q64 67 76 62"/>
+<path d="M43.4 76.4 L85.4 77.4 Q95.1 79.6 94.8 86.0 L93.1 106.0 Q93.5 114.7 86.0 114.2 L43.0 114.2 Q33.3 115.0 34.8 106.0 L35.1 86.0 Q34.8 78.6 42.0 78.3Z" fill="#fffaf0"/>
+<path d="M33.1 86.6 L19.0 99.2"/><path d="M93.9 85.9 L109.8 99.3"/><path d="M47.7 113.5 L45.5 123.3"/><path d="M79.3 113.3 L81.6 124.0"/>
+
+<g stroke-width="2.4"><path d="M54 106 Q50 96 60 96 Q62 88 72 92 Q80 92 78 106Z"/></g>
+</svg>

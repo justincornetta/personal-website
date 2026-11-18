@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Claude Code" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<title>Claude Code</title>
+
+<path d="M24.7 22.9 L102.8 25.0 Q114.5 22.4 113.1 34.0 L114.4 94.0 Q112.8 103.4 104.0 103.8 L25.3 104.2 Q14.0 104.8 13.5 94.0 L13.3 34.0 Q12.8 22.8 24.0 23.0Z" fill="#fffaf0"/><path d="M13.8 43.5 L114.2 43.0"/>
+<path d="M34 66 L50 76 L34 88"/><path d="M62 90 H88"/>
+</svg>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Codex" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<title>Codex</title>
+
+<path d="M23.1 25.4 L103.5 23.7 Q114.5 25.2 113.1 34.0 L112.9 94.0 Q115.5 102.7 104.0 105.0 L22.6 103.7 Q12.8 104.3 14.5 94.0 L13.8 34.0 Q15.3 22.9 24.0 23.0Z" fill="#fffaf0"/><path d="M14.0 43.8 L114.6 44.5"/>
+<path d="M48 62 L34 76 L48 90M80 62 L94 76 L80 90M70 58 L58 94"/>
+</svg>

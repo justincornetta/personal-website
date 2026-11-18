@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER art for the Multi-AI Agent Setup chart. Replace with final art using the same filename; keep id="pupil-left" and id="pupil-right" on characters with eyes. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 80" role="img" aria-label="Notion" fill="none" stroke="#2a3fb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<title>Notion</title>
+
+<path d="M18.4 11.2 L621.8 11.0 Q632.0 11.7 631.9 22.0 L633.4 58.0 Q632.7 69.4 622.0 66.5 L19.1 69.5 Q7.0 66.8 6.4 58.0 L8.9 22.0 Q6.5 11.9 18.0 11.3Z" fill="#fffaf0"/>
+<path d="M24.9 30.5 L615.2 29.6"/><path d="M23.6 44.2 L616.1 44.0"/><path d="M23.6 57.1 L616.5 58.0"/>
+<rect x="40" y="16" width="14" height="10"/><rect x="60" y="18" width="12" height="8"/>
+</svg>
