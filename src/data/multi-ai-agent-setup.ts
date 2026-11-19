@@ -222,7 +222,7 @@ export const ipnSubtitle = "IPN's own Notion workspace, guide and Skills registr
 // Hand-lettered aside on the personal chart.
 export const teamNote = "Shows part of the team. A few more bots handle legal, finances, calls and job search.";
 export const ipnLinkLabels = {
-  reads: "reads the IPN Agent Operating Guide and Agent Onboarding guide",
+  reads: "reads the IPN Agent Rules, Onboarding and Skills pages",
   changes: "every IPN Notion change",
   afterReview: "after my review",
   edits: "edits",
@@ -509,10 +509,10 @@ export const nodes: AgentNode[] = [
     kind: "base",
     art: `${V3}/raster/notion.webp`,
     pupils: v2Pupils["notion"],
-    oneLiner: "The shared knowledge base every agent reads. It holds my skills, the Agent Operating Guide, and the documentation and research for my non-coding projects.",
+    oneLiner: "The shared knowledge base every agent reads. It holds my skills, my Agent Operating Guide, and the documentation and research for my non-coding projects.",
     useCases: [
-      "Two separate workspaces, personal and IPN, each with its own Agent Operating Guide and Skills registry.",
-      "Every agent is directed to read its workspace's Agent Operating Guide before it starts work.",
+      "Two separate workspaces, personal and IPN. Personal has my Agent Operating Guide; IPN has its own agent rules pages; each has its own Skills registry.",
+      "Every agent is directed to read its workspace's agent rules before it starts work.",
       "54 reusable skills (41 personal, 20 IPN, 7 shared), each written once in Notion; every agent's local copy just points there.",
       "Holds project homes, documentation, and research for my non-coding projects.",
       "Noah is the default Notion editor; a few bots have narrow, audited write lanes.",
@@ -537,7 +537,7 @@ export const nodes: AgentNode[] = [
     kind: "base",
     art: `${V2}/raster/github.webp`,
     pupils: v2Pupils["github"],
-    oneLiner: "The source of truth for code status on each of my coding projects.",
+    oneLiner: "The source of truth for code and project status on each of my coding projects.",
     useCases: [
       "Every coding project has a repository with its code, history, and pull requests.",
       "Code status lives in a CHECKPOINT file on main, and it wins over any other note.",
@@ -578,7 +578,7 @@ export const nodes: AgentNode[] = [
     pupils: v2Pupils["ipn-leadership"],
     oneLiner: "IPN's leadership team runs its own AI agents for our nonprofit work, on the same rules as mine.",
     useCases: [
-      "Reads the IPN Agent Operating Guide and the IPN Agent Onboarding guide in IPN's Notion before starting work.",
+      "Reads IPN Agent Rules, IPN Agent Onboarding and IPN Skills in IPN's Notion before starting work.",
       "Uses the same agent types I do: Grok Bot, Cursor, Claude Code and Codex.",
       "Sends any change to IPN's Notion to me for review instead of editing it directly.",
     ],
@@ -636,8 +636,9 @@ export const nodes: AgentNode[] = [
     pupils: v2Pupils["notion"],
     oneLiner: "IPN's own Notion workspace, kept separate from my personal one, with its own guide and Skills registry.",
     useCases: [
-      "Holds the IPN Agent Operating Guide, the rules every IPN agent follows.",
-      "Holds the IPN Agent Onboarding guide that sets up a new leader's agents.",
+      "Holds IPN Agent Rules: Read this first, the rules every IPN agent follows.",
+      "Holds IPN Agent Onboarding: Get connected, which sets up a new leader's agents.",
+      "Holds IPN Skills: Read this first, the guide to IPN's skills.",
       "Holds IPN's Skills registry: the IPN skills plus the ones shared with my personal workspace.",
       "Noah is the default editor; a few bots have narrow, audited write lanes.",
     ],
@@ -648,7 +649,7 @@ export const nodes: AgentNode[] = [
     kind: "person",
     art: `${V3}/raster/justin.webp`,
     pupils: v2Pupils["justin"],
-    oneLiner: "Any change to IPN's Notion comes to me first.",
+    oneLiner: "Leaders send IPN Notion change requests to me for review; Noah makes the approved edit. Leaders don't edit IPN Notion directly.",
     useCases: [
       "I check the change against the guides and approve or adjust it.",
       "Once I approve, Noah makes the edit.",

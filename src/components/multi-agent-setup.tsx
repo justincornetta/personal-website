@@ -169,8 +169,8 @@ function measureIpnWires(tree: HTMLElement): Wiring {
     // The label sits above the line; it wraps to more lines when the run is short.
     const run = x2 - x1;
     const lines = run > 340
-      ? ["reads the IPN Agent Operating Guide", "and Agent Onboarding guide"]
-      : ["reads the IPN Agent", "Operating Guide and", "Agent Onboarding guide"];
+      ? ["reads the IPN Agent Rules,", "Onboarding and Skills pages"]
+      : ["reads the IPN Agent", "Rules, Onboarding and", "Skills pages"];
     labels.push({ x: (x1 + x2) / 2, y: y - 8 - (lines.length - 1) * 15, lines, anchor: "middle" });
   }
   if (review && noah) {
