@@ -4,14 +4,14 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { GalleryCarousel } from "@/components/gallery-carousel";
 import { mdxComponents } from "@/components/mdx-components";
-import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
+import { getProjectBySlug, getViewableProjects } from "@/lib/content";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
 };
 
 export function generateStaticParams() {
-  return getPublishedProjects().map((project) => ({ slug: project.slug }));
+  return getViewableProjects().map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
