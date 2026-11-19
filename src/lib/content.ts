@@ -42,6 +42,7 @@ export type ProjectMeta = {
   externalUrl?: string;
   video?: string;
   cover?: string;
+  coverChart?: "multi-ai-agent-setup";
   gallery: GalleryItem[];
 };
 
@@ -135,6 +136,7 @@ function normalizeProject(data: matter.GrayMatterFile<string>["data"]): ProjectM
     externalUrl: data.externalUrl ? String(data.externalUrl) : undefined,
     video: data.video ? String(data.video) : undefined,
     cover: data.cover ? String(data.cover) : undefined,
+    coverChart: data.coverChart === "multi-ai-agent-setup" ? "multi-ai-agent-setup" : undefined,
     gallery: asGallery(data.gallery),
   };
 }
@@ -176,8 +178,17 @@ export function getFeaturedProjects() {
   return getPublishedProjects().filter((project) => project.featured);
 }
 
+// Draft projects render on Vercel preview deployments only, so a case study can be
+// reviewed on its PR preview before it goes live. Production and local builds skip them.
+export function getViewableProjects() {
+  const showDrafts = process.env.VERCEL_ENV === "preview";
+  return getAllProjects().filter(
+    (project) => project.status === "published" || (showDrafts && project.status === "draft"),
+  );
+}
+
 export function getProjectBySlug(slug: string) {
-  return getPublishedProjects().find((project) => project.slug === slug);
+  return getViewableProjects().find((project) => project.slug === slug);
 }
 
 export function getAllWriting(): ContentEntry<WritingMeta>[] {

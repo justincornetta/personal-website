@@ -1,0 +1,116 @@
+---
+title: "How My AI Agents Work Together"
+slug: "ai-agents-working-together"
+subtitle: "How I made one AI power user's skills and workflows available to my whole team, and got my agents working together."
+summary: "How I shared my AI skills and workflows with my whole team, so everyone levels up together."
+category: "AI & Tech"
+contentType: "Project"
+role: "Lead"
+date: "2026-11-19"
+published: "Nov 2026"
+skills: ["AI Agent Orchestration", "AI Governance", "AI Automation"]
+tools: ["Grok Bot", "Claude Code", "Codex", "Agent Tin Can", "Notion", "Slack"]
+featured: false
+order: 1
+cover: "/images/projects/ai-agents-working-together/cover.webp"
+coverChart: "multi-ai-agent-setup"
+gallery: [{"src": "/images/projects/ai-agents-working-together/gallery/01.webp", "caption": "My Multi-AI Agent Setup, the chart on my Projects page. Cornbot organized the work, Claude Code built it, and Codex made the images."}, {"src": "/images/projects/ai-agents-working-together/gallery/02.webp", "caption": "The Nov 15 weekly skills post in our IPN Slack's #ipn-skills channel. Leaders get each skill read-only through a pointer file, the same live instructions the agents use, and Slack only announces what changed."}, {"src": "/images/projects/ai-agents-working-together/gallery/03.webp", "caption": "On Nov 14, Codex built build-financial-model, a personal skill. It came through Cornbot, and Noah published it to the personal Skills registry. That's the publishing flow for a new skill."}, {"src": "/images/projects/ai-agents-working-together/gallery/04.webp", "caption": "On Oct 28, in Codex, I asked for the Beyond Approval cover I picked to be sent to Cornbot, who would pass it to Designer. Codex confirmed it had sent the cover and my color preferences through."}, {"src": "/images/projects/ai-agents-working-together/gallery/05.webp", "caption": "On Oct 28, Designer received the Beyond Approval cover from Cornbot and recommended which changes should become general brand rules. Those edits only go to Noah after I approve them."}, {"src": "/images/projects/ai-agents-working-together/gallery/06.webp", "caption": "I asked Cornbot for an update on the case study graphic. Claude Code had just finished the build, Cornbot opened the pull request, and Noah started an accuracy check against Notion before I merged it."}, {"src": "/images/projects/ai-agents-working-together/gallery/07.webp", "caption": "On Nov 19, I asked Claude Code to open the deploy preview for PR #24 so I could make a few final edits myself."}]
+status: "published"
+---
+
+## TL;DR
+
+**Problem:** People in any organization have very different levels of familiarity with AI and how to use it. The productivity gap between those who use it well and those who don't is dramatic, and the power users' skills and workflows rarely reach anyone else, so the rest of the team doesn't level up with them.
+
+**Solution:** I built a multi-agent operating system on top of my earlier setup ([AI Agent Avengers](/projects/ai-agent-avengers)), so what I've built can be shared:
+
+- **Two Skills registries:** one for personal work and one for professional work, like my nonprofit, IPN. Every agent pulls skills from the live registry instead of keeping its own copy.
+- **IPN Agent Rules and IPN Agent Onboarding:** the rules set governance and upkeep for the shared knowledge base, and the onboarding guide gets any new agent connected quickly.
+- **A virtual computer for my Grok Bots:** they use it to reach coding agents like Claude Code and Codex.
+- **[Agent Tin Can](https://agenttincan.com/):** a private relay network built on Tailscale (a tool that links your devices into one private network), so agents can pass work to each other.
+
+**Why it matters:** When one person's skills and workflows are shared, the whole team levels up together, at every level of AI familiarity. Agent Tin Can allows instant communication across agent harnesses (the apps agents run in), which helps when coordinating work across agents. And the virtual computer gives my Grok Bots access to coding agents, so they can act as project managers for complex coding tasks and use frontier models.
+
+## Problem
+
+In most organizations, one person is further ahead with AI than everyone else. Their skills and workflows save hours, but they live in that person's own chats and computer. Everyone else starts from zero.
+
+At IPN (the Intercollegiate Psychedelics Network, my nonprofit), that person is me, and our leaders have very different levels of AI experience. So the question I wanted to answer was: how do I make my skills and workflows available to the whole team, so everyone levels up together?
+
+Three things stood in the way:
+
+- **No shared rules:** each leader's agent runs in a different tool, with nothing keeping them consistent.
+- **I was the bridge:** my coding agents ran on my Mac, my Grok Bots ran in the cloud, and I carried questions between them by hand.
+- **No easy access to the best model for each task:** Grok Bot has the best user experience, but it falls short of other models, like Claude and GPT, on capability. Each model is best for certain use cases.
+
+In my [last case study](/projects/ai-agent-avengers), I made Notion the shared knowledge base for my own agents. This one opens that up to the whole organization.
+
+## Solution
+
+I built four pieces: shared skills with governance, rules and onboarding for every IPN agent, a virtual computer for Grok Bot to access frontier models, and a more streamlined way for agents to coordinate.
+
+### Shared skills with governance
+
+A skill is a reusable set of instructions for a repeat task, like writing a meeting recap or opening a pull request (a proposed change to a codebase that I review before it goes live).
+
+- **Two sources of truth:** two Skills registries in Notion (personal and IPN) hold the full version of every skill.
+- **Role-specific skills:** each bot gets the skills that fit its job, as read-only pointer files back to the registry, so no second version drifts out of date.
+- **One default editor:** Noah, my Notion Organizer bot, is the default Notion editor, with narrow, audited write lanes for a few bots.
+- **IPN changes get reviewed:** for IPN Notion, leaders send change requests to me for review, and Noah makes the approved edit.
+- **Same live instructions:** IPN leaders get skills read-only through the same pointer files the agents use. Each week, a bot posts new and updated IPN skills to our Slack, so everyone knows what changed.
+
+### Rules and onboarding for every IPN agent
+
+Shared skills only help if every agent follows the same rules. My own bots follow my personal Agent Operating Guide, so I wrote the IPN version: two pages in IPN's Notion that any leader's agent reads before doing IPN work, in whatever tool the leader uses (ChatGPT, Claude, Cursor, or another).
+
+- **IPN Agent Rules - Read this first:** the rules every IPN agent follows. Only Noah edits IPN Notion, and every other agent reads only. Each leader decides whether their agent only drafts or can also send, and picks a writing style for it. I approve every rule change, and Noah makes the edit.
+- **IPN Agent Onboarding - Get connected:** a quick setup guide for connecting a leader's agent to the tools IPN uses, like Gmail, Google Drive, and Slack. Each connection comes with a one-line read-only test, and a final check reports anything the agent can't reach.
+
+Every leader gets one set of rules and one onboarding path, whether they use AI daily or are new to it.
+
+### The virtual computer
+
+Grok Bot gives my bots their own computer in the cloud. I set up Claude Code and Codex on it too, signed in on my own plans, never an API key, so builds don't depend on my Mac and my bots can use frontier models for complex tasks.
+
+For long-running, multi-agent tasks, Cornbot often acts as project manager. It scopes the work and requirements, delegates to the right bot or to a coding agent on the virtual computer, reviews the result, and brings me the final output for review. From there, I may open the project (often an open PR) in Claude Code to make small tweaks.
+
+The chart at the top of this page, My Multi-AI Agent Setup, is a good example:
+
+1. Cornbot organized the work: the brief, the screenshots, and the review.
+2. Claude Code built the chart, and Codex made the images.
+3. Noah checked the text against Notion.
+4. Cornbot handed me the finished work in a PR.
+5. I reviewed it and made a few tweaks in Claude Code.
+
+### How agents coordinate
+
+Agent Tin Can is a private messaging service that lets agents in different apps send each other requests and replies. It improves on my past setup, where I dropped a Markdown file locally for Noah to pick up in its daily scan. Tin Can messages arrive instantly.
+
+- **Cornbot is the middleman:** Claude Code and Codex send their asks to Cornbot over Tin Can.
+- **Grok Bots talk through Grok Bot messaging:** when a request is meant for another Grok Bot, Cornbot relays it there and sends the answer back over Tin Can.
+
+A real example from November 19:
+
+1. Claude Code, working on my IP reimbursement dashboard, needed sample rows from the November insurer files.
+2. That question was meant for Forge, my product/engineering Grok Bot, so Claude Code sent it to Cornbot over Tin Can.
+3. Cornbot relayed it to Forge through Grok Bot messaging.
+4. Forge pulled eight sample rows, one per insurer, without changing any data.
+5. Cornbot passed Forge's answer back to Claude Code over Tin Can.
+
+I didn't copy or paste anything. Tin Can relayed the message to Cornbot automatically, while I kept working, in the same Claude Code session.
+
+## Why it matters
+
+An AI power user can save themselves hours. Sharing what they've built is what helps everyone else.
+
+At IPN, any leader's agent can now pick up a skill I built, follow the same rules, and get connected with one guide, with clear protocols and governance that keep our knowledge base current and organized. A leader who's new to AI gets the same live instructions as my most advanced bot. A daily AI user gets a tested starting point.
+
+What's changed so far:
+
+- **Same instructions for everyone:** in one week, a single Slack post told the leadership team about five new IPN skills and seven updates.
+- **Less relaying by me:** questions move between coding agents and Grok Bots without me carrying them.
+- **Real output:** Cornbot, Claude Code, and Codex built my Multi-AI Agent Setup chart while I made the calls.
+
+That's the real payoff. When one AI power user shares their skills and workflows across an organization, they don't only lift themselves. They lift everyone around them.
+
+Last time, I assembled the Avengers. This time, I gave that superpower to the entire team.

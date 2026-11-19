@@ -4,7 +4,7 @@ import { MultiAgentSetup } from "@/components/multi-agent-setup";
 import { PortfolioCard } from "@/components/portfolio-card";
 import { ResearchFeature } from "@/components/research-feature";
 import { FeaturedXResearch } from "@/components/featured-x-research";
-import { getPublishedProjects, getPublishedWriting } from "@/lib/content";
+import { getPublishedWriting, getViewableProjects } from "@/lib/content";
 import { initiatives, research } from "@/lib/portfolio";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
-  const projects = getPublishedProjects().sort((a, b) => b.date.localeCompare(a.date));
+  const projects = getViewableProjects().sort((a, b) => b.date.localeCompare(a.date));
   const writing = getPublishedWriting();
   const featuredWriting = writing.filter((entry) => entry.seriesSlug === "beyond-approval");
   const remainingWriting = writing.filter((entry) => entry.seriesSlug !== "beyond-approval");
