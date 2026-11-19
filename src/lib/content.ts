@@ -42,6 +42,7 @@ export type ProjectMeta = {
   externalUrl?: string;
   video?: string;
   cover?: string;
+  coverChart?: "multi-ai-agent-setup";
   gallery: GalleryItem[];
 };
 
@@ -135,6 +136,7 @@ function normalizeProject(data: matter.GrayMatterFile<string>["data"]): ProjectM
     externalUrl: data.externalUrl ? String(data.externalUrl) : undefined,
     video: data.video ? String(data.video) : undefined,
     cover: data.cover ? String(data.cover) : undefined,
+    coverChart: data.coverChart === "multi-ai-agent-setup" ? "multi-ai-agent-setup" : undefined,
     gallery: asGallery(data.gallery),
   };
 }

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { GalleryCarousel } from "@/components/gallery-carousel";
 import { mdxComponents } from "@/components/mdx-components";
+import { MultiAgentSetup } from "@/components/multi-agent-setup";
 import { getProjectBySlug, getViewableProjects } from "@/lib/content";
 
 type ProjectPageProps = {
@@ -101,7 +102,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         ) : null}
       </dl>
 
-      {!embed && project.cover ? (
+      {!embed && project.coverChart === "multi-ai-agent-setup" ? (
+        // The live chart from the Projects page, in a box the size of a normal cover. It scrolls inside.
+        <div className="case__cover case__cover--chart" tabIndex={0} role="region" aria-label="My Multi-AI Agent Setup chart. Scroll inside to see all of it.">
+          <MultiAgentSetup />
+        </div>
+      ) : !embed && project.cover ? (
         <figure className="case__cover">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={project.cover} alt={`${project.title} project interface`} />
