@@ -3,6 +3,9 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import {
   groupLabels,
+  ipnLinkLabels,
+  ipnTitle,
+  personalTitle,
   storageLinkLabels,
   storageTitle,
   lede,
@@ -23,6 +26,8 @@ const toolIds = ["claude-code", "codex", "cursor"];
 // GitHub (the two that Noah checks Notion against for drift sit next to it).
 const storesBefore = ["google-drive"];
 const storesAfter = ["local-files", "github"];
+// IPN area: the four agent types under "Their agents".
+const ipnAgentIds = ["ipn-grok-bot", "ipn-cursor", "ipn-claude-code", "ipn-codex"];
 
 // --- Connection lines (desktop and tablet) ---------------------------------------------------------------
 // Drawn in one SVG over the tree from the measured positions of each node's picture, so they follow the
@@ -136,6 +141,50 @@ function measureWires(tree: HTMLElement): Wiring {
       wires.push({ kind: "cli", d: `${drops} M${f(xs[0])} ${f(y)} L${f(xs[3])} ${f(y)}` });
       labels.push({ x: (xs[0] + xs[3]) / 2, y: y + 18, lines: [storageLinkLabels.drift], anchor: "middle" });
     }
+  }
+  return { wires, labels };
+}
+
+// IPN area wires (desktop and tablet). Leadership sends changes down-left to "My review" and reads the guides
+// down-right into IPN Notion; review, Noah and IPN Notion sit in one bottom row joined by straight arrows.
+function measureIpnWires(tree: HTMLElement): Wiring {
+  if (window.matchMedia("(max-width: 719px)").matches) return { wires: [], labels: [] };
+  const origin = tree.getBoundingClientRect();
+  const box = (id: string) => {
+    const art = tree.querySelector<HTMLElement>(`[data-node="${id}"] [data-art]`);
+    if (!art) return null;
+    const r = art.getBoundingClientRect();
+    if (!r.width || !r.height) return null;
+    return { l: r.left - origin.left, r: r.right - origin.left, t: r.top - origin.top, cx: r.left - origin.left + r.width / 2, cy: r.top - origin.top + r.height / 2 };
+  };
+  const f = (n: number) => n.toFixed(1);
+  const lead = box("ipn-leadership"), review = box("ipn-review"), noah = box("ipn-noah"), notion = box("ipn-notion");
+  const wires: Wire[] = [];
+  const labels: WireLabel[] = [];
+  const r = 14;
+  if (lead && review) {
+    // Out of the left side of the team, along, then down into "My review".
+    const y = lead.cy, x1 = lead.l - WIRE_PAD, x2 = review.cx, y2 = review.t - WIRE_PAD;
+    wires.push({ kind: "relay", arrow: "end", d: `M${f(x1)} ${f(y)} L${f(x2 + r)} ${f(y)} Q${f(x2)} ${f(y)} ${f(x2)} ${f(y + r)} L${f(x2)} ${f(y2)}` });
+    labels.push({ x: (x1 + x2) / 2, y: y - 8, lines: [ipnLinkLabels.changes], anchor: "middle" });
+  }
+  if (lead && notion) {
+    const y = lead.cy, x1 = lead.r + WIRE_PAD, x2 = notion.cx, y2 = notion.t - WIRE_PAD;
+    wires.push({ kind: "relay", arrow: "end", d: `M${f(x1)} ${f(y)} L${f(x2 - r)} ${f(y)} Q${f(x2)} ${f(y)} ${f(x2)} ${f(y + r)} L${f(x2)} ${f(y2)}` });
+    // The label sits above the line; it wraps to more lines when the run is short.
+    const run = x2 - x1;
+    const lines = run > 340
+      ? ["reads the IPN Agent Operating Guide", "and Agent Onboarding guide"]
+      : ["reads the IPN Agent", "Operating Guide and", "Agent Onboarding guide"];
+    labels.push({ x: (x1 + x2) / 2, y: y - 8 - (lines.length - 1) * 15, lines, anchor: "middle" });
+  }
+  if (review && noah) {
+    wires.push({ kind: "relay", arrow: "end", d: `M${f(review.r + WIRE_PAD)} ${f(noah.cy)} L${f(noah.l - WIRE_PAD)} ${f(noah.cy)}` });
+    labels.push({ x: (review.r + noah.l) / 2, y: noah.cy - 10, lines: [ipnLinkLabels.afterReview], anchor: "middle" });
+  }
+  if (noah && notion) {
+    wires.push({ kind: "relay", arrow: "end", d: `M${f(noah.r + WIRE_PAD)} ${f(noah.cy)} L${f(notion.l - WIRE_PAD)} ${f(notion.cy)}` });
+    labels.push({ x: (noah.r + notion.l) / 2, y: noah.cy - 10, lines: [ipnLinkLabels.edits], anchor: "middle" });
   }
   return { wires, labels };
 }
@@ -258,26 +307,50 @@ function V2Art({ node, uid }: { node: AgentNode; uid: string }) {
   );
 }
 
-export function MultiAgentSetup() {
-  const [openId, setOpenId] = useState<string | null>(null);
-  const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const closeRef = useRef<HTMLButtonElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const uidBase = useId().replace(/[^a-zA-Z0-9_-]/g, "");
-  const treeRef = useRef<HTMLDivElement>(null);
-  const [{ wires, labels }, setWiring] = useState<Wiring>({ wires: [], labels: [] });
+function WireLayer({ wiring, id }: { wiring: Wiring; id: string }) {
+  const { wires, labels } = wiring;
+  if (!wires.length) return null;
+  return (
+    <svg className={styles.wires} aria-hidden="true" focusable="false">
+      <defs>
+        {/* Open hand-drawn chevron; auto-start-reverse points it outward at either end. */}
+        <marker id={`${id}-arrow`} viewBox="0 0 12 12" refX="10" refY="6" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+          <path d="M2 1.5 L10 6 L2 10.5" className={styles.arrowHead} />
+        </marker>
+      </defs>
+      {wires.map((w, i) => (
+        <path
+          key={i}
+          d={w.d}
+          className={w.kind === "cli" ? styles.wireCli : w.kind === "brace" ? styles.wireBrace : styles.wireRelay}
+          markerEnd={w.arrow ? `url(#${id}-arrow)` : undefined}
+          markerStart={w.arrow === "both" ? `url(#${id}-arrow)` : undefined}
+        />
+      ))}
+      {labels.map((l, i) => (
+        <text key={i} x={l.x} y={l.y} textAnchor={l.anchor} className={styles.wireLabel}>
+          {l.lines.map((line, j) => (
+            <tspan key={j} x={l.x} dy={j ? "1.15em" : 0}>{line}</tspan>
+          ))}
+        </text>
+      ))}
+    </svg>
+  );
+}
 
+// Measures a tree's connection lines and keeps them current. Re-measures when the tree resizes, when it scrolls
+// into view (its pictures may have had no size before), and once fonts and images have settled.
+function useWiring(ref: React.RefObject<HTMLDivElement | null>, measure: (tree: HTMLElement) => Wiring) {
+  const [wiring, setWiring] = useState<Wiring>({ wires: [], labels: [] });
   useLayoutEffect(() => {
-    const tree = treeRef.current;
+    const tree = ref.current;
     if (!tree) return;
     let frame = 0;
     const update = () => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => setWiring(measureWires(tree)));
+      frame = requestAnimationFrame(() => setWiring(measure(tree)));
     };
     update();
-    // Re-measure when the tree resizes, when it scrolls into view (its pictures may have had no size
-    // before), and once fonts and images have settled.
     const observer = new ResizeObserver(update);
     observer.observe(tree);
     const visible = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && update());
@@ -290,7 +363,21 @@ export function MultiAgentSetup() {
       visible.disconnect();
       window.removeEventListener("load", update);
     };
-  }, []);
+  }, [ref, measure]);
+  return wiring;
+}
+
+export function MultiAgentSetup() {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const uidBase = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const chartsRef = useRef<HTMLDivElement>(null); // both areas: eye tracking follows the pointer across them
+  const treeRef = useRef<HTMLDivElement>(null);
+  const ipnRef = useRef<HTMLDivElement>(null);
+  const personalWiring = useWiring(treeRef, measureWires);
+  const ipnWiring = useWiring(ipnRef, measureIpnWires);
   const open = nodes.find((n) => n.id === openId) ?? null;
 
   const close = () => setOpenId(null);
@@ -336,7 +423,7 @@ export function MultiAgentSetup() {
 
   const stopEyes = () => {
     cancelAnimationFrame(eyeFrame.current);
-    treeRef.current?.querySelectorAll("[data-pupil], [data-tilt]").forEach((el) => el.removeAttribute("transform"));
+    chartsRef.current?.querySelectorAll("[data-pupil], [data-tilt]").forEach((el) => el.removeAttribute("transform"));
   };
 
   const aimNode = (node: HTMLElement, x: number, y: number) => {
@@ -373,7 +460,7 @@ export function MultiAgentSetup() {
     const { clientX: x, clientY: y } = event;
     cancelAnimationFrame(eyeFrame.current);
     eyeFrame.current = requestAnimationFrame(() => {
-      treeRef.current?.querySelectorAll<HTMLElement>("[data-eyes]").forEach((node) => aimNode(node, x, y));
+      chartsRef.current?.querySelectorAll<HTMLElement>("[data-eyes]").forEach((node) => aimNode(node, x, y));
     });
   };
 
@@ -449,33 +536,10 @@ export function MultiAgentSetup() {
           <h2 id="multi-ai-agent-setup-title" className={styles.sheetTitle}>{sectionTitle}</h2>
           <p className={styles.sheetLede}>{lede}</p>
         </header>
-        <div ref={treeRef} className={styles.tree} onPointerMove={trackEyes} onPointerLeave={stopEyes}>
-          {wires.length ? (
-            <svg className={styles.wires} aria-hidden="true" focusable="false">
-              <defs>
-                {/* Open hand-drawn chevron; auto-start-reverse points it outward at either end. */}
-                <marker id={`${uidBase}-arrow`} viewBox="0 0 12 12" refX="10" refY="6" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
-                  <path d="M2 1.5 L10 6 L2 10.5" className={styles.arrowHead} />
-                </marker>
-              </defs>
-              {wires.map((w, i) => (
-                <path
-                  key={i}
-                  d={w.d}
-                  className={w.kind === "cli" ? styles.wireCli : w.kind === "brace" ? styles.wireBrace : styles.wireRelay}
-                  markerEnd={w.arrow ? `url(#${uidBase}-arrow)` : undefined}
-                  markerStart={w.arrow === "both" ? `url(#${uidBase}-arrow)` : undefined}
-                />
-              ))}
-              {labels.map((l, i) => (
-                <text key={i} x={l.x} y={l.y} textAnchor={l.anchor} className={styles.wireLabel}>
-                  {l.lines.map((line, j) => (
-                    <tspan key={j} x={l.x} dy={j ? "1.15em" : 0}>{line}</tspan>
-                  ))}
-                </text>
-              ))}
-            </svg>
-          ) : null}
+        <div ref={chartsRef} onPointerMove={trackEyes} onPointerLeave={stopEyes}>
+        <h3 className={`${styles.areaHeading} ${styles.areaPersonal}`}>{personalTitle}</h3>
+        <div ref={treeRef} className={styles.tree}>
+          <WireLayer wiring={personalWiring} id={`${uidBase}-p`} />
           <div className={styles.top}>{renderNode("justin")}</div>
 
           <div className={styles.rail} aria-hidden="true">
@@ -528,6 +592,26 @@ export function MultiAgentSetup() {
               {storesAfter.map(renderNode)}
             </div>
           </section>
+        </div>
+
+        <section className={styles.ipnArea} aria-labelledby="mas-ipn-title">
+          <h3 id="mas-ipn-title" className={`${styles.areaHeading} ${styles.areaIpn}`}>{ipnTitle}</h3>
+          <div ref={ipnRef} className={styles.ipn}>
+            <WireLayer wiring={ipnWiring} id={`${uidBase}-i`} />
+            <div className={styles.ipnTeam}>
+              {renderNode("ipn-leadership")}
+              <span className={styles.stem} aria-hidden="true" />
+              {renderNode("ipn-agents")}
+              <span className={styles.stem} aria-hidden="true" />
+              <ul className={styles.ipnAgents} aria-label="IPN agent types">
+                {ipnAgentIds.map((id) => <li key={id} className={styles.ipnAgent}>{renderNode(id)}</li>)}
+              </ul>
+            </div>
+            <div className={`${styles.ipnCell} ${styles.ipnReview}`}>{renderNode("ipn-review")}</div>
+            <div className={`${styles.ipnCell} ${styles.ipnNoah}`}>{renderNode("ipn-noah")}</div>
+            <div className={`${styles.ipnCell} ${styles.ipnNotion}`}>{renderNode("ipn-notion")}</div>
+          </div>
+        </section>
         </div>
       </div>
       </div>

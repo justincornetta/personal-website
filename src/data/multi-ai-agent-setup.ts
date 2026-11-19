@@ -126,6 +126,24 @@ const v2Pupils: Record<string, V2Pupils> = {
     left: { cx: 67.981, cy: 51.037, rx: 2.858, ry: 5.716, rot: -25, hx: 67.352, hy: 49.093, hr: 0.629 },
     right: { cx: 86.354, cy: 45.729, rx: 2.858, ry: 5.716, rot: -25, hx: 85.725, hy: 43.785, hr: 0.629 },
   },
+  // TEMPORARY: the three new IPN pictures are copies of grok-bot-hub.webp until Codex's art arrives in
+  // /workspace/design/multi-ai-agent-setup/ipn-art-v1/. These pupils are the hub's; replace each with the
+  // measured geometry from <name>.eyes.json when the art is swapped.
+  "ipn-leadership": {
+    max: 1.2,
+    left: { cx: 67.981, cy: 51.037, rx: 2.858, ry: 5.716, rot: -25, hx: 67.352, hy: 49.093, hr: 0.629 },
+    right: { cx: 86.354, cy: 45.729, rx: 2.858, ry: 5.716, rot: -25, hx: 85.725, hy: 43.785, hr: 0.629 },
+  },
+  "grok-bot": {
+    max: 1.2,
+    left: { cx: 67.981, cy: 51.037, rx: 2.858, ry: 5.716, rot: -25, hx: 67.352, hy: 49.093, hr: 0.629 },
+    right: { cx: 86.354, cy: 45.729, rx: 2.858, ry: 5.716, rot: -25, hx: 85.725, hy: 43.785, hr: 0.629 },
+  },
+  "ipn-agents": {
+    max: 1.2,
+    left: { cx: 67.981, cy: 51.037, rx: 2.858, ry: 5.716, rot: -25, hx: 67.352, hy: 49.093, hr: 0.629 },
+    right: { cx: 86.354, cy: 45.729, rx: 2.858, ry: 5.716, rot: -25, hx: 85.725, hy: 43.785, hr: 0.629 },
+  },
   justin: {
     max: 1.9,
     left: { cx: 51.853, cy: 56.447, rx: 2.45, ry: 3.879, rot: 0, hx: 51.314, hy: 55.128, hr: 0.539 },
@@ -168,6 +186,16 @@ export const storageLinkLabels = {
   pointsTo: "points to",
   codeCopy: "local copy of the code",
   drift: "Noah checks for drift",
+};
+
+// IPN area (below the personal chart). Labels drawn on its connections by the wire overlay.
+export const personalTitle = "Personal";
+export const ipnTitle = "IPN";
+export const ipnLinkLabels = {
+  reads: "reads the IPN Agent Operating Guide and Agent Onboarding guide",
+  changes: "every IPN Notion change",
+  afterReview: "after my review",
+  edits: "edits",
 };
 
 export const justinLabel =
@@ -508,6 +536,106 @@ export const nodes: AgentNode[] = [
       "I use them directly for coding and front-end design work.",
       "They message each other, and Cornbot, through Agent Tincan.",
       "Claude Code and Codex are also installed on Grok Bot's computer, so the bots can run them directly.",
+    ],
+  },
+  // --- IPN leadership area (Intercollegiate Psychedelics Network) ---
+  {
+    id: "ipn-leadership",
+    name: "IPN leadership team",
+    kind: "person",
+    art: `${V3}/raster/ipn-leadership.webp`,
+    pupils: v2Pupils["ipn-leadership"],
+    oneLiner: "IPN's leadership team runs its own AI agents for our nonprofit work, on the same rules as mine.",
+    useCases: [
+      "Reads the IPN Agent Operating Guide and the IPN Agent Onboarding guide in IPN's Notion before starting work.",
+      "Uses the same agent types I do: Grok Bot, Cursor, Claude Code and Codex.",
+      "Sends any change to IPN's Notion to me for review instead of editing it directly.",
+    ],
+  },
+  {
+    id: "ipn-agents",
+    name: "Their agents",
+    kind: "group",
+    art: `${V3}/raster/ipn-agents.webp`,
+    pupils: v2Pupils["ipn-agents"],
+    oneLiner: "Each leader picks the agent that fits the job, and every one of them follows the IPN guides.",
+    useCases: [],
+  },
+  {
+    id: "ipn-grok-bot",
+    name: "Grok Bot",
+    kind: "tool",
+    art: `${V3}/raster/grok-bot.webp`,
+    pupils: v2Pupils["grok-bot"],
+    oneLiner: "Always-on assistant for delegated tasks, research and recurring workflows.",
+    useCases: [],
+  },
+  {
+    id: "ipn-cursor",
+    name: "Cursor",
+    kind: "tool",
+    art: `${V2}/raster/cursor.webp`,
+    pupils: v2Pupils["cursor"],
+    oneLiner: "Reviewing documents together and running several coding tasks at once.",
+    useCases: [],
+  },
+  {
+    id: "ipn-claude-code",
+    name: "Claude Code",
+    kind: "tool",
+    art: `${V3}/raster/claude-code.webp`,
+    pupils: v2Pupils["claude-code"],
+    oneLiner: "Builds and front-end work on IPN's web projects.",
+    useCases: [],
+  },
+  {
+    id: "ipn-codex",
+    name: "Codex",
+    kind: "tool",
+    art: `${V3}/raster/codex.webp`,
+    pupils: v2Pupils["codex"],
+    oneLiner: "Coding tasks and image generation.",
+    useCases: [],
+  },
+  {
+    id: "ipn-notion",
+    name: "IPN Notion",
+    kind: "base",
+    art: `${V3}/raster/notion.webp`,
+    pupils: v2Pupils["notion"],
+    oneLiner: "IPN's knowledge base, kept separate from my personal workspace.",
+    useCases: [
+      "Holds the IPN Agent Operating Guide, the rules every IPN agent follows.",
+      "Holds the IPN Agent Onboarding guide that sets up a new leader's agents.",
+      "Noah is its only editor, so it stays consistent.",
+    ],
+  },
+  {
+    id: "ipn-review",
+    name: "My review",
+    kind: "person",
+    art: `${V3}/raster/justin.webp`,
+    pupils: v2Pupils["justin"],
+    oneLiner: "Any change to IPN's Notion comes to me first.",
+    useCases: [
+      "I check the change against the guides and approve or adjust it.",
+      "Once I approve, Noah makes the edit.",
+    ],
+  },
+  {
+    // A second Noah in the IPN area, so no wire has to cross the whole sheet. Same photo, eyes and copy.
+    id: "ipn-noah",
+    name: "Noah",
+    role: "Notion Organizer",
+    cardTitle: "Noah (Notion Organizer)",
+    kind: "bot",
+    art: `${AVATARS}/noah.webp`,
+    eyes: avatarEyes["noah"],
+    oneLiner: "My Notion Organizer, and the only bot allowed to edit Notion. It is trained on my documentation guidelines.",
+    useCases: [
+      "Makes the edit to IPN's Notion once I have approved a change.",
+      "Every change request comes to Noah, so the knowledge base stays consistent.",
+      "Checks for context drift and flags anything that no longer matches.",
     ],
   },
 ];

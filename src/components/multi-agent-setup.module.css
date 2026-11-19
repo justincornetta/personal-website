@@ -404,6 +404,70 @@ button.node { position: relative; }
 .close svg { width: 22px; height: 22px; }
 .close:hover { background: rgba(93, 112, 214, 0.14); }
 
+/* ---------------------------------------------------------------------------------------------------
+   IPN leadership area, below the personal chart. Team on top (leadership, "Their agents", four agent
+   types), then one row: My review (bottom left), Noah, IPN Notion. Its long wires are drawn by a second
+   measured overlay; the short stems are plain borders so they also show on phones.
+   --------------------------------------------------------------------------------------------------- */
+.areaHeading {
+  margin: 0;
+  font-family: var(--hand);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink-blue);
+}
+.areaPersonal { margin: 6px 0 2px clamp(6px, 1.6vw, 18px); font-size: 17px; opacity: 0.7; }
+.ipnArea { margin-top: 40px; padding-top: 22px; border-top: 2px dashed rgba(93, 112, 214, 0.45); }
+.areaIpn {
+  margin: 0 0 6px clamp(6px, 1.6vw, 18px);
+  font-size: clamp(24px, 3vw, 30px);
+  text-decoration: underline wavy rgba(93, 112, 214, 0.55);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1.5px;
+}
+
+.ipn {
+  position: relative;
+  --art: clamp(58px, 7.2vw, 80px);
+  --line: 2px dashed var(--ink-blue);
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 3fr) minmax(0, 1.25fr);
+  grid-template-areas:
+    ". team ."
+    "review noah notion";
+  row-gap: 44px;
+  align-items: start;
+  justify-items: center;
+  width: 100%;
+}
+.ipnTeam { grid-area: team; display: flex; flex-direction: column; align-items: center; width: 100%; }
+.ipnTeam .stem { height: 20px; }
+.ipnTeam .node.person { width: 130px; }
+.ipnTeam .node.person .name { font-size: 16px; }
+.ipnAgents { position: relative; display: flex; width: 100%; margin: 0; padding: 0; list-style: none; }
+/* Org-chart bar over four equal slots: first centre (12.5%) to last (87.5%). */
+.ipnAgents::before { content: ""; position: absolute; top: 0; left: 12.5%; right: 12.5%; border-top: var(--line); opacity: 0.7; }
+.ipnAgent { position: relative; flex: 1 1 0; min-width: 0; display: flex; justify-content: center; padding-top: 20px; }
+.ipnAgent::before { content: ""; position: absolute; top: 0; left: 50%; height: 20px; border-left: var(--line); opacity: 0.7; }
+.ipnCell { display: flex; justify-content: center; width: 100%; }
+.ipnCell .node.person { width: 110px; }
+.ipnReview { grid-area: review; }
+.ipnNoah { grid-area: noah; }
+.ipnNotion { grid-area: notion; }
+
+@media (max-width: 900px) {
+  .ipn { grid-template-columns: minmax(0, 1.1fr) minmax(0, 3fr) minmax(0, 1.1fr); }
+}
+@media (max-width: 719px) {
+  .ipnArea { margin-top: 32px; }
+  .ipn { --art: 64px; display: flex; flex-direction: column; align-items: center; row-gap: 0; }
+  .ipnAgents { flex-wrap: wrap; row-gap: 6px; }
+  .ipnAgents::before, .ipnAgent::before { display: none; }
+  .ipnAgent { flex: 0 0 50%; padding-top: 0; }
+  .ipnCell { position: relative; margin-top: 28px; }
+  .ipnCell::before { content: ""; position: absolute; left: 50%; top: -28px; height: 28px; border-left: var(--line); opacity: 0.7; }
+}
+
 /* Tablet: tighter columns and smaller art. */
 @media (max-width: 900px) {
   .sheet { padding: 10px; }

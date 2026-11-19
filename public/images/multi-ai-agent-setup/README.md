@@ -10,3 +10,8 @@ Not shown:
 
 - The top-level `*.svg` files here are Codex's v1 sketch robots. They are left in the tree but nothing references them.
 - The v2 drawings of the 10 Grok Bots (`/workspace/design/multi-ai-agent-setup/art/v2/{cornbot,noah,...}.svg`) are not used; the photos replace them.
+
+IPN leadership area (below the personal chart):
+
+- `v3/raster/ipn-leadership.webp`, `grok-bot.webp`, `ipn-agents.webp`: the three new IPN icons. TEMPORARY: each is currently a copy of `grok-bot-hub.webp` (with the hub's pupil geometry in `v2Pupils`) until Codex's art lands in `/workspace/design/multi-ai-agent-setup/ipn-art-v1/`. To swap: convert each PNG to 512px lossless WebP over the same filename, then replace the matching `v2Pupils` entry with the measured `<name>.eyes.json` centres scaled to the 128 viewBox (`max` about 75% of the room).
+- The IPN Cursor, Claude Code, Codex, Notion and Justin nodes reuse the existing art and pupils; the second Noah reuses Noah's photo and eyes.
