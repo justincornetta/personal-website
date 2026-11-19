@@ -649,6 +649,12 @@ export function MultiAgentSetup() {
                 {open.useCases.map((useCase) => <li key={useCase}>{useCase}</li>)}
               </ul>
             ) : null}
+            {open.link ? (
+              <a className={styles.readMore} href={open.link.href} target="_blank" rel="noopener noreferrer">
+                {open.link.label}
+                <span className="sr-only"> about {open.cardTitle ?? open.name} (opens in a new tab)</span>
+              </a>
+            ) : null}
           </div>
         </div>
       ) : null}

@@ -5,10 +5,10 @@
 // Art:
 //  - The 10 Grok Bots use real profile photos (public/images/multi-ai-agent-setup/avatars/*.webp),
 //    shown in a hand-drawn sketch circle. The v2 drawings of those bots are not used.
-//  - The drawn nodes sit in an inlined 128x128 SVG that carries movable pupil groups. Justin, Claude Code,
-//    Codex, Grok Bot's computer, Agent Tincan and Notion use the v3 transparent rasters (v3/raster/*.webp,
-//    same drawings and pupil geometry as v2). Cursor, Google Drive, GitHub and local files are Codex's newer
-//    drawings in v2/raster/ with whitened backgrounds; their drawn pupils are painted over (`cover`).
+//  - The drawn nodes sit in an inlined 128x128 SVG that carries movable pupil groups. Every drawing uses a
+//    v3/raster/*.webp file cut to a fully transparent background (no paper or watercolor wash outside the
+//    ink outline). Pictures whose pupils are drawn in (Cursor, Grok Bot, the storage icons) paint over them
+//    (`cover`) so the moving pupil leaves no ghost.
 //  - The v1 robot SVGs in public/images/multi-ai-agent-setup/ are no longer shown.
 // Layout lives in src/components/multi-agent-setup.tsx.
 
@@ -46,10 +46,10 @@ export type AgentNode = {
   pupils?: V2Pupils; // v2 nodes
   oneLiner: string;
   useCases: string[]; // 3 or 4 bullets; empty when the copy is a label only
+  link?: { href: string; label: string }; // optional outside link at the foot of the card (opens in a new tab)
 };
 
 const AVATARS = "/images/multi-ai-agent-setup/avatars";
-const V2 = "/images/multi-ai-agent-setup/v2";
 const V3 = "/images/multi-ai-agent-setup/v3";
 
 // Eye centres measured on the avatar sources (see the notes per bot).
@@ -147,10 +147,11 @@ const v2Pupils: Record<string, V2Pupils> = {
       },
     ],
   },
+  // Codex's watercolor sphere (Deliverables/multi-ai-agent-setup-grokbot-art-v1); pupils are in the art.
   "grok-bot": {
-    max: 2.63,
-    left: { cx: 51.312, cy: 52.688, rx: 2.869, ry: 4.5, rot: 0, hx: 50.681, hy: 51.157, hr: 0.631 },
-    right: { cx: 75.062, cy: 52.688, rx: 2.869, ry: 4.5, rot: 0, hx: 74.431, hy: 51.157, hr: 0.631 },
+    max: 1.1,
+    left: { cx: 73.25, cy: 47.5, rx: 3.12, ry: 3.88, rot: 0, hx: 72.31, hy: 46.14, hr: 0.87, cover: "#fdeed6" },
+    right: { cx: 90.0, cy: 43.88, rx: 2.88, ry: 4.0, rot: 0, hx: 89.14, hy: 42.48, hr: 0.81, cover: "#fdeed7" },
   },
   "ipn-agents": {
     max: 1.75,
@@ -199,7 +200,7 @@ const v2Pupils: Record<string, V2Pupils> = {
 export const sectionTitle = "My Multi-AI Agent Setup";
 
 export const lede =
-  "This is how I work with AI day to day: Grok Bots take delegated tasks, workflows, and research, and coding agents take complex builds and front-end design. A shared knowledge base and Agent Tincan connect them all.";
+  "This is how I work with AI day to day, across my personal and professional work: Grok Bots take delegated tasks, workflows, and research, and coding agents take complex builds and front-end design. A shared knowledge base and Agent Tincan connect them all.";
 
 export const storageTitle = "Where the work lives";
 
@@ -313,7 +314,7 @@ export const nodes: AgentNode[] = [
     id: "cursor",
     name: "Cursor",
     kind: "tool",
-    art: `${V2}/raster/cursor.webp`,
+    art: `${V3}/raster/cursor.webp`,
     pupils: v2Pupils["cursor"],
     oneLiner: "Like Claude Code and Codex, a tool I use for front-end design and coding work.",
     useCases: [
@@ -483,6 +484,7 @@ export const nodes: AgentNode[] = [
     id: "agent-tin-can",
     name: "Agent Tincan",
     kind: "link",
+    link: { href: "https://agenttincan.com/#top", label: "Read more" },
     art: `${V3}/raster/agent-tin-can.webp`,
     pupils: v2Pupils["agent-tin-can"],
     oneLiner: "A private relay, over Tailscale, that lets the coding agents on my laptop and my Grok Bots message each other.",
@@ -522,7 +524,7 @@ export const nodes: AgentNode[] = [
     id: "local-files",
     name: "Local files",
     kind: "base",
-    art: `${V2}/raster/local-files.webp`,
+    art: `${V3}/raster/local-files.webp`,
     pupils: v2Pupils["local-files"],
     oneLiner: "The files on my Mac. They point back to Notion for guides and skills, and hold local copies of the code in my GitHub repos.",
     useCases: [
@@ -535,7 +537,7 @@ export const nodes: AgentNode[] = [
     id: "github",
     name: "GitHub",
     kind: "base",
-    art: `${V2}/raster/github.webp`,
+    art: `${V3}/raster/github.webp`,
     pupils: v2Pupils["github"],
     oneLiner: "The source of truth for code and project status on each of my coding projects.",
     useCases: [
@@ -548,7 +550,7 @@ export const nodes: AgentNode[] = [
     id: "google-drive",
     name: "Google Drive",
     kind: "base",
-    art: `${V2}/raster/google-drive.webp`,
+    art: `${V3}/raster/google-drive.webp`,
     pupils: v2Pupils["google-drive"],
     oneLiner: "Where shared documents, spreadsheets, and files live when I am working on them with other people.",
     useCases: [
@@ -605,7 +607,7 @@ export const nodes: AgentNode[] = [
     id: "ipn-cursor",
     name: "Cursor",
     kind: "tool",
-    art: `${V2}/raster/cursor.webp`,
+    art: `${V3}/raster/cursor.webp`,
     pupils: v2Pupils["cursor"],
     oneLiner: "Reviewing documents together and running several coding tasks at once.",
     useCases: [],
@@ -638,8 +640,7 @@ export const nodes: AgentNode[] = [
     useCases: [
       "Holds IPN Agent Rules: Read this first, the rules every IPN agent follows.",
       "Holds IPN Agent Onboarding: Get connected, which sets up a new leader's agents.",
-      "Holds IPN Skills: Read this first, the guide to IPN's skills.",
-      "Holds IPN's Skills registry: the IPN skills plus the ones shared with my personal workspace.",
+      "Holds IPN's skills: a read-first guide and the Skills registry, with the IPN skills plus the ones shared with my personal workspace.",
       "Noah is the default editor; a few bots have narrow, audited write lanes.",
     ],
   },
