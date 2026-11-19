@@ -1,14 +1,14 @@
 // Copy + node data for the "My Multi-AI Agent Setup" section on /projects.
 //
-// Body copy is from Cornbot's approved file
-// /workspace/website-ai-setup/use-cases.md, used word for word.
+// Body copy started from Cornbot's approved file /workspace/website-ai-setup/use-cases.md and has since been
+// rewritten at Justin's direction (see CHECKPOINT.md).
 // Art:
 //  - The 10 Grok Bots use real profile photos (public/images/multi-ai-agent-setup/avatars/*.webp),
 //    shown in a hand-drawn sketch circle. The v2 drawings of those bots are not used.
-//  - The drawn nodes sit in an inlined 128x128 SVG that carries movable pupil groups. Justin, Claude Code,
-//    Codex, Grok Bot's computer, Agent Tincan and Notion use the v3 transparent rasters (v3/raster/*.webp,
-//    same drawings and pupil geometry as v2). Cursor, Google Drive, GitHub and local files are Codex's newer
-//    drawings in v2/raster/ with whitened backgrounds; their drawn pupils are painted over (`cover`).
+//  - The drawn nodes sit in an inlined 128x128 SVG that carries movable pupil groups. Every drawing uses a
+//    v3/raster/*.webp file cut to a fully transparent background (no paper or watercolor wash outside the
+//    ink outline). Pictures whose pupils are drawn in (Cursor, Grok Bot, the storage icons) paint over them
+//    (`cover`) so the moving pupil leaves no ghost.
 //  - The v1 robot SVGs in public/images/multi-ai-agent-setup/ are no longer shown.
 // Layout lives in src/components/multi-agent-setup.tsx.
 
@@ -32,7 +32,8 @@ export type V2Pupil = {
 };
 // `max`: how far both pupils may travel, in viewBox units of 128. Set per picture from the measured room
 // between each pupil and the edge of its eye white (about 75% of it).
-export type V2Pupils = { left: V2Pupil; right: V2Pupil; max?: number };
+// `extra`: more eye pairs, for pictures with several characters. Each pair keeps its own `max`.
+export type V2Pupils = { left: V2Pupil; right: V2Pupil; max?: number; extra?: V2Pupils[] };
 
 export type AgentNode = {
   id: string;
@@ -45,10 +46,10 @@ export type AgentNode = {
   pupils?: V2Pupils; // v2 nodes
   oneLiner: string;
   useCases: string[]; // 3 or 4 bullets; empty when the copy is a label only
+  link?: { href: string; label: string }; // optional outside link at the foot of the card (opens in a new tab)
 };
 
 const AVATARS = "/images/multi-ai-agent-setup/avatars";
-const V2 = "/images/multi-ai-agent-setup/v2";
 const V3 = "/images/multi-ai-agent-setup/v3";
 
 // Eye centres measured on the avatar sources (see the notes per bot).
@@ -126,6 +127,49 @@ const v2Pupils: Record<string, V2Pupils> = {
     left: { cx: 67.981, cy: 51.037, rx: 2.858, ry: 5.716, rot: -25, hx: 67.352, hy: 49.093, hr: 0.629 },
     right: { cx: 86.354, cy: 45.729, rx: 2.858, ry: 5.716, rot: -25, hx: 85.725, hy: 43.785, hr: 0.629 },
   },
+  // IPN pictures by Codex (/workspace/design/multi-ai-agent-setup/ipn-art-v1/). Pupils are centred in the eye
+  // whites from <name>.eyes.json, scaled from 1024 to 128; `max` is about 75% of the room. The group pictures
+  // have one eye pair per character: the centre character is `left`/`right`, the others are in `extra`.
+  "ipn-leadership": {
+    max: 1.24,
+    left: { cx: 57.375, cy: 51.812, rx: 1.378, ry: 2.125, rot: 0, hx: 57.072, hy: 51.09, hr: 0.303 },
+    right: { cx: 71.438, cy: 51.75, rx: 1.35, ry: 2.156, rot: 0, hx: 71.141, hy: 51.017, hr: 0.297 },
+    extra: [
+      {
+        max: 1.13,
+        left: { cx: 25.562, cy: 60.0, rx: 1.294, ry: 1.969, rot: 0, hx: 25.278, hy: 59.331, hr: 0.285 },
+        right: { cx: 37.562, cy: 58.438, rx: 1.238, ry: 2.0, rot: 0, hx: 37.29, hy: 57.758, hr: 0.272 },
+      },
+      {
+        max: 1.13,
+        left: { cx: 94.188, cy: 56.312, rx: 1.238, ry: 1.875, rot: 0, hx: 93.915, hy: 55.675, hr: 0.272 },
+        right: { cx: 107.062, cy: 57.0, rx: 1.238, ry: 1.906, rot: 0, hx: 106.79, hy: 56.352, hr: 0.272 },
+      },
+    ],
+  },
+  // Codex's watercolor sphere (Deliverables/multi-ai-agent-setup-grokbot-art-v1); pupils are in the art.
+  "grok-bot": {
+    max: 1.1,
+    left: { cx: 73.25, cy: 47.5, rx: 3.12, ry: 3.88, rot: 0, hx: 72.31, hy: 46.14, hr: 0.87, cover: "#fdeed6" },
+    right: { cx: 90.0, cy: 43.88, rx: 2.88, ry: 4.0, rot: 0, hx: 89.14, hy: 42.48, hr: 0.81, cover: "#fdeed7" },
+  },
+  "ipn-agents": {
+    max: 1.75,
+    left: { cx: 55.875, cy: 41.5, rx: 1.941, ry: 3.031, rot: 0, hx: 55.448, hy: 40.469, hr: 0.427 },
+    right: { cx: 69.938, cy: 41.438, rx: 1.913, ry: 3.062, rot: 0, hx: 69.517, hy: 40.396, hr: 0.421 },
+    extra: [
+      {
+        max: 1.44,
+        left: { cx: 32.562, cy: 79.688, rx: 1.744, ry: 2.75, rot: 0, hx: 32.179, hy: 78.752, hr: 0.384 },
+        right: { cx: 45.062, cy: 78.125, rx: 1.575, ry: 2.656, rot: 0, hx: 44.716, hy: 77.222, hr: 0.346 },
+      },
+      {
+        max: 1.55,
+        left: { cx: 85.5, cy: 72.562, rx: 1.772, ry: 2.812, rot: 0, hx: 85.11, hy: 71.606, hr: 0.39 },
+        right: { cx: 98.188, cy: 74.062, rx: 1.688, ry: 2.812, rot: 0, hx: 97.816, hy: 73.106, hr: 0.371 },
+      },
+    ],
+  },
   justin: {
     max: 1.9,
     left: { cx: 51.853, cy: 56.447, rx: 2.45, ry: 3.879, rot: 0, hx: 51.314, hy: 55.128, hr: 0.539 },
@@ -156,22 +200,37 @@ const v2Pupils: Record<string, V2Pupils> = {
 export const sectionTitle = "My Multi-AI Agent Setup";
 
 export const lede =
-  "This is how I work with AI day to day: Grok Bots take delegated tasks, workflows, and research, and coding agents take complex builds and front-end design. A shared knowledge base and Agent Tincan connect them all.";
+  "This is how I work with AI day to day, across my personal and professional work: Grok Bots take delegated tasks, workflows, and research, and coding agents take complex builds and front-end design. A shared knowledge base and Agent Tincan connect them all.";
 
 export const storageTitle = "Where the work lives";
 
 // Short hand-lettered labels on the storage connections (drawn by the wire overlay).
 export const storageLinkLabels = {
   read: "every agent reads the Agent Operating Guide",
-  requests: "every change request goes to Noah",
+  requests: "Notion edits are routed to Noah",
   edits: "edits",
   pointsTo: "points to",
   codeCopy: "local copy of the code",
   drift: "Noah checks for drift",
 };
 
+// IPN area (below the personal chart). Labels drawn on its connections by the wire overlay.
+export const personalTitle = "Personal";
+export const ipnTitle = "IPN";
+// Small hand-lettered lines under each area heading: each area has its own Notion workspace.
+export const personalSubtitle = "my own Notion workspace, guide and Skills registry";
+export const ipnSubtitle = "IPN's own Notion workspace, guide and Skills registry";
+// Hand-lettered aside on the personal chart.
+export const teamNote = "Shows part of the team. A few more bots handle legal, finances, calls and job search.";
+export const ipnLinkLabels = {
+  reads: "reads the IPN Agent Rules, Onboarding and Skills pages",
+  changes: "every IPN Notion change",
+  afterReview: "after my review",
+  edits: "edits",
+};
+
 export const justinLabel =
-  "I set the work, make the decisions, and approve anything that gets sent, published, or paid for.";
+  "I set the work, make the decisions, and approve anything that gets sent, published, or paid for. Bots draft, I send.";
 
 // These two callouts are not in the approved copy (the substance lives on the Grok Bot and Notion cards).
 export const claudeOnGrokBotCallout = "";
@@ -183,12 +242,12 @@ export const groupLabels = {
 };
 
 const grokBotOneLiner =
-  "The always-on computer where the Grok Bots live, and where Agent Tincan and Claude Code can run even when my laptop is off.";
+  "The always-on computer where the Grok Bots live, and where Agent Tincan keeps running even when my laptop is off.";
 
 const grokBotUseCases = [
   "Runs scheduled work, like the daily investment scans and Noah's weekday Notion audit, without my computer having to be on.",
-  "Has Claude Code and Codex installed, so the bots usually run them directly instead of going through Agent Tincan.",
-  "Keeps the Agent Tincan relay running so local coding tools and bots can pass work back and forth.",
+  "Has Claude Code and Codex installed. Forge, my engineering bot, runs them there, and Cornbot does too when I ask.",
+  "Keeps the Agent Tincan relay running so coding agents on my laptop and the Grok Bots can pass work back and forth.",
 ];
 
 export const nodes: AgentNode[] = [
@@ -201,7 +260,7 @@ export const nodes: AgentNode[] = [
     cardTitle: "Me",
     oneLiner: justinLabel,
     useCases: [
-      "Cornbot, my Chief of Staff on Grok Bot, manages my Grok Bot team. I hand it a task in plain language, and it routes the work to the right bot and reports back.",
+      "Cornbot, my Chief of Staff on Grok Bot, manages my Grok Bot team. I hand it a task in plain language, and it hands the work off to the right bot, which reports back to me in its own chat.",
       "For front-end and design work, I often work directly in my coding agents: Claude Code, Cursor, and Codex.",
       "I am giving the bots more autonomy over time as they earn my trust, and I still approve anything that leaves my hands.",
     ],
@@ -214,10 +273,10 @@ export const nodes: AgentNode[] = [
     kind: "bot",
     art: `${AVATARS}/cornbot.webp`,
     eyes: avatarEyes["cornbot"],
-    oneLiner: "My front door for personal and Intercollegiate Psychedelics Network (IPN) work. I drop a task in plain language, and it either does the work or briefs a specialist and brings back the result.",
+    oneLiner: "My front door for personal and Intercollegiate Psychedelics Network (IPN) work. I drop a task in plain language, and it either does the work or hands it off to a specialist, who reports back to me in its own chat.",
     useCases: [
-      "Triages new work, routes it to the right bot, and reports back with what changed or what I need to decide.",
-      "Drafts IPN emails and Slack replies in my voice for me to send.",
+      "Triages new work and hands it off to the right bot, which reports back to me in its own chat with what changed or what I need to decide.",
+      "Drafts IPN emails and Slack replies in my voice. Bots draft, I send.",
       "Scans my personal and IPN inboxes for replies that can't wait.",
       "Turns meeting notes into action items and draft recaps.",
       "Manages my to-do list and takes the tedious tasks off it so I can focus on the work that needs me.",
@@ -229,11 +288,11 @@ export const nodes: AgentNode[] = [
     kind: "tool",
     art: `${V3}/raster/claude-code.webp`,
     pupils: v2Pupils["claude-code"],
-    oneLiner: "The tool I use for most coding and front-end work. My bots can also run it on Grok Bot's computer, on my Claude subscription.",
+    oneLiner: "The tool I use for most coding and front-end work. Forge also runs it on Grok Bot's computer, on my Claude subscription, and Cornbot does too when I ask.",
     useCases: [
       "Most of the coding on the IPN member portal, the IPN website, and other software projects.",
       "Front-end work on those products.",
-      "Tasks that I start myself, and tasks that Forge or another bot hands off through Agent Tincan or on Grok Bot's computer.",
+      "Tasks that I start myself, tasks Forge runs on Grok Bot's computer, and work a bot hands off through Agent Tincan.",
       "Feature work on a branch, with a preview I can review before anything is merged.",
     ],
   },
@@ -247,7 +306,7 @@ export const nodes: AgentNode[] = [
     useCases: [
       "Coding work that I alternate with Claude Code.",
       "Image generation, including visuals for diagrams and site graphics.",
-      "Shared skill updates: it leaves a change request for Noah instead of editing Notion itself.",
+      "Shared skill updates: it messages Cornbot over Agent Tincan, and Cornbot routes the Notion edit to Noah.",
       "Work that I start myself, and work that a bot hands off through Agent Tincan.",
     ],
   },
@@ -255,7 +314,7 @@ export const nodes: AgentNode[] = [
     id: "cursor",
     name: "Cursor",
     kind: "tool",
-    art: `${V2}/raster/cursor.webp`,
+    art: `${V3}/raster/cursor.webp`,
     pupils: v2Pupils["cursor"],
     oneLiner: "Like Claude Code and Codex, a tool I use for front-end design and coding work.",
     useCases: [
@@ -287,11 +346,11 @@ export const nodes: AgentNode[] = [
     kind: "bot",
     art: `${AVATARS}/noah.webp`,
     eyes: avatarEyes["noah"],
-    oneLiner: "My Notion Organizer, and the only bot allowed to edit Notion. It is trained on my documentation guidelines.",
+    oneLiner: "My Notion Organizer and the default Notion editor, trained on my documentation guidelines. A few bots have narrow, audited write lanes.",
     useCases: [
-      "Every change request from my other agents, like a skill update or a new Notion database, comes to Noah, so the knowledge base stays consistent.",
+      "Cornbot routes Notion edits from my other agents, like a skill update or a new Notion database, to Noah, so the knowledge base stays consistent.",
       "Checks for context drift between my GitHub repos, Notion, and local files, and flags anything that no longer matches.",
-      "Keeps project pages, guides, and the skills registry current as decisions get made.",
+      "Keeps project pages, guides, and the Skills registry current as decisions get made.",
       "Keeps coding-project pages to a short summary and a link to the repo, so GitHub stays the source of truth for them.",
     ],
   },
@@ -308,7 +367,7 @@ export const nodes: AgentNode[] = [
       "Builds and maintains the IPN member portal and the IPN website.",
       "Builds data tools from public sources, like insurance rate files and Medicare fee schedules.",
       "Opens pull requests with preview links and reviews the work before I approve a merge.",
-      "Hands coding and front-end work to Claude Code, and sometimes to Codex or Cursor, then brings the result back.",
+      "Runs Claude Code and Codex on Grok Bot's computer for coding and front-end work, and sometimes hands work to Cursor through Agent Tincan.",
     ],
   },
   {
@@ -425,12 +484,13 @@ export const nodes: AgentNode[] = [
     id: "agent-tin-can",
     name: "Agent Tincan",
     kind: "link",
+    link: { href: "https://agenttincan.com/#top", label: "Read more" },
     art: `${V3}/raster/agent-tin-can.webp`,
     pupils: v2Pupils["agent-tin-can"],
-    oneLiner: "A private relay, over Tailscale, that lets my coding tools and my Grok Bots message each other.",
+    oneLiner: "A private relay, over Tailscale, that lets the coding agents on my laptop and my Grok Bots message each other.",
     useCases: [
-      "Claude Code, Codex, and Cursor use it to ask each other for help or hand off work.",
-      "Any of them can message Cornbot, who passes the request to the right Grok Bot and sends the answer back.",
+      "Coding agents on my laptop use it to pass work to the Grok Bots.",
+      "They message Cornbot, who hands the request to the right Grok Bot and routes any Notion edits to Noah.",
       "Cornbot can also send a bot's request out to Claude Code, Codex, or Cursor.",
       "It runs on Grok Bot's always-on computer, so it works even when my laptop is closed.",
     ],
@@ -451,19 +511,20 @@ export const nodes: AgentNode[] = [
     kind: "base",
     art: `${V3}/raster/notion.webp`,
     pupils: v2Pupils["notion"],
-    oneLiner: "The shared knowledge base every agent reads. It holds my skills, the Agent Operating Guide, and the documentation and research for my non-coding projects.",
+    oneLiner: "The shared knowledge base every agent reads. It holds my skills, my Agent Operating Guide, and the documentation and research for my non-coding projects.",
     useCases: [
-      "Every agent is directed to read the Agent Operating Guide before it starts work.",
-      "Stores the full instructions for reusable skills, so Claude Code, Codex, Grok Bot, and new tools follow the same recipes.",
+      "Two separate workspaces, personal and IPN. Personal has my Agent Operating Guide; IPN has its own agent rules pages; each has its own Skills registry.",
+      "Every agent is directed to read its workspace's agent rules before it starts work.",
+      "54 reusable skills (41 personal, 20 IPN, 7 shared), each written once in Notion; every agent's local copy just points there.",
       "Holds project homes, documentation, and research for my non-coding projects.",
-      "Nothing goes into Notion except through Noah.",
+      "Noah is the default Notion editor; a few bots have narrow, audited write lanes.",
     ],
   },
   {
     id: "local-files",
     name: "Local files",
     kind: "base",
-    art: `${V2}/raster/local-files.webp`,
+    art: `${V3}/raster/local-files.webp`,
     pupils: v2Pupils["local-files"],
     oneLiner: "The files on my Mac. They point back to Notion for guides and skills, and hold local copies of the code in my GitHub repos.",
     useCases: [
@@ -476,20 +537,20 @@ export const nodes: AgentNode[] = [
     id: "github",
     name: "GitHub",
     kind: "base",
-    art: `${V2}/raster/github.webp`,
+    art: `${V3}/raster/github.webp`,
     pupils: v2Pupils["github"],
-    oneLiner: "Holds the codebase and the project context for each of my coding projects.",
+    oneLiner: "The source of truth for code and project status on each of my coding projects.",
     useCases: [
       "Every coding project has a repository with its code, history, and pull requests.",
-      "Each repo keeps its own project context, including a checkpoint file with current status that wins over any other note.",
-      "Notion keeps a short summary and a link back to the repo instead of copying it.",
+      "Code status lives in a CHECKPOINT file on main, and it wins over any other note.",
+      "Notion holds a short summary and a link back to the repo instead of copying it.",
     ],
   },
   {
     id: "google-drive",
     name: "Google Drive",
     kind: "base",
-    art: `${V2}/raster/google-drive.webp`,
+    art: `${V3}/raster/google-drive.webp`,
     pupils: v2Pupils["google-drive"],
     oneLiner: "Where shared documents, spreadsheets, and files live when I am working on them with other people.",
     useCases: [
@@ -506,8 +567,109 @@ export const nodes: AgentNode[] = [
     oneLiner: "I work in Claude Code, Codex, and Cursor myself. The bots can also hand work to them.",
     useCases: [
       "I use them directly for coding and front-end design work.",
-      "They message each other, and Cornbot, through Agent Tincan.",
-      "Claude Code and Codex are also installed on Grok Bot's computer, so the bots can run them directly.",
+      "They pass work to the Grok Bots through Agent Tincan by messaging Cornbot.",
+      "Claude Code and Codex are also installed on Grok Bot's computer. Forge runs them there, and Cornbot does too when I ask.",
+    ],
+  },
+  // --- IPN leadership area (Intercollegiate Psychedelics Network) ---
+  {
+    id: "ipn-leadership",
+    name: "IPN leadership team",
+    kind: "person",
+    art: `${V3}/raster/ipn-leadership.webp`,
+    pupils: v2Pupils["ipn-leadership"],
+    oneLiner: "IPN's leadership team runs its own AI agents for our nonprofit work, on the same rules as mine.",
+    useCases: [
+      "Reads IPN Agent Rules, IPN Agent Onboarding and IPN Skills in IPN's Notion before starting work.",
+      "Uses the same agent types I do: Grok Bot, Cursor, Claude Code and Codex.",
+      "Sends any change to IPN's Notion to me for review instead of editing it directly.",
+    ],
+  },
+  {
+    id: "ipn-agents",
+    name: "Their agents",
+    kind: "group",
+    art: `${V3}/raster/ipn-agents.webp`,
+    pupils: v2Pupils["ipn-agents"],
+    oneLiner: "Each leader picks the agent that fits the job, and every one of them follows the IPN guides.",
+    useCases: [],
+  },
+  {
+    id: "ipn-grok-bot",
+    name: "Grok Bot",
+    kind: "tool",
+    art: `${V3}/raster/grok-bot.webp`,
+    pupils: v2Pupils["grok-bot"],
+    oneLiner: "Always-on assistant for delegated tasks, research and recurring workflows.",
+    useCases: [],
+  },
+  {
+    id: "ipn-cursor",
+    name: "Cursor",
+    kind: "tool",
+    art: `${V3}/raster/cursor.webp`,
+    pupils: v2Pupils["cursor"],
+    oneLiner: "Reviewing documents together and running several coding tasks at once.",
+    useCases: [],
+  },
+  {
+    id: "ipn-claude-code",
+    name: "Claude Code",
+    kind: "tool",
+    art: `${V3}/raster/claude-code.webp`,
+    pupils: v2Pupils["claude-code"],
+    oneLiner: "Builds and front-end work on IPN's web projects.",
+    useCases: [],
+  },
+  {
+    id: "ipn-codex",
+    name: "Codex",
+    kind: "tool",
+    art: `${V3}/raster/codex.webp`,
+    pupils: v2Pupils["codex"],
+    oneLiner: "Coding tasks and image generation.",
+    useCases: [],
+  },
+  {
+    id: "ipn-notion",
+    name: "IPN Notion",
+    kind: "base",
+    art: `${V3}/raster/notion.webp`,
+    pupils: v2Pupils["notion"],
+    oneLiner: "IPN's own Notion workspace, kept separate from my personal one, with its own guide and Skills registry.",
+    useCases: [
+      "Holds IPN Agent Rules: Read this first, the rules every IPN agent follows.",
+      "Holds IPN Agent Onboarding: Get connected, which sets up a new leader's agents.",
+      "Holds IPN's skills: a read-first guide and the Skills registry, with the IPN skills plus the ones shared with my personal workspace.",
+      "Noah is the default editor; a few bots have narrow, audited write lanes.",
+    ],
+  },
+  {
+    id: "ipn-review",
+    name: "My review",
+    kind: "person",
+    art: `${V3}/raster/justin.webp`,
+    pupils: v2Pupils["justin"],
+    oneLiner: "Leaders send IPN Notion change requests to me for review; Noah makes the approved edit. Leaders don't edit IPN Notion directly.",
+    useCases: [
+      "I check the change against the guides and approve or adjust it.",
+      "Once I approve, Noah makes the edit.",
+    ],
+  },
+  {
+    // A second Noah in the IPN area, so no wire has to cross the whole sheet. Same photo, eyes and copy.
+    id: "ipn-noah",
+    name: "Noah",
+    role: "Notion Organizer",
+    cardTitle: "Noah (Notion Organizer)",
+    kind: "bot",
+    art: `${AVATARS}/noah.webp`,
+    eyes: avatarEyes["noah"],
+    oneLiner: "My Notion Organizer and the default Notion editor, trained on my documentation guidelines. A few bots have narrow, audited write lanes.",
+    useCases: [
+      "Makes the edit to IPN's Notion once I have approved a change.",
+      "Approved changes come to Noah, so the knowledge base stays consistent.",
+      "Checks for context drift and flags anything that no longer matches.",
     ],
   },
 ];

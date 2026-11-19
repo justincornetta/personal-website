@@ -48,7 +48,8 @@ export default function RootLayout({
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />
-        <Analytics />
+        {/* The analytics script is only served on Vercel deployments; off Vercel it would 404. */}
+        {process.env.VERCEL ? <Analytics /> : null}
       </body>
     </html>
   );

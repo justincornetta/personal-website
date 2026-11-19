@@ -3,6 +3,12 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import {
   groupLabels,
+  ipnLinkLabels,
+  ipnSubtitle,
+  ipnTitle,
+  personalSubtitle,
+  personalTitle,
+  teamNote,
   storageLinkLabels,
   storageTitle,
   lede,
@@ -23,10 +29,13 @@ const toolIds = ["claude-code", "codex", "cursor"];
 // GitHub (the two that Noah checks Notion against for drift sit next to it).
 const storesBefore = ["google-drive"];
 const storesAfter = ["local-files", "github"];
+// IPN area: the four agent types under "Their agents".
+const ipnAgentIds = ["ipn-grok-bot", "ipn-cursor", "ipn-claude-code", "ipn-codex"];
 
 // --- Connection lines (desktop and tablet) ---------------------------------------------------------------
 // Drawn in one SVG over the tree from the measured positions of each node's picture, so they follow the
-// layout at any width. "relay" = Agent Tincan (dashed), "cli" = runs on Grok Bot's computer (dotted).
+// layout at any width. "relay" = Agent Tincan (dashed), "cli" = runs on Grok Bot's computer (dotted; Forge
+// runs Claude Code and Codex there, and Cornbot does when Justin asks).
 // `arrow`: which ends get an arrowhead ("end" = at the second node, "both" = a two-way link).
 // "brace" = the solid bracket over the storage row.
 type Wire = { d: string; kind: "relay" | "cli" | "brace"; arrow?: "end" | "both" };
@@ -72,21 +81,12 @@ function measureWires(tree: HTMLElement): Wiring {
   tools.forEach((tool) => {
     if (can && tool) wires.push({ kind: "relay", d: curve(can.r + WIRE_PAD, can.cy, tool.l - WIRE_PAD, tool.cy + tool.h * 0.25) });
   });
-  // Claude Code and Codex are installed on Grok Bot's computer.
+  // Claude Code and Codex are installed on Grok Bot's computer (run there by Forge, and by Cornbot on request).
   tools.slice(0, 2).forEach((tool) => {
     if (pc && tool) wires.push({ kind: "cli", arrow: "end", d: curve(pc.r + WIRE_PAD, pc.cy, tool.l - WIRE_PAD, tool.cy - tool.h * 0.25) });
   });
   if (pc && corn) wires.push({ kind: "cli", d: curve(pc.l - WIRE_PAD, pc.cy, corn.r + WIRE_PAD, corn.cy - corn.h * 0.35) });
-  // The tools also talk to each other...
-  const [cc, cx, cu] = tools;
-  // ...drawn as one bracket on their right: a vertical line with a short arrow into each tool.
-  if (cc && cx && cu) {
-    const bx = Math.max(cc.r, cx.r, cu.r) + 30, r = 10;
-    wires.push({ kind: "relay", d: `M${f(bx)} ${f(cc.cy + r)} L${f(bx)} ${f(cu.cy - r)}` });
-    wires.push({ kind: "relay", arrow: "end", d: `M${f(bx)} ${f(cc.cy + r)} Q${f(bx)} ${f(cc.cy)} ${f(bx - r)} ${f(cc.cy)} L${f(cc.r + WIRE_PAD)} ${f(cc.cy)}` });
-    wires.push({ kind: "relay", arrow: "end", d: `M${f(bx)} ${f(cx.cy)} L${f(cx.r + WIRE_PAD)} ${f(cx.cy)}` });
-    wires.push({ kind: "relay", arrow: "end", d: `M${f(bx)} ${f(cu.cy - r)} Q${f(bx)} ${f(cu.cy)} ${f(bx - r)} ${f(cu.cy)} L${f(cu.r + WIRE_PAD)} ${f(cu.cy)}` });
-  }
+  // (No tool-to-tool bracket: the coding agents do not message each other through Agent Tincan.)
 
   // --- Storage row ---
   const labels: WireLabel[] = [];
@@ -103,14 +103,14 @@ function measureWires(tree: HTMLElement): Wiring {
     });
     wires.push({ kind: "relay", arrow: "end", d: `M${f(tip)} ${f(y2 + 4)} L${f(tip)} ${f(notion.t - WIRE_PAD)}` });
     labels.push({ x: tip + 10, y: y2 + 16, lines: [storageLinkLabels.read], anchor: "start" });
-    // ...and every change request (a skill update, a new database) drops off the same bracket to Noah.
+    // ...and Notion edits (a skill update, a new database) drop off the same bracket to Noah, via Cornbot.
     if (noah) {
       wires.push({ kind: "relay", arrow: "end", d: `M${f(noah.cx)} ${f(y1 + 1)} L${f(noah.cx)} ${f(noah.t - WIRE_PAD)}` });
       labels.push({ x: noah.cx - 10, y: y2 + 16, lines: [storageLinkLabels.requests], anchor: "end" });
     }
   }
   if (noah && notion) {
-    // Noah is the only one who edits Notion. (On phones this arrow is plain HTML inside the row.)
+    // Noah is the default Notion editor. (On phones this arrow is plain HTML inside the row.)
     wires.push({ kind: "relay", arrow: "end", d: `M${f(noah.r + WIRE_PAD)} ${f(noah.cy)} L${f(notion.l - WIRE_PAD)} ${f(notion.cy)}` });
     labels.push({ x: (noah.r + notion.l) / 2, y: noah.cy - 10, lines: [storageLinkLabels.edits], anchor: "middle" });
   }
@@ -136,6 +136,50 @@ function measureWires(tree: HTMLElement): Wiring {
       wires.push({ kind: "cli", d: `${drops} M${f(xs[0])} ${f(y)} L${f(xs[3])} ${f(y)}` });
       labels.push({ x: (xs[0] + xs[3]) / 2, y: y + 18, lines: [storageLinkLabels.drift], anchor: "middle" });
     }
+  }
+  return { wires, labels };
+}
+
+// IPN area wires (desktop and tablet). Leadership sends changes down-left to "My review" and reads the guides
+// down-right into IPN Notion; review, Noah and IPN Notion sit in one bottom row joined by straight arrows.
+function measureIpnWires(tree: HTMLElement): Wiring {
+  if (window.matchMedia("(max-width: 719px)").matches) return { wires: [], labels: [] };
+  const origin = tree.getBoundingClientRect();
+  const box = (id: string) => {
+    const art = tree.querySelector<HTMLElement>(`[data-node="${id}"] [data-art]`);
+    if (!art) return null;
+    const r = art.getBoundingClientRect();
+    if (!r.width || !r.height) return null;
+    return { l: r.left - origin.left, r: r.right - origin.left, t: r.top - origin.top, cx: r.left - origin.left + r.width / 2, cy: r.top - origin.top + r.height / 2 };
+  };
+  const f = (n: number) => n.toFixed(1);
+  const lead = box("ipn-leadership"), review = box("ipn-review"), noah = box("ipn-noah"), notion = box("ipn-notion");
+  const wires: Wire[] = [];
+  const labels: WireLabel[] = [];
+  const r = 14;
+  if (lead && review) {
+    // Out of the left side of the team, along, then down into "My review".
+    const y = lead.cy, x1 = lead.l - WIRE_PAD, x2 = review.cx, y2 = review.t - WIRE_PAD;
+    wires.push({ kind: "relay", arrow: "end", d: `M${f(x1)} ${f(y)} L${f(x2 + r)} ${f(y)} Q${f(x2)} ${f(y)} ${f(x2)} ${f(y + r)} L${f(x2)} ${f(y2)}` });
+    labels.push({ x: (x1 + x2) / 2, y: y - 8, lines: [ipnLinkLabels.changes], anchor: "middle" });
+  }
+  if (lead && notion) {
+    const y = lead.cy, x1 = lead.r + WIRE_PAD, x2 = notion.cx, y2 = notion.t - WIRE_PAD;
+    wires.push({ kind: "relay", arrow: "end", d: `M${f(x1)} ${f(y)} L${f(x2 - r)} ${f(y)} Q${f(x2)} ${f(y)} ${f(x2)} ${f(y + r)} L${f(x2)} ${f(y2)}` });
+    // The label sits above the line; it wraps to more lines when the run is short.
+    const run = x2 - x1;
+    const lines = run > 340
+      ? ["reads the IPN Agent Rules,", "Onboarding and Skills pages"]
+      : ["reads the IPN Agent", "Rules, Onboarding and", "Skills pages"];
+    labels.push({ x: (x1 + x2) / 2, y: y - 8 - (lines.length - 1) * 15, lines, anchor: "middle" });
+  }
+  if (review && noah) {
+    wires.push({ kind: "relay", arrow: "end", d: `M${f(review.r + WIRE_PAD)} ${f(noah.cy)} L${f(noah.l - WIRE_PAD)} ${f(noah.cy)}` });
+    labels.push({ x: (review.r + noah.l) / 2, y: noah.cy - 10, lines: [ipnLinkLabels.afterReview], anchor: "middle" });
+  }
+  if (noah && notion) {
+    wires.push({ kind: "relay", arrow: "end", d: `M${f(noah.r + WIRE_PAD)} ${f(noah.cy)} L${f(notion.l - WIRE_PAD)} ${f(notion.cy)}` });
+    labels.push({ x: (noah.r + notion.l) / 2, y: noah.cy - 10, lines: [ipnLinkLabels.edits], anchor: "middle" });
   }
   return { wires, labels };
 }
@@ -234,7 +278,7 @@ function PhotoArt({ node, uid }: { node: AgentNode; uid: string }) {
 // --- v2 SVG, inlined ---------------------------------------------------------------------------------
 // The raster is the 512px image from the v2 file; the pupil groups are copied from it. Only the outer
 // group is translated, so each pupil keeps its own rotation.
-function V2PupilGroup({ pupil, side, uid, max }: { pupil: V2Pupil; side: "left" | "right"; uid: string; max?: number }) {
+function V2PupilGroup({ pupil, side, uid, max }: { pupil: V2Pupil; side: string; uid: string; max?: number }) {
   return (
     <>
     {pupil.cover ? (
@@ -249,35 +293,68 @@ function V2PupilGroup({ pupil, side, uid, max }: { pupil: V2Pupil; side: "left" 
 }
 
 function V2Art({ node, uid }: { node: AgentNode; uid: string }) {
+  // Group pictures carry one eye pair per character (`extra`); every pair moves on its own.
+  const pairs = node.pupils ? [node.pupils, ...(node.pupils.extra ?? [])] : [];
   return (
     <svg className={styles.artSvg} viewBox="0 0 128 128" data-vb="128" aria-hidden="true" focusable="false">
       <image href={node.art} width="128" height="128" />
-      {node.pupils ? <V2PupilGroup pupil={node.pupils.left} side="left" uid={uid} max={node.pupils.max} /> : null}
-      {node.pupils ? <V2PupilGroup pupil={node.pupils.right} side="right" uid={uid} max={node.pupils.max} /> : null}
+      {pairs.map((pair, i) => {
+        const suffix = i ? `-${i}` : "";
+        return (
+          <g key={i}>
+            <V2PupilGroup pupil={pair.left} side={`left${suffix}`} uid={uid} max={pair.max} />
+            <V2PupilGroup pupil={pair.right} side={`right${suffix}`} uid={uid} max={pair.max} />
+          </g>
+        );
+      })}
     </svg>
   );
 }
 
-export function MultiAgentSetup() {
-  const [openId, setOpenId] = useState<string | null>(null);
-  const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const closeRef = useRef<HTMLButtonElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const uidBase = useId().replace(/[^a-zA-Z0-9_-]/g, "");
-  const treeRef = useRef<HTMLDivElement>(null);
-  const [{ wires, labels }, setWiring] = useState<Wiring>({ wires: [], labels: [] });
+function WireLayer({ wiring, id }: { wiring: Wiring; id: string }) {
+  const { wires, labels } = wiring;
+  if (!wires.length) return null;
+  return (
+    <svg className={styles.wires} aria-hidden="true" focusable="false">
+      <defs>
+        {/* Open hand-drawn chevron; auto-start-reverse points it outward at either end. */}
+        <marker id={`${id}-arrow`} viewBox="0 0 12 12" refX="10" refY="6" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+          <path d="M2 1.5 L10 6 L2 10.5" className={styles.arrowHead} />
+        </marker>
+      </defs>
+      {wires.map((w, i) => (
+        <path
+          key={i}
+          d={w.d}
+          className={w.kind === "cli" ? styles.wireCli : w.kind === "brace" ? styles.wireBrace : styles.wireRelay}
+          markerEnd={w.arrow ? `url(#${id}-arrow)` : undefined}
+          markerStart={w.arrow === "both" ? `url(#${id}-arrow)` : undefined}
+        />
+      ))}
+      {labels.map((l, i) => (
+        <text key={i} x={l.x} y={l.y} textAnchor={l.anchor} className={styles.wireLabel}>
+          {l.lines.map((line, j) => (
+            <tspan key={j} x={l.x} dy={j ? "1.15em" : 0}>{line}</tspan>
+          ))}
+        </text>
+      ))}
+    </svg>
+  );
+}
 
+// Measures a tree's connection lines and keeps them current. Re-measures when the tree resizes, when it scrolls
+// into view (its pictures may have had no size before), and once fonts and images have settled.
+function useWiring(ref: React.RefObject<HTMLDivElement | null>, measure: (tree: HTMLElement) => Wiring) {
+  const [wiring, setWiring] = useState<Wiring>({ wires: [], labels: [] });
   useLayoutEffect(() => {
-    const tree = treeRef.current;
+    const tree = ref.current;
     if (!tree) return;
     let frame = 0;
     const update = () => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => setWiring(measureWires(tree)));
+      frame = requestAnimationFrame(() => setWiring(measure(tree)));
     };
     update();
-    // Re-measure when the tree resizes, when it scrolls into view (its pictures may have had no size
-    // before), and once fonts and images have settled.
     const observer = new ResizeObserver(update);
     observer.observe(tree);
     const visible = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && update());
@@ -290,7 +367,21 @@ export function MultiAgentSetup() {
       visible.disconnect();
       window.removeEventListener("load", update);
     };
-  }, []);
+  }, [ref, measure]);
+  return wiring;
+}
+
+export function MultiAgentSetup() {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const uidBase = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const chartsRef = useRef<HTMLDivElement>(null); // both areas: eye tracking follows the pointer across them
+  const treeRef = useRef<HTMLDivElement>(null);
+  const ipnRef = useRef<HTMLDivElement>(null);
+  const personalWiring = useWiring(treeRef, measureWires);
+  const ipnWiring = useWiring(ipnRef, measureIpnWires);
   const open = nodes.find((n) => n.id === openId) ?? null;
 
   const close = () => setOpenId(null);
@@ -336,7 +427,7 @@ export function MultiAgentSetup() {
 
   const stopEyes = () => {
     cancelAnimationFrame(eyeFrame.current);
-    treeRef.current?.querySelectorAll("[data-pupil], [data-tilt]").forEach((el) => el.removeAttribute("transform"));
+    chartsRef.current?.querySelectorAll("[data-pupil], [data-tilt]").forEach((el) => el.removeAttribute("transform"));
   };
 
   const aimNode = (node: HTMLElement, x: number, y: number) => {
@@ -373,7 +464,7 @@ export function MultiAgentSetup() {
     const { clientX: x, clientY: y } = event;
     cancelAnimationFrame(eyeFrame.current);
     eyeFrame.current = requestAnimationFrame(() => {
-      treeRef.current?.querySelectorAll<HTMLElement>("[data-eyes]").forEach((node) => aimNode(node, x, y));
+      chartsRef.current?.querySelectorAll<HTMLElement>("[data-eyes]").forEach((node) => aimNode(node, x, y));
     });
   };
 
@@ -449,33 +540,11 @@ export function MultiAgentSetup() {
           <h2 id="multi-ai-agent-setup-title" className={styles.sheetTitle}>{sectionTitle}</h2>
           <p className={styles.sheetLede}>{lede}</p>
         </header>
-        <div ref={treeRef} className={styles.tree} onPointerMove={trackEyes} onPointerLeave={stopEyes}>
-          {wires.length ? (
-            <svg className={styles.wires} aria-hidden="true" focusable="false">
-              <defs>
-                {/* Open hand-drawn chevron; auto-start-reverse points it outward at either end. */}
-                <marker id={`${uidBase}-arrow`} viewBox="0 0 12 12" refX="10" refY="6" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
-                  <path d="M2 1.5 L10 6 L2 10.5" className={styles.arrowHead} />
-                </marker>
-              </defs>
-              {wires.map((w, i) => (
-                <path
-                  key={i}
-                  d={w.d}
-                  className={w.kind === "cli" ? styles.wireCli : w.kind === "brace" ? styles.wireBrace : styles.wireRelay}
-                  markerEnd={w.arrow ? `url(#${uidBase}-arrow)` : undefined}
-                  markerStart={w.arrow === "both" ? `url(#${uidBase}-arrow)` : undefined}
-                />
-              ))}
-              {labels.map((l, i) => (
-                <text key={i} x={l.x} y={l.y} textAnchor={l.anchor} className={styles.wireLabel}>
-                  {l.lines.map((line, j) => (
-                    <tspan key={j} x={l.x} dy={j ? "1.15em" : 0}>{line}</tspan>
-                  ))}
-                </text>
-              ))}
-            </svg>
-          ) : null}
+        <div ref={chartsRef} onPointerMove={trackEyes} onPointerLeave={stopEyes}>
+        <h3 className={`${styles.areaHeading} ${styles.areaPersonal}`}>{personalTitle}</h3>
+        <p className={styles.areaSub}>{personalSubtitle}</p>
+        <div ref={treeRef} className={styles.tree}>
+          <WireLayer wiring={personalWiring} id={`${uidBase}-p`} />
           <div className={styles.top}>{renderNode("justin")}</div>
 
           <div className={styles.rail} aria-hidden="true">
@@ -500,6 +569,7 @@ export function MultiAgentSetup() {
               <span id="mas-group-investing" className={styles.groupLabel}>{groupLabels.investing}</span>
               <div className={styles.groupNodes}>{scanIds.map(renderNode)}</div>
             </div>
+            <p className={styles.teamNote}>{teamNote}</p>
           </section>
 
           <section className={`${styles.branch} ${styles.bridge}`} aria-label="How the coding tools and the bots connect">
@@ -529,6 +599,27 @@ export function MultiAgentSetup() {
             </div>
           </section>
         </div>
+
+        <section className={styles.ipnArea} aria-labelledby="mas-ipn-title">
+          <h3 id="mas-ipn-title" className={`${styles.areaHeading} ${styles.areaIpn}`}>{ipnTitle}</h3>
+          <p className={styles.areaSub}>{ipnSubtitle}</p>
+          <div ref={ipnRef} className={styles.ipn}>
+            <WireLayer wiring={ipnWiring} id={`${uidBase}-i`} />
+            <div className={styles.ipnTeam}>
+              {renderNode("ipn-leadership")}
+              <span className={styles.stem} aria-hidden="true" />
+              {renderNode("ipn-agents")}
+              <span className={styles.stem} aria-hidden="true" />
+              <ul className={styles.ipnAgents} aria-label="IPN agent types">
+                {ipnAgentIds.map((id) => <li key={id} className={styles.ipnAgent}>{renderNode(id)}</li>)}
+              </ul>
+            </div>
+            <div className={`${styles.ipnCell} ${styles.ipnReview}`}>{renderNode("ipn-review")}</div>
+            <div className={`${styles.ipnCell} ${styles.ipnNoah}`}>{renderNode("ipn-noah")}</div>
+            <div className={`${styles.ipnCell} ${styles.ipnNotion}`}>{renderNode("ipn-notion")}</div>
+          </div>
+        </section>
+        </div>
       </div>
       </div>
 
@@ -557,6 +648,12 @@ export function MultiAgentSetup() {
               <ul>
                 {open.useCases.map((useCase) => <li key={useCase}>{useCase}</li>)}
               </ul>
+            ) : null}
+            {open.link ? (
+              <a className={styles.readMore} href={open.link.href} target="_blank" rel="noopener noreferrer">
+                {open.link.label}
+                <span className="sr-only"> about {open.cardTitle ?? open.name} (opens in a new tab)</span>
+              </a>
             ) : null}
           </div>
         </div>
