@@ -5,6 +5,9 @@ import {
   groupLabels,
   ipnLinkLabels,
   ipnSubtitle,
+  ipnHref,
+  ipnName,
+  ipnNote,
   ipnTitle,
   personalSubtitle,
   personalTitle,
@@ -601,7 +604,13 @@ export function MultiAgentSetup() {
         </div>
 
         <section className={styles.ipnArea} aria-labelledby="mas-ipn-title">
-          <h3 id="mas-ipn-title" className={`${styles.areaHeading} ${styles.areaIpn}`}>{ipnTitle}</h3>
+          <h3 id="mas-ipn-title" className={`${styles.areaHeading} ${styles.areaIpn}`}>
+            <a className={styles.areaLink} href={ipnHref} target="_blank" rel="noopener noreferrer">
+              {ipnTitle}
+              <span className="sr-only">, the {ipnName} (opens in a new tab)</span>
+            </a>{" "}
+            <span className={styles.areaNote}>({ipnNote})</span>
+          </h3>
           <p className={styles.areaSub}>{ipnSubtitle}</p>
           <div ref={ipnRef} className={styles.ipn}>
             <WireLayer wiring={ipnWiring} id={`${uidBase}-i`} />

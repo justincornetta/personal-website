@@ -434,6 +434,18 @@ button.node { position: relative; }
   text-decoration-thickness: 1.5px;
 }
 .areaPersonal { margin-top: 18px; }
+/* The IPN heading links to IPN's site, so the wavy underline sits on the link alone (a parent's text
+   decoration would also run under the "(my nonprofit)" note). */
+.areaIpn { text-decoration: none; }
+.areaLink {
+  color: inherit;
+  text-decoration: underline wavy rgba(93, 112, 214, 0.55);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1.5px;
+}
+.areaLink:hover { color: var(--accent, var(--ink-blue)); text-decoration-color: var(--ink-blue); }
+.areaLink:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.areaNote { font-size: 0.6em; font-weight: 400; color: var(--ink-blue); opacity: 0.8; }
 .ipnArea { margin-top: 40px; padding-top: 22px; border-top: 2px dashed rgba(93, 112, 214, 0.45); }
 /* Hand-lettered line under each area heading (each area has its own Notion workspace). */
 .areaSub {

@@ -217,6 +217,10 @@ export const storageLinkLabels = {
 // IPN area (below the personal chart). Labels drawn on its connections by the wire overlay.
 export const personalTitle = "Personal";
 export const ipnTitle = "IPN";
+// Short gloss after the heading, and where the heading links (opens in a new tab).
+export const ipnNote = "my nonprofit";
+export const ipnName = "Intercollegiate Psychedelics Network";
+export const ipnHref = "https://www.intercollegiatepsychedelics.net/";
 // Small hand-lettered lines under each area heading: each area has its own Notion workspace.
 export const personalSubtitle = "my own Notion workspace, guide and Skills registry";
 export const ipnSubtitle = "IPN's own Notion workspace, guide and Skills registry";
