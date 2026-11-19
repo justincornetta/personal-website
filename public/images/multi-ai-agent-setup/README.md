@@ -13,5 +13,5 @@ Not shown:
 
 IPN leadership area (below the personal chart):
 
-- `v3/raster/ipn-leadership.webp`, `grok-bot.webp`, `ipn-agents.webp`: the three new IPN icons. TEMPORARY: each is currently a copy of `grok-bot-hub.webp` (with the hub's pupil geometry in `v2Pupils`) until Codex's art lands in `/workspace/design/multi-ai-agent-setup/ipn-art-v1/`. To swap: convert each PNG to 512px lossless WebP over the same filename, then replace the matching `v2Pupils` entry with the measured `<name>.eyes.json` centres scaled to the 128 viewBox (`max` about 75% of the room).
+- `v3/raster/ipn-leadership.webp`, `grok-bot.webp`, `ipn-agents.webp`: the three IPN icons by Codex, 512px lossless WebP from the 1024px PNGs in `/workspace/design/multi-ai-agent-setup/ipn-art-v1/`. Pupils in `v2Pupils` are centred in the eye whites from each `<name>.eyes.json`, scaled to the 128 viewBox, with `max` about 75% of the room. The two group pictures have one pair per character: the centre character is `left`/`right`, the others are in `extra`, and every pair moves.
 - The IPN Cursor, Claude Code, Codex, Notion and Justin nodes reuse the existing art and pupils; the second Noah reuses Noah's photo and eyes.
