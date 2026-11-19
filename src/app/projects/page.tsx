@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ClosingContact, RevealMotion } from "@/components/site-redesign-shared";
+import { MultiAgentSetup } from "@/components/multi-agent-setup";
 import { PortfolioCard } from "@/components/portfolio-card";
 import { ResearchFeature } from "@/components/research-feature";
 import { FeaturedXResearch } from "@/components/featured-x-research";
@@ -22,6 +23,7 @@ export default function ProjectsPage() {
         <header className="portfolio-page__header reveal reveal-1">
           <h1>Projects &amp; Research</h1>
         </header>
+        <MultiAgentSetup />
         <section className="portfolio-section" id="initiatives" aria-labelledby="initiatives-title">
           <header className="portfolio-section__header reveal reveal-1">
             <h2 id="initiatives-title">{initiatives.title}</h2>
