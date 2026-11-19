@@ -6,11 +6,59 @@
   --ink-blue-soft: #5d70d6; /* lines and borders only (4.1:1 on cream) */
   --ink-blue-text: #4659c4; /* small text: 5.5:1 on cream */
   --paper-cream: #fbf5e4;
+  --pen-black: #1c1b1f; /* black ballpoint, a touch soft so it sits on the paper */
+  /* Long text (cards, hover previews) uses the site's sans; the hand lettering stays on the chart labels. */
+  --read: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
   --hand: "Segoe Print", "Bradley Hand", "Chalkboard SE", "Marker Felt", "Comic Neue", "Comic Sans MS", cursive;
 }
 
+/* The sheet hangs on the wall by a strip of tan masking tape across its top edge. The tape sits on a
+   wrapper because the sheet itself clips its overflow. */
+.sheetWrap { position: relative; margin-top: 8px; }
+
+/* Title and lede written on the sheet in black pen, in the same hand as the chart labels. */
+.sheetHeader { max-width: 70ch; margin: 18px 0 6px; padding: 0 clamp(6px, 1.6vw, 18px); }
+.sheetTitle {
+  margin: 0;
+  font-family: var(--hand);
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: var(--pen-black);
+}
+.sheetLede {
+  margin: 10px 0 0;
+  font-family: var(--hand);
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.55;
+  color: var(--pen-black);
+}
+.tape {
+  position: absolute;
+  z-index: 2;
+  top: -22px;
+  left: 50%;
+  width: clamp(150px, 26vw, 340px);
+  height: 44px;
+  transform: translateX(-50%) rotate(-2.5deg);
+  /* pale cream crepe paper (classic general-purpose masking tape): faint crinkle lines, soft uneven tone,
+     a touch darker than the sheet so it still reads against it */
+  background:
+    repeating-linear-gradient(91deg, rgba(150, 125, 80, 0.05) 0 1px, transparent 1px 5px),
+    radial-gradient(ellipse at 30% 35%, rgba(255, 253, 244, 0.5), transparent 60%),
+    radial-gradient(ellipse at 78% 75%, rgba(196, 176, 132, 0.18), transparent 55%),
+    linear-gradient(180deg, #efe6cc 0%, #e8ddbe 55%, #e2d5b3 100%);
+  box-shadow: 0 1px 2px rgba(31, 27, 20, 0.16), 0 3px 8px -4px rgba(31, 27, 20, 0.2);
+  opacity: 0.94;
+  /* torn ends */
+  clip-path: polygon(
+    1.5% 0, 98.5% 0, 100% 10%, 98% 22%, 99.5% 35%, 97.5% 49%, 99.5% 63%, 97.5% 77%, 100% 90%, 98.5% 100%,
+    1.5% 100%, 0 90%, 2% 77%, 0.5% 63%, 2.5% 49%, 0.5% 35%, 2% 22%, 0 10%
+  );
+  pointer-events: none;
+}
 .sheet {
-  margin-top: 30px;
   padding: clamp(10px, 2vw, 22px);
   border-radius: 10px 14px 12px 16px;
   border: 1px solid #e0d5b8;
@@ -26,10 +74,11 @@
 
 /* ---------------------------------------------------------------------------------------------------
    Tree. Plain grid in normal flow, no coordinates. DOM order = tab order = mobile stack order:
-   Justin, Grok Bot branch, Tin Can bridge, Coding tools, Notion.
-   Desktop/tablet: [Grok Bot branch] ---Tin Can--- [Coding tools], Justin above, Notion below.
+   Justin, Grok Bot branch, Tincan bridge, Coding tools, Notion.
+   Desktop/tablet: [Grok Bot branch] ---Tincan--- [Coding tools], Justin above, Notion below.
    --------------------------------------------------------------------------------------------------- */
 .tree {
+  position: relative;
   --art: clamp(58px, 7.2vw, 80px);
   --gap: 14px;
   --line: 2px dashed var(--ink-blue);
@@ -44,7 +93,7 @@
   width: 100%;
 }
 
-.top { grid-area: top; justify-self: center; }
+.top { grid-area: top; display: flex; justify-content: center; }
 
 /* Connector from Justin to the two branches (subgrid so the drops land on the branch centres). */
 .rail {
@@ -72,22 +121,31 @@
   flex-direction: column;
   align-items: center;
   padding: 16px 12px 18px;
-  border: 2px dashed var(--ink-blue-soft);
-  border-radius: 22px 30px 24px 28px;
   background: transparent;
 }
-.branchTitle { margin: 0; font: inherit; }
 .stem { flex: none; height: 22px; border-left: var(--line); opacity: 0.7; }
-.groups { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 10px; width: 100%; }
-.group {
-  flex: 0 1 auto;
+/* Cornbot's direct reports: an org-chart row. Equal-width slots, so the horizontal bar runs from the first
+   centre (10%) to the last (90%) and the middle slot sits under Cornbot's stem. */
+.reports {
+  position: relative;
+  display: flex;
+  width: 100%;
   margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.reports::before { content: ""; position: absolute; top: 0; left: 10%; right: 10%; border-top: var(--line); opacity: 0.7; }
+.report { position: relative; flex: 1 1 0; min-width: 0; display: flex; justify-content: center; padding-top: 20px; }
+.report::before { content: ""; position: absolute; top: 0; left: 50%; height: 20px; border-left: var(--line); opacity: 0.7; }
+.report .node { width: 100%; max-width: 96px; }
+/* JMJ Capital: a drop from its slot down to its scan bots. */
+.reportLead::after { content: ""; position: absolute; left: 50%; top: 100%; height: 18px; border-left: var(--line); opacity: 0.7; }
+.scans {
+  width: 100%;
+  margin-top: 18px;
   padding: 6px 8px 8px;
-  border: 1.5px dashed rgba(93, 112, 214, 0.55);
-  border-radius: 14px 18px 14px 16px;
   text-align: center;
 }
-.groupWide { flex-basis: 100%; }
 .groupLabel {
   display: inline-block;
   margin: 0 0 4px;
@@ -98,84 +156,110 @@
   text-decoration: underline wavy rgba(93, 112, 214, 0.55);
   text-underline-offset: 4px;
 }
+/* A group heading that opens a card ("Coding agents"). Looks like the other hand-lettered labels. */
+.groupHeading { margin: 0 0 4px; } /* keeps the page h3 face, like the "Grok Bot" label */
+.headingButton {
+  position: relative;
+  margin: 0;
+  padding: 2px 4px;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+.headingButton:hover { color: var(--accent, var(--ink-blue)); text-decoration-color: var(--ink-blue); }
+.headingButton:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+@media (hover: hover) {
+  .headingButton:hover .tip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+}
+.headingButton:focus-visible .tip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
 .groupNodes { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px; }
 
-/* Tin Can bridge: one horizontal link between the two branches. */
+/* Middle column: Grok Bot's computer above Agent Tincan. Their connections are drawn by the wire overlay. */
 .bridge {
   grid-area: bridge;
   align-self: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: clamp(48px, 9vw, 110px);
   padding: 0;
 }
-.bridgeNodes {
-  position: relative;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  /* run the link out to both branch frames */
-  width: calc(100% + var(--gap) * 2);
-  margin: 0 calc(var(--gap) * -1);
-}
-.bridgeNodes::before {
-  content: "";
-  position: absolute;
-  left: 0; right: 0;
-  top: calc(var(--art) / 2);
-  border-top: var(--line);
-  opacity: 0.85;
-}
-.bridgeNodes .node { background: var(--paper-cream); border-radius: 12px; }
-.caption {
-  margin: 0;
-  padding: 6px 8px;
-  max-width: 30ch;
+.bridge .node { width: auto; padding: 2px 10px; }
+
+/* Connection lines over the tree (hidden on phones, where the chart stacks). */
+.wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.wires path { fill: none; stroke: var(--ink-blue); stroke-width: 2; stroke-linecap: round; opacity: 0.7; }
+.wireRelay { stroke-dasharray: 6 5; }
+.wireBrace { stroke-width: 2.2 !important; opacity: 0.75 !important; }
+/* Labels on the lines: hand lettering with a paper-coloured halo so they read over the ruled lines. */
+.wireLabel {
+  fill: var(--ink-blue-text);
+  font-family: var(--hand);
   font-size: 13px;
-  line-height: 1.35;
-  text-align: center;
-  color: var(--ink-blue-text);
-  background: rgba(251, 245, 228, 0.92);
-  border-radius: 8px;
+  paint-order: stroke;
+  stroke: var(--paper-cream);
+  stroke-width: 4px;
+  stroke-linejoin: round;
 }
+.wires .arrowHead { fill: none; stroke: var(--ink-blue); stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-linejoin: round; opacity: 1; }
+.wireCli { stroke-dasharray: 0.5 5; stroke-width: 3 !important; opacity: 0.8 !important; }
 
 /* Coding tools branch. */
 .tools { grid-area: tools; display: flex; flex-direction: column; gap: 12px; }
-.callout {
-  margin: 0;
-  padding: 8px 10px;
-  font-size: 13px;
-  line-height: 1.35;
-  color: var(--ink-blue);
-  border: 1.5px dashed var(--ink-blue-soft);
-  border-radius: 12px 14px 12px 16px;
-  background: rgba(251, 245, 228, 0.9);
-}
 .toolsPanel {
   padding: 10px 10px 12px;
-  border: 2px dashed var(--ink-blue-soft);
   border-radius: 22px 28px 24px 26px;
   background: transparent;
   text-align: center;
 }
-.toolNodes { display: flex; flex-direction: column; gap: 6px; }
-.toolNodes .node { width: 100%; flex-direction: row; justify-content: flex-start; gap: 8px; text-align: left; }
-.toolNodes .name { flex: 1; margin: 0; }
+.toolNodes { display: flex; flex-direction: column; align-items: center; gap: 6px; }
 
-/* Notion: full-width base. */
+/* Storage: full-width base. Plain stores, then Noah as the gate in front of Notion. */
 .base {
   grid-area: base;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   margin-top: 24px;
-  padding: 10px 12px;
-  border: 2px dashed var(--ink-blue-soft);
-  border-radius: 20px 26px 22px 24px;
+  padding: 12px 14px 16px;
   background: transparent;
 }
-.base .node { width: auto; flex-direction: row; gap: 12px; }
-.base .name { font-size: 17px; }
+.stores { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 16px 30px; width: 100%; margin-top: 6px; }
+/* Desktop and tablet: room for the bracket above the row, the labelled links between stores, and Noah's
+   drift-check rail under it (all drawn by the wire overlay). */
+@media (min-width: 720px) {
+  .base { margin-top: 40px; padding-bottom: 54px; }
+  .base > .groupLabel { align-self: flex-start; margin-left: 6px; }
+  /* Five equal slots, so the icons are evenly spaced and Notion (the middle slot) sits on the centre line
+     under the bracket. Noah and Notion leave their wrapper and take a slot each; the "edits" arrow between
+     them is drawn by the wire overlay instead. */
+  .stores { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); justify-items: center; column-gap: 0; }
+  .stores .gate { display: contents; }
+  .stores .gateArrow { display: none; }
+}
+.gate {
+  display: flex;
+  align-items: flex-start;
+  padding: 6px 10px 4px;
+}
+.gateArrow { position: relative; flex: none; width: 52px; margin-top: calc(var(--art) / 2 + 4px); border-top: var(--line); }
+.gateLabel {
+  position: absolute;
+  left: 50%; bottom: 4px;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: var(--ink-blue-text);
+  white-space: nowrap;
+}
+.gateArrow::after {
+  content: "";
+  position: absolute;
+  right: -3px; top: -7px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 9px solid var(--ink-blue);
+}
 
 /* Nodes. */
 .node {
@@ -193,6 +277,44 @@
   cursor: pointer;
 }
 div.node { cursor: default; }
+/* Positioned (so nodes paint above the wire overlay) but never given a z-index: that would create a stacking
+   context and stop the v2 art's mix-blend-mode from reaching the paper (a white square shows). The hover
+   preview lifts itself instead. */
+button.node { position: relative; }
+
+
+/* Hover/focus preview bubble above a node. */
+.tip {
+  position: absolute;
+  z-index: 10;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  width: max-content;
+  max-width: 230px;
+  padding: 8px 10px;
+  border: 1.5px solid var(--ink-blue-soft);
+  border-radius: 10px 12px 10px 12px;
+  background: var(--paper-cream);
+  box-shadow: 0 10px 24px -14px rgba(31, 27, 20, 0.5);
+  color: var(--ink-blue);
+  font-family: var(--read);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+  text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 4px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  pointer-events: none;
+}
+/* The top node sits against the sheet's edge (and the tape), so its preview opens below it. */
+.top .tip { top: calc(100% + 6px); bottom: auto; transform: translate(-50%, -4px); }
+.tipMore { display: block; margin-top: 4px; font-size: 11px; font-weight: 700; color: var(--ink-blue-text); }
+@media (hover: hover) {
+  .node:hover .tip, .node:focus-visible .tip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+}
 .node:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 10px; }
 
 .art {
@@ -214,7 +336,7 @@ div.node { cursor: default; }
 .k_hub .art { width: calc(var(--art) * 1.25); height: calc(var(--art) * 1.25); }
 .k_hub .name { font-size: 17px; }
 
-.top .node.person { cursor: default; width: min(100%, 300px); }
+.top .node.person { width: auto; min-width: 120px; }
 .person .art { width: calc(var(--art) * 1.15); height: calc(var(--art) * 1.15); }
 .person .name { font-size: 18px; }
 
@@ -258,23 +380,15 @@ div.node { cursor: default; }
   background: var(--paper-cream);
   box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.5);
   color: var(--ink-blue);
-  font-family: var(--hand);
+  font-family: var(--read);
 }
-.card h3 { margin: 0; padding-right: 48px; font-size: 26px; line-height: 1.15; }
+/* Short card title keeps the hand lettering; the body reads in the sans, in a deeper ink. */
+.card h3 { margin: 0; padding-right: 48px; font-family: var(--hand); font-size: 26px; line-height: 1.15; }
 .cardRole { margin: 4px 0 0; color: var(--ink-blue-text); font-size: 15px; }
-.oneLiner { margin: 14px 0 10px; font-size: 16px; line-height: 1.45; }
-.card ul { margin: 0 0 16px; padding-left: 20px; font-size: 15px; line-height: 1.45; }
-.card li { margin: 0 0 4px; padding-left: 2px; }
+.oneLiner { margin: 14px 0 12px; font-size: 16px; font-weight: 500; line-height: 1.5; color: #1f2a6b; }
+.card ul { margin: 0 0 16px; padding-left: 20px; list-style: disc; font-size: 15px; line-height: 1.55; color: #33407f; }
+.card li { margin: 0 0 8px; padding-left: 2px; }
 .card li::marker { color: var(--ink-blue); }
-.readMore {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  font-weight: 700;
-  color: var(--ink-blue);
-  border-bottom: 2px dashed var(--ink-blue-soft);
-}
-.readMore:hover { color: var(--accent); }
 .close {
   position: absolute;
   top: 10px; right: 10px;
@@ -296,8 +410,7 @@ div.node { cursor: default; }
   .tree { --gap: 10px; grid-template-columns: minmax(0, 1.8fr) minmax(150px, 0.9fr) minmax(0, 1fr); }
   .node { width: 78px; }
   .name { font-size: 12px; }
-  .group { padding: 5px 5px 6px; }
-  .caption { font-size: 12px; }
+  .scans { padding: 5px 5px 6px; }
 }
 
 /* Mobile: the same story stacked top to bottom, no horizontal scroll. */
@@ -309,7 +422,6 @@ div.node { cursor: default; }
     flex-direction: column;
     align-items: stretch;
   }
-  .top { align-self: center; }
   .rail { display: block; height: 28px; }
   .railL, .railM, .railR { display: none; }
   .railStem { height: 28px; }
@@ -323,9 +435,12 @@ div.node { cursor: default; }
     opacity: 0.7;
   }
   .bridge { align-self: stretch; }
-  .bridgeNodes { width: 100%; margin: 0; justify-content: center; gap: 36px; }
-  .bridgeNodes::before { left: 25%; right: 25%; }
-  .caption { max-width: none; font-size: 13px; }
+  .bridge { flex-direction: row; justify-content: center; gap: 36px; }
+  .reports { flex-wrap: wrap; row-gap: 6px; }
+  .reports::before, .report::before, .reportLead::after { display: none; }
+  .report { flex: 0 0 33.33%; padding-top: 0; }
+  .scans { margin-top: 12px; }
+
   .toolNodes .node { padding: 4px 6px; }
   .base { margin-top: 28px; }
   .node { width: 88px; }
