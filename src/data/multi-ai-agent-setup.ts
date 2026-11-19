@@ -5,8 +5,10 @@
 // Art:
 //  - The 10 Grok Bots use real profile photos (public/images/multi-ai-agent-setup/avatars/*.webp),
 //    shown in a hand-drawn sketch circle. The v2 drawings of those bots are not used.
-//  - The other 8 nodes use v2 art: a 512px raster (v2/raster/*.webp) inside an inlined 128x128 SVG that
-//    carries movable pupil groups. v2/*.svg are the original files; their pupil geometry is copied below.
+//  - The drawn nodes sit in an inlined 128x128 SVG that carries movable pupil groups. Justin, Claude Code,
+//    Codex, Grok Bot's computer, Agent Tincan and Notion use the v3 transparent rasters (v3/raster/*.webp,
+//    same drawings and pupil geometry as v2). Cursor, Google Drive, GitHub and local files are Codex's newer
+//    drawings in v2/raster/ with whitened backgrounds; their drawn pupils are painted over (`cover`).
 //  - The v1 robot SVGs in public/images/multi-ai-agent-setup/ are no longer shown.
 // Layout lives in src/components/multi-agent-setup.tsx.
 
@@ -47,6 +49,7 @@ export type AgentNode = {
 
 const AVATARS = "/images/multi-ai-agent-setup/avatars";
 const V2 = "/images/multi-ai-agent-setup/v2";
+const V3 = "/images/multi-ai-agent-setup/v3";
 
 // Eye centres measured on the avatar sources (see the notes per bot).
 const INK = "#0d0d0d";
@@ -193,7 +196,7 @@ export const nodes: AgentNode[] = [
     id: "justin",
     name: "Me",
     kind: "person",
-    art: `${V2}/raster/justin.webp`,
+    art: `${V3}/raster/justin.webp`,
     pupils: v2Pupils["justin"],
     cardTitle: "Me",
     oneLiner: justinLabel,
@@ -224,7 +227,7 @@ export const nodes: AgentNode[] = [
     id: "claude-code",
     name: "Claude Code",
     kind: "tool",
-    art: `${V2}/raster/claude-code.webp`,
+    art: `${V3}/raster/claude-code.webp`,
     pupils: v2Pupils["claude-code"],
     oneLiner: "The tool I use for most coding and front-end work. My bots can also run it on Grok Bot's computer, on my Claude subscription.",
     useCases: [
@@ -238,7 +241,7 @@ export const nodes: AgentNode[] = [
     id: "codex",
     name: "Codex",
     kind: "tool",
-    art: `${V2}/raster/codex.webp`,
+    art: `${V3}/raster/codex.webp`,
     pupils: v2Pupils["codex"],
     oneLiner: "The tool I use alongside Claude Code for coding, and the one I go to for image generation.",
     useCases: [
@@ -422,7 +425,7 @@ export const nodes: AgentNode[] = [
     id: "agent-tin-can",
     name: "Agent Tincan",
     kind: "link",
-    art: `${V2}/raster/agent-tin-can.webp`,
+    art: `${V3}/raster/agent-tin-can.webp`,
     pupils: v2Pupils["agent-tin-can"],
     oneLiner: "A private relay, over Tailscale, that lets my coding tools and my Grok Bots message each other.",
     useCases: [
@@ -437,7 +440,7 @@ export const nodes: AgentNode[] = [
     name: "Grok Bot's virtual computer",
     cardTitle: "Grok Bot Virtual Computer",
     kind: "machine",
-    art: `${V2}/raster/grok-bot-computer.webp`,
+    art: `${V3}/raster/grok-bot-computer.webp`,
     pupils: v2Pupils["grok-bot-computer"],
     oneLiner: grokBotOneLiner,
     useCases: grokBotUseCases,
@@ -446,7 +449,7 @@ export const nodes: AgentNode[] = [
     id: "notion",
     name: "Notion",
     kind: "base",
-    art: `${V2}/raster/notion.webp`,
+    art: `${V3}/raster/notion.webp`,
     pupils: v2Pupils["notion"],
     oneLiner: "The shared knowledge base every agent reads. It holds my skills, the Agent Operating Guide, and the documentation and research for my non-coding projects.",
     useCases: [

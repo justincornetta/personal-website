@@ -381,9 +381,12 @@ export function MultiAgentSetup() {
     const node = nodes.find((n) => n.id === id)!;
     const hasEyes = Boolean(node.pupils || node.eyes);
     const uid = `${uidBase}-${node.id}`;
+    // Drawn art (v2/v3 rasters with inlined pupils) vs. bot photos in a sketched circle. Only the whitened v2
+    // rasters need the darken blend; v3 rasters are transparent.
+    const drawn = !node.art.includes("/avatars/");
     const art = (
-      <span className={`${styles.art} ${node.art.includes("/v2/") ? styles.artV2 : ""}`} data-art="">
-        {node.art.includes("/v2/") ? <V2Art node={node} uid={uid} /> : <PhotoArt node={node} uid={uid} />}
+      <span className={`${styles.art} ${drawn && node.art.includes("/v2/") ? styles.artV2 : ""}`} data-art="">
+        {drawn ? <V2Art node={node} uid={uid} /> : <PhotoArt node={node} uid={uid} />}
       </span>
     );
     return (
