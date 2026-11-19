@@ -15,7 +15,7 @@ order: 1
 cover: "/images/projects/ai-agents-working-together/cover.webp"
 coverChart: "multi-ai-agent-setup"
 gallery: [{"src": "/images/projects/ai-agents-working-together/gallery/01.webp", "caption": "My Multi-AI Agent Setup, the chart on my Projects page. Cornbot organized the work, Claude Code built it, and Codex made the images."}, {"src": "/images/projects/ai-agents-working-together/gallery/02.webp", "caption": "The Nov 15 weekly skills post in our IPN Slack's #ipn-skills channel. Leaders get each skill read-only through a pointer file, the same live instructions the agents use, and Slack only announces what changed."}, {"src": "/images/projects/ai-agents-working-together/gallery/03.webp", "caption": "On Nov 14, Codex built build-financial-model, a personal skill. It came through Cornbot, and Noah published it to the personal Skills registry. That's the publishing flow for a new skill."}, {"src": "/images/projects/ai-agents-working-together/gallery/04.webp", "caption": "On Oct 28, in Codex, I asked for the Beyond Approval cover I picked to be sent to Cornbot, who would pass it to Designer. Codex confirmed it had sent the cover and my color preferences through."}, {"src": "/images/projects/ai-agents-working-together/gallery/05.webp", "caption": "On Oct 28, Designer received the Beyond Approval cover from Cornbot and recommended which changes should become general brand rules. Those edits only go to Noah after I approve them."}, {"src": "/images/projects/ai-agents-working-together/gallery/06.webp", "caption": "I asked Cornbot for an update on the case study graphic. Claude Code had just finished the build, Cornbot opened the pull request, and Noah started an accuracy check against Notion before I merged it."}, {"src": "/images/projects/ai-agents-working-together/gallery/07.webp", "caption": "On Nov 19, I asked Claude Code to open the deploy preview for PR #24 so I could make a few final edits myself."}]
-status: "draft"
+status: "published"
 ---
 
 ## TL;DR
@@ -63,8 +63,8 @@ A skill is a reusable set of instructions for a repeat task, like writing a meet
 
 Shared skills only help if every agent follows the same rules. My own bots follow my personal Agent Operating Guide, so I wrote the IPN version: two pages in IPN's Notion that any leader's agent reads before doing IPN work, in whatever tool the leader uses (ChatGPT, Claude, Cursor, or another).
 
-- **IPN Agent Rules: Read this first:** the rules every IPN agent follows. Only Noah edits IPN Notion, and every other agent reads only. Each leader decides whether their agent only drafts or can also send, and picks a writing style for it. I approve every rule change, and Noah makes the edit.
-- **IPN Agent Onboarding: Get connected:** a quick setup guide for connecting a leader's agent to the tools IPN uses, like Gmail, Google Drive, and Slack. Each connection comes with a one-line read-only test, and a final check reports anything the agent can't reach.
+- **IPN Agent Rules - Read this first:** the rules every IPN agent follows. Only Noah edits IPN Notion, and every other agent reads only. Each leader decides whether their agent only drafts or can also send, and picks a writing style for it. I approve every rule change, and Noah makes the edit.
+- **IPN Agent Onboarding - Get connected:** a quick setup guide for connecting a leader's agent to the tools IPN uses, like Gmail, Google Drive, and Slack. Each connection comes with a one-line read-only test, and a final check reports anything the agent can't reach.
 
 Every leader gets one set of rules and one onboarding path, whether they use AI daily or are new to it.
 
@@ -92,12 +92,12 @@ Agent Tin Can is a private messaging service that lets agents in different apps 
 A real example from November 19:
 
 1. Claude Code, working on my IP reimbursement dashboard, needed sample rows from the November insurer files.
-2. That question was meant for Forge, so Claude Code sent it to Cornbot over Tin Can.
+2. That question was meant for Forge, my product/engineering Grok Bot, so Claude Code sent it to Cornbot over Tin Can.
 3. Cornbot relayed it to Forge through Grok Bot messaging.
 4. Forge pulled eight sample rows, one per insurer, without changing any data.
 5. Cornbot passed Forge's answer back to Claude Code over Tin Can.
 
-I didn't copy or paste anything, and the work kept moving.
+I didn't copy or paste anything. Tin Can relayed the message to Cornbot automatically, while I kept working, in the same Claude Code session.
 
 ## Why it matters
 
